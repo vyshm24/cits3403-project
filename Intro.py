@@ -1,2 +1,3 @@
-myfavouritefood():
-    return[]
+
+def myfavouritefood():
+    return[udon]
