@@ -1,2 +1,2 @@
 myfavouritefood():
-    return[]
+    return[apple]
