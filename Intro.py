@@ -1,0 +1,2 @@
+myfavouritefood():
+    return[]
