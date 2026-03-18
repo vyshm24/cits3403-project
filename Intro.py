@@ -1,2 +1,3 @@
 myfavouritefood():
-    return[fried rice]
+    return[fried rice, udon]
+
