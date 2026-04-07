@@ -5,9 +5,14 @@ html, body {
     height: 100%;
 }
 
-body {
-    background-image: url("sign-in-picture.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+.page {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px 120px;
+      background:
+        linear-gradient(rgba(0,0,0,0.16), rgba(0,0,0,0.16)),
+        url('sign-in-picture.jpg') center/cover no-repeat;
 }
