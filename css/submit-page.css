@@ -1,0 +1,253 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- Base & Reset --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f7f6; /* 干净的高级浅色背景 */
+    color: #333;
+    line-height: 1.6;
+    padding-bottom: 60px;
+}
+
+/* --- Header / Navigation --- */
+.top-nav {
+    background: linear-gradient(135deg, #003087 0%, #0052cc 100%);
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.go-back-to-home-page a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: opacity 0.3s ease;
+}
+
+.go-back-to-home-page a:hover {
+    opacity: 0.8;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* --- Main Layout --- */
+main {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* --- Sections / Cards --- */
+section {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 24px rgba(10, 20, 50, 0.05); /* 柔和的卡片阴影 */
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: transform 0.3s ease;
+}
+
+section:hover {
+    transform: translateY(-2px); /* 悬浮时轻微浮起 */
+}
+
+h2 {
+    font-size: 1.4rem;
+    color: #1a202c;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #edf2f7;
+}
+
+/* --- Form Layout & Labels --- */
+label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    color: #4a5568;
+    margin-top: 15px;
+}
+
+fieldset {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 25px;
+    background-color: #fafbfd;
+    transition: border-color 0.3s ease;
+}
+
+fieldset:hover {
+    border-color: #cbd5e0;
+}
+
+legend {
+    background: #e2e8f0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #2d3748;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- Inputs & Selects --- */
+input[type="text"],
+input[type="number"],
+input[type="time"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: #2d3748;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 4px rgba(49, 130, 206, 0.15); /* 漂亮的蓝色焦点发光 */
+}
+
+::placeholder {
+    color: #a0aec0;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+hr {
+    display: none; /* 我们用卡片阴影分隔，不需要水平线了 */
+}
+
+/* --- Dynamic Checkboxes Group (完全适配你 HTML 这次的结构) --- */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 10px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.checkbox-group label {
+    margin: 0 8px 0 0; /* 文字右侧留一点空隙 */
+    font-weight: 500;
+    color: #2d3748;
+    cursor: pointer;
+}
+
+.checkbox-group input[type="text"] {
+    width: auto;
+    flex-grow: 1;
+    min-width: 150px;
+    margin-left: 10px;
+}
+
+/* 适配你目前 Label在前 Checkbox在后的设计 */
+input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #cbd5e0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 25px; /* Checkbox后面留大点空隙，因为你要引出下一个选项的Label */
+}
+
+input[type="checkbox"]:checked {
+    background-color: #3182ce;
+    border-color: #3182ce;
+}
+
+input[type="checkbox"]:checked::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* --- Buttons --- */
+button {
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.add-activity-btn,
+.add-day-btn {
+    background-color: #ebf8ff;
+    color: #3182ce;
+    border: 2px dashed #90cdf4;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    width: 100%;
+    margin-top: 25px;
+    display: block;
+}
+
+.add-activity-btn:hover,
+.add-day-btn:hover {
+    background-color: #bee3f8;
+    border-color: #63b3ed;
+    color: #2b6cb0;
+}
+
+.submit-itinerary-btn {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    border: none;
+    padding: 18px 30px;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    width: 100%;
+    margin-top: 10px;
+    box-shadow: 0 6px 15px rgba(56, 161, 105, 0.3);
+}
+
+.submit-itinerary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(56, 161, 105, 0.4);
+    background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+}
+
+.submit-itinerary-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(56, 161, 105, 0.3);
+}
