@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Travel Blog</title>
+    <link rel="stylesheet" href="sign-up.css">
+</head>
+
+<body>
+    <div class="page">
+        <section class="signup-card">
+            <h2>Sign Up</h2>
+            <form action="">
+                <input type="text" placeholder="Choose a username" name="username" required>
+                <input type="password" id="password" placeholder="Create a password" name="password" required>
+                <input type="password" id="confirm-password" placeholder="Confirm your password" name="confirm-password"
+                    required>
+                <button class="submit">SIGN UP</button>
+            </form>
+
+            <p class="switch-to-sign-in">
+                Already have an account? <a href="sign-in.html">Sign in</a>
+            </p>
+        </section>
+    </div>
+
+    <script>
+        const form = document.querySelector("form");
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirm-password");
+
+        // Trigger the check every time you type in this input field.
+        function validatePassword() {                        // If the passwords do not match, set a custom error.
+            if (password.value != confirmPassword.value) {   //if the password and confirm password are not the same
+                confirmPassword.setCustomValidity("Passwords do not match");
+            } else {
+                confirmPassword.setCustomValidity("");
+            }
+        }
+
+        // Listen for input changes in both password fields and validate whether the passwords match in real time
+        password.addEventListener("input", validatePassword)
+        confirmPassword.addEventListener("input", validatePassword)
+    </script>
+</body>
+
+</html>
