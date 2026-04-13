@@ -3,17 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link href="/search/search.css" rel="stylesheet" type="text2/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Search Page</title>
 </head>
 
 <body>
 
-    <div class="topnav">
-    <a class="active" href="#home">Home</a>
-    <a href="#news">Countries</a>
-    <a href="#contact">Post your Own</a>
-    <a href="#about">Sign In</a>
+    <div class="navbar bg-base-100 shadow-sm" style = "background-color: rgb(46, 196, 255);">
+    <div class="flex-1">
+        <a class="btn btn-ghost text-xl" href = "/Home/home-page.html">Home</a>
+        <a class="btn btn-ghost text-xl">Countries</a>
+        <a class="btn btn-ghost text-xl" href = "">Post</a>
+        <a class="btn btn-ghost text-xl" href = "/sign-in-up/sign-in.html">Login</a>
     </div>
-        
+    <div class="flex-none">
+        <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+            <div class="w-10 rounded-full">
+            <img
+                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            </div>
+        </div>
+        <ul
+            tabindex="-1"
+            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+            <li>
+            <a class="justify-between">
+                Profile
+            </a>
+            </li>
+            <li><a>Logout</a></li>
+        </ul>
+        </div>
+    </div>
+    </div>
+
+    <div class="flex justify-center mt-20">
+        <input type="text" placeholder="Search" class="input input-bordered w-full max-w-2xl text-lg h-14 shadow-md"/>
+    </div>
+
+            
 </body>
 </html>
