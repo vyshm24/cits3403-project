@@ -5,6 +5,7 @@
     font-family: "Trebuchet MS", sans-serif;
 }
 
+/* Make html and body fill the full viewport */
 body,
 html {
     width: 100%;
@@ -118,6 +119,7 @@ input[type="password"]:focus {
     background-color: #002FA7;
 }
 
+/* Blue underline */
 .switch-to-sign-up,
 .switch-to-sign-in {
     margin-top: 25px;
