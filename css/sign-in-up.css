@@ -41,8 +41,10 @@ html {
 .login-card,
 .signup-card {
     background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.5);
-    width: 420px;
+    width: 100%; /* 宽度不写死，能自适应屏幕 */    
+    max-width: 420px;
     padding: 50px 40px;
     border-radius: 16px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
