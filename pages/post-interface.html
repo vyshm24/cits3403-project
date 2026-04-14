@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Interface - Travel Blog</title>
+    <link rel="stylesheet" href="../css/post-interface.css">
+</head>
+
+<body>
+    <header class="top-nav">
+        <div class="go-back-to-home-page">
+            <a href="home-page.html">Travel Blog</a>
+        </div>
+        <h1 id="post-title"></h1>
+    </header>
+
+    <main>
+        <div class="post-container" id="itinerary-detail" data-entity="itinerary-display">
+            <section class="post-summary-section" data-role="trip-summary">
+                <h2>Trip Overview</h2>
+                <p>Author: <span id="post-author"></span></p>
+                <p>Location: <span id="post-location-summary"></span></p>
+                <p>Total Days: <span id="post-total-days"></span></p>
+                <p>Budget Level: <span id="post-budget-level"></span></p>
+                <p>Budget Range: <span id="post-budget"></span></p>
+                <p>Trip Type: <span id="post-trip-type"></span></p>
+            </section>
+
+            <hr>
+
+            <section class="post-header-section">
+                <div class="rating-group" id="rating" data-role="rating-section">
+                    <h3>Rating</h3>
+                    <span class="stars" id="rating-stars"></span>
+                    <span class="rating-value" id="rating-value"></span>
+                </div>
+
+                <div class="location-group" data-role="map-section">
+                    <h3>Location</h3>
+                    <a href="" target="_blank" id="location-link">View on Google Maps</a>
+                </div>
+            </section>
+
+            <hr>
+
+            <section class="itinerary-days-section" data-role="days-display-section">
+                <h2>Daily Itinerary</h2>
+                <div id="post-days-list" data-role="days-display-list">
+                    <article class="day-card" id="day-card-template" data-role="day-card-template" hidden>
+                        <h3 data-field="day-title"></h3>
+                        <p>Country: <span data-field="country"></span></p>
+                        <p>State/Province: <span data-field="state"></span></p>
+                        <p>City: <span data-field="city"></span></p>
+
+                        <section class="day-activities" data-role="activities-display-section">
+                            <h4>Activities</h4>
+                            <ul data-role="activities-display-list">
+                                <li data-role="activity-display-item" hidden>
+                                    <span data-field="activity-time"></span>
+                                    <span data-field="activity-sequence"></span>
+                                    <span data-field="activity-description"></span>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <section class="day-logistics" data-role="logistics-display-section">
+                            <h4>Logistics</h4>
+                            <p>Transport: <span data-field="transport"></span></p>
+                            <p>Restaurant: <span data-field="restaurant"></span></p>
+                            <p>Accommodation: <span data-field="accommodation"></span></p>
+                        </section>
+                    </article>
+                </div>
+            </section>
+
+            <hr>
+
+            <section class="stats-section" data-role="interaction-section">
+                <h2>Interaction</h2>
+                <div class="stats-group">
+                    <p>Likes: <span id="likes-count"></span></p>
+                    <p>Saves: <span id="saves-count"></span></p>
+                </div>
+            </section>
+
+            <hr>
+
+            <section class="comments-section" data-role="comments-section">
+                <h2>Comments</h2>
+                <div class="comments-container">
+                    <ul id="comments-list" data-role="comments-list"></ul>
+                </div>
+            </section>
+
+            <hr>
+
+            <section class="related-content-section" data-role="related-content-section">
+                <h2>Explore More</h2>
+
+                <fieldset class="related-group">
+                    <legend>Related Itineraries</legend>
+                    <ul id="related-itineraries" data-role="related-itineraries-list"></ul>
+                </fieldset>
+
+                <fieldset class="related-group">
+                    <legend>Modified Versions</legend>
+                    <ul id="modified-versions" data-role="modified-versions-list"></ul>
+                </fieldset>
+
+                <fieldset class="related-group">
+                    <legend>Other Itineraries by Author</legend>
+                    <ul id="other-itineraries" data-role="other-itineraries-list"></ul>
+                </fieldset>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>
