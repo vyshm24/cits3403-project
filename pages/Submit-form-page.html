@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Itinerary - Travel Blog</title>
-    <link rel="stylesheet" href="../css/submit-form-page.css">
+    <link rel="stylesheet" href="../css/Submit-form-page.css">
 </head>
 
 <body>
@@ -67,7 +67,10 @@
 
                 <!--data-day="1": let JS know which day this is -->
                 <div class="day-container" id="day-1" data-day="1"> 
+                    <div class="day-header">
                     <h3 class="day-title">Day 1</h3>
+                    <button type="button" class="delete-day-btn">Delete Day</button>
+                </div>
 
                     <!-- location -->
                     <fieldset class="location-group">
@@ -94,13 +97,19 @@
                             <!-- new activity can append to .activities-list  -->
                         <div class="activities-list">
                             <div class="activity-item">
-                            <label for="time-day1-1">Time:</label>
-                            <input type="time" id="time-day1-1" name="time_day1_1">
-                            <br>
+                                <div class="activity-header">
+                                    <div class="activity-summary">Activity 1</div>
+                                    <button type="button" class="delete-activity-btn">Delete</button>
+                                </div>
 
-                            <label for="activity-day1-1">Activity Description:</label>
-                            <textarea id="activity-day1-1" name="activity_day1_1" rows="2"
-                                placeholder="E.g. Visit the museum..."></textarea>
+                                <div class="activity-fields">
+                                    <label for="time-day1-1">Time:</label>
+                                    <input type="time" id="time-day1-1" name="time_day1_1">
+
+                                    <label for="activity-day1-1">Activity Description:</label>
+                                    <textarea id="activity-day1-1" name="activity_day1_1" rows="2"
+                                        placeholder="E.g. Visit the museum..."></textarea>
+                                </div>
                             </div>
                         </div>
                         <!-- Click to add more Activity Logs -->
@@ -175,6 +184,8 @@
 
         </form>
     </main>
+
+    <script src="../js/Submit-form-page.js"></script>
 </body>
 
 </html>
