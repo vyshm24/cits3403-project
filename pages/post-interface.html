@@ -4,116 +4,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post Interface - Travel Blog</title>
+    <title>Post Interface</title>
     <link rel="stylesheet" href="../css/post-interface.css">
 </head>
 
 <body>
+    <!-- Top navigation -->
     <header class="top-nav">
         <div class="go-back-to-home-page">
             <a href="home-page.html">Travel Blog</a>
         </div>
-        <h1 id="post-title"></h1>
     </header>
 
     <main>
-        <div class="post-container" id="itinerary-detail" data-entity="itinerary-display">
-            <section class="post-summary-section" data-role="trip-summary">
-                <h2>Trip Overview</h2>
-                <p>Author: <span id="post-author"></span></p>
+        <div class="post-container" id="itinerary-detail">
+
+            <!-- Cover image / image carousel -->
+            <section class="post-hero-section">
+                <img id="post-cover-image" src="" alt="Trip cover image">
+                <!-- If you add a carousel later, replace the single image with a carousel container -->
+                <!--
+                <div class="post-carousel">
+                    <img src="" alt="Trip image 1">
+                    <img src="" alt="Trip image 2">
+                    <img src="" alt="Trip image 3">
+                </div>
+                -->
+            </section>
+
+            <!-- Trip summary -->
+            <section class="post-summary-section">
+                <h1 id="post-title"></h1>
+
+                <p>Author: <span id="post-account-name"></span></p>
                 <p>Location: <span id="post-location-summary"></span></p>
+
+                <div class="rating-group" id="rating">
+                    <p>
+                        <span class="stars" id="rating-stars"></span>
+                        <span class="rating-value" id="rating-value"></span>
+                    </p>
+                </div>
+
                 <p>Total Days: <span id="post-total-days"></span></p>
                 <p>Budget Level: <span id="post-budget-level"></span></p>
-                <p>Budget Range: <span id="post-budget"></span></p>
+                <p>Budget Range: <span id="post-budget-range"></span></p>
                 <p>Trip Type: <span id="post-trip-type"></span></p>
-            </section>
 
-            <hr>
-
-            <section class="post-header-section">
-                <div class="rating-group" id="rating" data-role="rating-section">
-                    <h3>Rating</h3>
-                    <span class="stars" id="rating-stars"></span>
-                    <span class="rating-value" id="rating-value"></span>
-                </div>
-
-                <div class="location-group" data-role="map-section">
-                    <h3>Location</h3>
-                    <a href="" target="_blank" id="location-link">View on Google Maps</a>
-                </div>
-            </section>
-
-            <hr>
-
-            <section class="itinerary-days-section" data-role="days-display-section">
-                <h2>Daily Itinerary</h2>
-                <div id="post-days-list" data-role="days-display-list">
-                    <article class="day-card" id="day-card-template" data-role="day-card-template" hidden>
-                        <h3 data-field="day-title"></h3>
-                        <p>Country: <span data-field="country"></span></p>
-                        <p>State/Province: <span data-field="state"></span></p>
-                        <p>City: <span data-field="city"></span></p>
-
-                        <section class="day-activities" data-role="activities-display-section">
-                            <h4>Activities</h4>
-                            <ul data-role="activities-display-list">
-                                <li data-role="activity-display-item" hidden>
-                                    <span data-field="activity-time"></span>
-                                    <span data-field="activity-sequence"></span>
-                                    <span data-field="activity-description"></span>
-                                </li>
-                            </ul>
-                        </section>
-
-                        <section class="day-logistics" data-role="logistics-display-section">
-                            <h4>Logistics</h4>
-                            <p>Transport: <span data-field="transport"></span></p>
-                            <p>Restaurant: <span data-field="restaurant"></span></p>
-                            <p>Accommodation: <span data-field="accommodation"></span></p>
-                        </section>
-                    </article>
-                </div>
-            </section>
-
-            <hr>
-
-            <section class="stats-section" data-role="interaction-section">
-                <h2>Interaction</h2>
-                <div class="stats-group">
+                <div class="summary-actions">
+                    <p>
+                        <a href="#" target="_blank" id="location-link">View on Google Maps</a>
+                    </p>
                     <p>Likes: <span id="likes-count"></span></p>
                     <p>Saves: <span id="saves-count"></span></p>
                 </div>
             </section>
 
-            <hr>
+            <!-- Itinerary details -->
+            <section class="itinerary-days-section">
+                <h2>Daily Itinerary</h2>
 
-            <section class="comments-section" data-role="comments-section">
-                <h2>Comments</h2>
-                <div class="comments-container">
-                    <ul id="comments-list" data-role="comments-list"></ul>
+                <div id="post-days-list"> <!-- JS will insert each day's itinerary details into this container -->
+
+                    <!-- Reusable template for each day -->
+                    <article class="day-card" id="day-card-template" hidden> <!-- JS will clone this card, fill in the content, and append it to post-days-list for Day 1, Day 2, Day 3, and so on -->
+
+                        <h3 class="day-title">Day 1</h3> <!-- Start with one hidden day card template, then let JS clone it when more days are needed -->
+
+                        <!-- Location -->
+                        <section class="day-location">
+                            <h4>Location</h4>
+                            <p>Country: <span class="day-country"></span></p>
+                            <p>State/Province: <span class="day-state"></span></p>
+                            <p>City: <span class="day-city"></span></p>
+                        </section>
+
+                        <!-- Activities -->
+                        <section class="day-activities">
+                            <h4>Activities & Schedule</h4>
+                            <ul class="activities-list">
+                                <li class="activity-item" hidden> <!-- JS will clone this activity item, update the time and description, and append it to activities-list for each day -->
+                                    <span class="activity-time"></span>
+                                    <span class="activity-description"></span>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <!-- Transportation, food, and accommodation -->
+                        <section class="day-logistics">
+                            <h4>Logistics, Food & Stays</h4>
+                            <p>Transport: <span class="day-transport"></span></p>
+                            <p>Restaurant: <span class="day-restaurant"></span></p>
+                            <p>Accommodation: <span class="day-accommodation"></span></p>
+                        </section>
+                    </article>
+
                 </div>
             </section>
 
-            <hr>
-
-            <section class="related-content-section" data-role="related-content-section">
-                <h2>Explore More</h2>
-
-                <fieldset class="related-group">
-                    <legend>Related Itineraries</legend>
-                    <ul id="related-itineraries" data-role="related-itineraries-list"></ul>
-                </fieldset>
-
-                <fieldset class="related-group">
-                    <legend>Modified Versions</legend>
-                    <ul id="modified-versions" data-role="modified-versions-list"></ul>
-                </fieldset>
-
-                <fieldset class="related-group">
-                    <legend>Other Itineraries by Author</legend>
-                    <ul id="other-itineraries" data-role="other-itineraries-list"></ul>
-                </fieldset>
-            </section>
         </div>
     </main>
 </body>
