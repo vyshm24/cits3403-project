@@ -86,28 +86,29 @@
                         <input type="text" id="city-day1" name="city_day1" required>
                     </fieldset>
 
-                    <!-- new activity can append to .activities-list  -->
-                    <div class="activities-list">
-                        <!-- activities -->
-                        <fieldset class="activities-group">
-                            <legend>Activities & Schedule</legend>
+                   
+                    <!-- activities -->
+                    <fieldset class="activities-group">
+                        <legend>Activities & Schedule</legend>
 
+                            <!-- new activity can append to .activities-list  -->
+                        <div class="activities-list">
                             <div class="activity-item">
-                                <label for="time-day1-1">Time:</label>
-                                <input type="time" id="time-day1-1" name="time_day1_1">
+                            <label for="time-day1-1">Time:</label>
+                            <input type="time" id="time-day1-1" name="time_day1_1">
+                            <br>
 
-                                <label for="activity-day1-1">Activity Description:</label>
-                                <textarea id="activity-day1-1" name="activity_day1_1" rows="2"
-                                    placeholder="e.g. Visit the museum..."></textarea>
+                            <label for="activity-day1-1">Activity Description:</label>
+                            <textarea id="activity-day1-1" name="activity_day1_1" rows="2"
+                                placeholder="E.g. Visit the museum..."></textarea>
                             </div>
+                        </div>
+                        <!-- Click to add more Activity Logs -->
+                        <!-- !!!!! NOTE: use JS to add more activity logs !!!!! -->
+                        <!--  -->
+                        <button type="button" class="add-activity-btn">Add Another Activity Log</button>
 
-                            <!-- Click to add more Activity Logs -->
-                            <!-- !!!!! NOTE: use JS to add more activity logs !!!!! -->
-                            <!--  -->
-                            <button type="button" class="add-activity-btn">Add Another Activity Log</button>
-
-                        </fieldset>
-                    </div>
+                    </fieldset>
 
                     <!-- transportation, food and accommodation -->
                     <fieldset class="logistics-group">
@@ -134,23 +135,10 @@
                             <input type="checkbox" id="transport-ferry-day1" name="transport_day1[]" value="ferry">
                             <label for="transport-ferry-day1">Ferry</label>
 
-                            <input type="checkbox" id="transport-other-day1" name="transport_day1[]" value="other">
+                            <input type="checkbox" class="transport-other-checkbox" id="transport-other-day1" name="transport_day1[]" value="other">
                             <label for="transport-other-day1">Other:</label>
-                            <input type="text" id="transport-other-text-day1" name="transport_other_text_day1"
+                            <input type="text" class="transport-other-text" id="transport-other-text-day1" name="transport_other_text_day1"
                                 placeholder="E.g. Helicopter..." disabled>
-                            <script>
-                                const checkbox = document.getElementById('transport-other-day1');
-                                const textInput = document.getElementById('transport-other-text-day1');
-                                checkbox.addEventListener('change', function () {
-                                    if (this.checked) {
-                                        textInput.disabled = false;  // Enable input when checked
-                                        textInput.focus();           // Auto focus on input
-                                    } else {
-                                        textInput.disabled = true;   // Disable input when unchecked
-                                        textInput.value = '';        // Clear input value
-                                    }
-                                })
-                            </script>
                         </div>
 
                         <br>
@@ -177,7 +165,7 @@
                 </div>
 
                 <!-- When clicked, this button allows JS to duplicate entire Day 2, Day 3 sections. -->
-                <button type="button" class="add-day-btn">Add Another Day (Day 2)</button>
+                <button type="button" class="add-day-btn">Add Another Day</button>
             </section>
 
             <hr>
