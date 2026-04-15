@@ -1,0 +1,15 @@
+.day-header,
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.activities-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-item.collapsed .activity-fields {
+    display: none;
+}
