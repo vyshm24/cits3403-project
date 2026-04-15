@@ -25,13 +25,13 @@
                 <h2>General Information</h2>
 
                 <label for="account-name">Account Name:</label>
-                <input type="text" id="account-name" name="account_name" required>
+                <input type="text" id="account-name" name="account_name" required><br>
 
                 <label for="trip-title">Trip Title:</label>
-                <input type="text" id="trip-title" name="trip_title" required>
+                <input type="text" id="trip-title" name="trip_title" required><br>
 
                 <label for="total-days">Total Travel Days:</label>
-                <input type="number" id="total-days" name="total_days" min="1" required>
+                <input type="number" id="total-days" name="total_days" min="1" required><br>
 
                 <!-- Budget Section -->
                 <fieldset class="budget-group">
@@ -63,8 +63,11 @@
 
             <!-- Section 2: Daily Itinerary (Day 1) -->
             <section class="daily-plan-section">
-                <h2>Daily Itinerary (Day 1)</h2>
-                <div class="day-container" id="day-1">
+                <h2>Daily Itinerary</h2>
+
+                <!--data-day="1": let JS know which day this is -->
+                <div class="day-container" id="day-1" data-day="1"> 
+                    <h3 class="day-title">Day 1</h3>
 
                     <!-- location -->
                     <fieldset class="location-group">
@@ -76,26 +79,30 @@
 
                         <label for="state-day1">State/Province:</label>
                         <select id="state-day1" name="state_day1">
-                            <option value="text">Select State</option>
+                            <option value="">Select State</option>
                         </select>
 
                         <label for="city-day1">City (Specific):</label>
                         <input type="text" id="city-day1" name="city_day1" required>
                     </fieldset>
 
+                   
                     <!-- activities -->
                     <fieldset class="activities-group">
                         <legend>Activities & Schedule</legend>
 
-                        <div class="activity-item">
-                            <label for="time-day1-1">Time / Sequence:</label>
+                            <!-- new activity can append to .activities-list  -->
+                        <div class="activities-list">
+                            <div class="activity-item">
+                            <label for="time-day1-1">Time:</label>
                             <input type="time" id="time-day1-1" name="time_day1_1">
+                            <br>
 
                             <label for="activity-day1-1">Activity Description:</label>
                             <textarea id="activity-day1-1" name="activity_day1_1" rows="2"
-                                placeholder="e.g. Visit the museum..."></textarea>
+                                placeholder="E.g. Visit the museum..."></textarea>
+                            </div>
                         </div>
-
                         <!-- Click to add more Activity Logs -->
                         <!-- !!!!! NOTE: use JS to add more activity logs !!!!! -->
                         <!--  -->
@@ -128,23 +135,10 @@
                             <input type="checkbox" id="transport-ferry-day1" name="transport_day1[]" value="ferry">
                             <label for="transport-ferry-day1">Ferry</label>
 
-                            <input type="checkbox" id="transport-other-day1" name="transport_day1[]" value="other">
+                            <input type="checkbox" class="transport-other-checkbox" id="transport-other-day1" name="transport_day1[]" value="other">
                             <label for="transport-other-day1">Other:</label>
-                            <input type="text" id="transport-other-text-day1" name="transport_other_text_day1"
+                            <input type="text" class="transport-other-text" id="transport-other-text-day1" name="transport_other_text_day1"
                                 placeholder="E.g. Helicopter..." disabled>
-                            <script>
-                                const checkbox = document.getElementById('transport-other-day1');
-                                const textInput = document.getElementById('transport-other-text-day1');
-                                checkbox.addEventListener('change', function () {
-                                    if (this.checked) {
-                                        textInput.disabled = false;  // Enable input when checked
-                                        textInput.focus();           // Auto focus on input
-                                    } else {
-                                        textInput.disabled = true;   // Disable input when unchecked
-                                        textInput.value = '';        // Clear input value
-                                    }
-                                })
-                            </script>
                         </div>
 
                         <br>
@@ -171,7 +165,7 @@
                 </div>
 
                 <!-- When clicked, this button allows JS to duplicate entire Day 2, Day 3 sections. -->
-                <button type="button" class="add-day-btn">Add Another Day (Day 2)</button>
+                <button type="button" class="add-day-btn">Add Another Day</button>
             </section>
 
             <hr>
