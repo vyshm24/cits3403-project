@@ -1,3 +1,13 @@
+/**
+ * Main initialization logic
+ *
+ * Purpose:
+ * - Wait until the DOM is fully loaded before accessing page elements
+ * - Cache frequently used DOM nodes
+ * - Ensure all day containers are wrapped inside #days-wrapper
+ * - Initialize activity summary display and total day count
+ * - Bind the click event for adding a new day
+ */
 document.addEventListener("DOMContentLoaded", function () {
     const addDayBtn = document.querySelector(".add-day-btn");
     const totalDaysInput = document.getElementById("total-days");
@@ -36,6 +46,18 @@ document.addEventListener("DOMContentLoaded", function () {
             initializeActivitySummaries();
         });
     }
+
+     /**
+     * Copy location data from the previous day to the new day
+     *
+     * Purpose:
+     * - Read the country and state/province fields from the previous day
+     * - Copy those values into the newly created day
+     * - Reduce repeated input when consecutive travel days share the same location
+     *
+     * @param {HTMLElement} previousDay The source day container
+     * @param {HTMLElement} newDay The target day container
+     */
         function copyPreviousLocation(previousDay, newDay) {
         const prevCountry = previousDay.querySelector('[name^="country_day"]');
         const prevState = previousDay.querySelector('[name^="state_day"]');
@@ -51,6 +73,20 @@ document.addEventListener("DOMContentLoaded", function () {
             newState.value = prevState.value;
         }
     }
+
+    /**
+     * Global click event delegation
+     *
+     * Purpose:
+     * - Handle adding a new activity within a day
+     * - Handle collapsing or expanding an activity section
+     * - Handle deleting an activity
+     * - Handle deleting a day
+     *
+     * Why event delegation is used:
+     * - Newly cloned buttons and elements do not need separate event bindings
+     * - One listener can manage all matching clickable elements efficiently
+     */
 
     document.addEventListener("click", function (e) {
         if (e.target.classList.contains("add-activity-btn")) {
@@ -127,6 +163,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    /**
+     * Global change event delegation
+     *
+     * Purpose:
+     * - Detect changes to the "Other transport" checkbox
+     * - Enable the related text input when checked
+     * - Disable and clear the text input when unchecked
+     *
+     * Why event delegation is used:
+     * - It supports both existing and dynamically added day/activity sections
+     * - No need to rebind change listeners after cloning elements
+     */
+
     document.addEventListener("change", function (e) {
         if (e.target.classList.contains("transport-other-checkbox")) {
             const checkbox = e.target;
@@ -145,6 +194,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+
+    /**
+     * Update all day-related attributes inside a day container
+     *
+     * Purpose:
+     * - Set the correct data-day and id for the day container
+     * - Update the visible day title such as "Day 1", "Day 2"
+     * - Replace all id, name, and label[for] values inside the day
+     * - Refresh the numbering of all activity items inside that day
+     *
+     * @param {HTMLElement} dayElement The day container to update
+     * @param {number} dayNumber The new day number
+     */
     function updateDayAttributes(dayElement, dayNumber) {
         dayElement.dataset.day = dayNumber;
         dayElement.id = "day-" + dayNumber;
@@ -177,6 +239,19 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    /**
+     * Update all numbering-related attributes inside a single activity block
+     *
+     * Purpose:
+     * - Rewrite id, name, and label[for] values based on the current day number
+     *   and activity number
+     * - Keep all form fields correctly mapped after cloning or reordering
+     * - Update the activity summary label shown in the UI
+     *
+     * @param {HTMLElement} activityElement The activity element to update
+     * @param {number} dayNumber The day number this activity belongs to
+     * @param {number} activityNumber The new activity number
+     */
     function updateActivityAttributes(activityElement, dayNumber, activityNumber) {
         activityElement.querySelectorAll("[id]").forEach(function (el) {
             el.id = el.id
@@ -202,6 +277,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    /**
+     * Reset all input values inside a day container
+     *
+     * Purpose:
+     * - Clear text inputs, textareas, selects, checkboxes, and radio buttons
+     * - Disable the "Other transport" text field
+     * - Remove extra activity items and keep only the first one
+     * - Reinitialize the remaining first activity as a clean starting block
+     *
+     * @param {HTMLElement} dayElement The day container to reset
+     */
     function resetDayValues(dayElement) {
         const inputs = dayElement.querySelectorAll("input, textarea, select");
 
@@ -242,6 +328,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+
+    /**
+     * Reset all user-entered values inside a single activity block
+     *
+     * Purpose:
+     * - Clear text input and textarea content
+     * - Uncheck checkbox and radio fields
+     * - Prepare a cloned activity block for fresh user input
+     *
+     * @param {HTMLElement} activityElement The activity block to reset
+     */
     function resetActivityValues(activityElement) {
         activityElement.querySelectorAll("input, textarea").forEach(function (field) {
             if (field.type === "checkbox" || field.type === "radio") {
@@ -252,6 +349,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+
+    /**
+     * Renumber all activity items inside a specific activities list
+     *
+     * Purpose:
+     * - Recalculate activity numbers after an activity is deleted
+     * - Update summary labels such as "Activity 1", "Activity 2"
+     * - Rewrite id, name, and label[for] values to stay consistent
+     * - Keep the last activity expanded while collapsing others if needed
+     *
+     * @param {HTMLElement} activitiesList The activities list container
+     */
     function renumberActivities(activitiesList) {
         const dayContainer = activitiesList.closest(".day-container");
         const dayNumber = parseInt(dayContainer.dataset.day, 10);
@@ -289,6 +398,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+
+    /**
+     * Renumber all day containers after one day is deleted
+     *
+     * Purpose:
+     * - Recalculate day numbers in order
+     * - Update each day container's dataset, id, and title
+     * - Rewrite all day-related id, name, and label[for] values
+     * - Trigger activity renumbering inside each day as well
+     */
     function renumberDays() {
         const dayContainers = daysWrapper.querySelectorAll(".day-container");
 
@@ -322,10 +441,30 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    /**
+     * Replace the day number pattern inside a string
+     *
+     * Purpose:
+     * - Find all occurrences of patterns like "day1", "day2", etc.
+     * - Replace them with the new day number
+     * - Used by multiple helper functions to keep naming consistent
+     *
+     * @param {string} str The original string
+     * @param {number} newDayNumber The new day number to inject
+     * @returns {string} The updated string
+     */
     function replaceDayNumber(str, newDayNumber) {
         return str.replace(/day\d+/g, "day" + newDayNumber);
     }
 
+    /**
+     * Synchronize the hidden or visible total day input with the current day count
+     *
+     * Purpose:
+     * - Count the number of .day-container elements inside #days-wrapper
+     * - Write that number into the total-days input field
+     * - Keep the form value accurate after adding or deleting days
+     */
     function syncTotalDays() {
         const totalDays = daysWrapper.querySelectorAll(".day-container").length;
         if (totalDaysInput) {
@@ -333,6 +472,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    /**
+     * Initialize activity summary labels and collapsed states
+     *
+     * Purpose:
+     * - Set each activity summary text based on its position
+     * - Collapse all activities except the last one in each list
+     * - Make the UI cleaner and easier to scan when multiple activities exist
+     */
     function initializeActivitySummaries() {
         document.querySelectorAll(".activities-list").forEach(function (list) {
             const items = list.querySelectorAll(".activity-item");
