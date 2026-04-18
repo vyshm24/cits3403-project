@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Itinerary - Travel Blog</title>
+
+    <link rel="stylesheet" href="../css/tailwind.output.css">
+
+    <link rel="stylesheet" href="../css/Submit-form-page.css">
+</head>
+
+<body>
+    <header class="top-nav">
+
+        <div class="go-back-to-home-page">
+            <a href="home-page.html">Travel Blog</a>
+        </div>
+        <h1>Create Your Itinerary</h1>
+    </header>
+
+    <main>
+        <form action="" method="POST">
+
+            <!-- Section 1: General Trip Information -->
+            <section class="general-info-section">
+                <h2>General Information</h2>
+
+                <label for="account-name">Account Name:</label>
+                <input type="text" id="account-name" name="account_name" required><br>
+
+                <label for="trip-title">Trip Title:</label>
+                <input type="text" id="trip-title" name="trip_title" required><br>
+
+                <label for="total-days">Total Travel Days:</label>
+                <input type="number" id="total-days" name="total_days" min="1" required><br>
+
+                <!-- Budget Section -->
+                <fieldset class="budget-group">
+                    <legend>Budget Options</legend>
+                    <label for="budget-level">Budget Level:</label>
+                    <select id="budget-level" name="budget_level" required>
+                        <option value="" disabled selected>Select budget level...</option>
+                        <option value="$">$ - Budget</option>
+                        <option value="$$">$$ - Mid-range</option>
+                        <option value="$$$">$$$ - Luxury</option>
+                    </select>
+
+                    <label for="budget-range">Estimated Cost Range:</label>
+                    <input type="text" id="budget-range" name="budget_range" placeholder="e.g. $1K-$3K" required>
+                </fieldset>
+
+                <!-- Trip Type -->
+                <label for="trip-type">Trip Type:</label>
+                <select id="trip-type" name="trip_type" required>
+                    <option value="" disabled selected>Select a type...</option>
+                    <option value="adventurous">Adventurous</option>
+                    <option value="slow-paced">Slow Paced</option>
+                    <option value="food-centric">Food Centric</option>
+                    <option value="cultural">Cultural</option>
+                </select>
+            </section>
+
+            <hr>
+
+
+            <!-- Section 1.5: Trip Photos -->
+            <section class="photo-upload-section">
+                <h2>Trip Photos</h2>
+
+                <label for="cover-photo">Cover Photo:</label>
+                <input type="file" id="cover-photo" name="cover_photo" accept="image/*"><br>
+
+                <label for="trip-photos">Upload Photos:</label>
+                <input type="file" id="trip-photos" name="trip_photos[]" accept="image/*" multiple><br>
+
+                <label for="photo-notes">Photo Notes:</label>
+                <textarea id="photo-notes" name="photo_notes" rows="3"
+                    placeholder="Add notes for the uploaded photos..."></textarea>
+            </section>
+            
+
+            <!-- Section 2: Daily Itinerary (Day 1) -->
+            <section class="daily-plan-section">
+                <h2>Daily Itinerary</h2>
+
+                <!--data-day="1": let JS know which day this is -->
+                <div class="day-container" id="day-1" data-day="1"> 
+                    <div class="day-header">
+                    <h3 class="day-title">Day 1</h3>
+                    <button type="button" class="delete-day-btn">Delete Day</button>
+                </div>
+
+                    <!-- location -->
+                    <fieldset class="location-group">
+                        <legend>Location</legend>
+                        <label for="country-day1">Country:</label>
+                        <select id="country-day1" name="country_day1" required>
+                            <option value="" disabled selected>Select Country</option>
+                        </select>
+
+                        <label for="state-day1">State/Province:</label>
+                        <select id="state-day1" name="state_day1">
+                            <option value="">Select State</option>
+                        </select>
+
+                        <label for="city-day1">City (Specific):</label>
+                        <input type="text" id="city-day1" name="city_day1" required>
+                    </fieldset>
+
+                   
+                    <!-- activities -->
+                    <fieldset class="activities-group">
+                        <legend>Activities & Schedule</legend>
+
+                            <!-- new activity can append to .activities-list  -->
+                        <div class="activities-list">
+                            <div class="activity-item">
+                                <div class="activity-header">
+                                    <div class="activity-summary">Activity 1</div>
+                                    <button type="button" class="delete-activity-btn">Delete</button>
+                                </div>
+
+                                <div class="activity-fields">
+                                    <label for="time-day1-1">Time:</label>
+                                    <input type="time" id="time-day1-1" name="time_day1_1">
+
+                                    <label for="activity-day1-1">Activity Description:</label>
+                                    <textarea id="activity-day1-1" name="activity_day1_1" rows="2"
+                                        placeholder="E.g. Visit the museum..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Click to add more Activity Logs -->
+                        <!-- !!!!! NOTE: use JS to add more activity logs !!!!! -->
+                        <!--  -->
+                        <button type="button" class="add-activity-btn">Add Another Activity Log</button>
+
+                    </fieldset>
+
+                    <!-- transportation, food and accommodation -->
+                    <fieldset class="logistics-group">
+                        <legend>Logistics, Food & Stays</legend>
+
+                        <label>Transportation (Select all that apply):</label>
+                        <div class="checkbox-group">
+
+                            <input type="checkbox" id="transport-flight-day1" name="transport_day1[]" value="flight">
+                            <label for="transport-flight-day1">Flight</label>
+
+                            <input type="checkbox" id="transport-train-day1" name="transport_day1[]" value="train">
+                            <label for="transport-train-day1">Train</label>
+
+                            <input type="checkbox" id="transport-bus-day1" name="transport_day1[]" value="bus">
+                            <label for="transport-bus-day1">Bus</label>
+
+                            <input type="checkbox" id="transport-car-day1" name="transport_day1[]" value="car">
+                            <label for="transport-car-day1">Car/Taxi</label>
+
+                            <input type="checkbox" id="transport-walking-day1" name="transport_day1[]" value="walking">
+                            <label for="transport-walking-day1">Walking</label>
+
+                            <input type="checkbox" id="transport-ferry-day1" name="transport_day1[]" value="ferry">
+                            <label for="transport-ferry-day1">Ferry</label>
+
+                            <input type="checkbox" class="transport-other-checkbox" id="transport-other-day1" name="transport_day1[]" value="other">
+                            <label for="transport-other-day1">Other:</label>
+                            <input type="text" class="transport-other-text" id="transport-other-text-day1" name="transport_other_text_day1"
+                                placeholder="E.g. Helicopter..." disabled>
+                        </div>
+
+                        <br>
+
+                        <label for="restaurant-dropdown-day1">Restaurant Options:</label>
+                        <select id="restaurant-dropdown-day1" name="restaurant_dropdown_day1">
+                            <option value="">Select recommended platform restaurant...</option>
+                        </select>
+                        <label for="restaurant-specific-day1">OR Specific Restaurant Name:</label>
+                        <input type="text" id="restaurant-specific-day1" name="restaurant_specific_day1"
+                            placeholder="Type custom restaurant">
+
+                        <br><br>
+
+                        <label for="accommodation-dropdown-day1">Accommodation Options:</label>
+                        <select id="accommodation-dropdown-day1" name="accommodation_dropdown_day1">
+                            <option value="">Select recommended platform stay...</option>
+                        </select>
+                        <label for="accommodation-specific-day1">OR Specific Accommodation Name:</label>
+                        <input type="text" id="accommodation-specific-day1" name="accommodation_specific_day1"
+                            placeholder="Type custom accommodation">
+                    </fieldset>
+
+                </div>
+
+                <!-- When clicked, this button allows JS to duplicate entire Day 2, Day 3 sections. -->
+                <button type="button" class="add-day-btn">Add Another Day</button>
+            </section>
+
+            <hr>
+
+            <!-- submit -->
+            <button type="submit" class="submit-itinerary-btn">POST ITINERARY</button>
+
+        </form>
+    </main>
+
+    <script src="../js/Submit-form-page.js"></script>
+</body>
+
+</html>
