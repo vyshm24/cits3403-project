@@ -1,15 +1,194 @@
-.day-header,
+/* ===== GLOBAL ===== */
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background-color: #f8f6f2;
+  color: #333;
+}
+
+/* ===== NAVBAR（统一风格） ===== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #444;
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #666;
+  font-size: 15px;
+}
+
+.nav-links a:hover {
+  color: #000;
+}
+
+/* ===== MAIN FORM ===== */
+main {
+  max-width: 900px;
+  margin: 40px auto;
+}
+
+/* ===== SECTION CARD STYLE ===== */
+section {
+  background: #ffffff;
+  padding: 25px 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+h1, h2 {
+  margin-top: 0;
+}
+
+/* ===== FORM ELEMENTS ===== */
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #aaa;
+}
+
+/* ===== FIELDSET ===== */
+fieldset {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+legend {
+  padding: 0 10px;
+  color: #666;
+}
+
+/* ===== DAY CARD ===== */
+.day-container {
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  border: 1px solid #eee;
+}
+
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ===== ACTIVITY CARD ===== */
+.activity-item {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #eee;
+}
+
 .activity-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.activities-list {
-    display: flex;
-    flex-direction: column;
+.activity-summary {
+  font-weight: 500;
 }
 
-.activity-item.collapsed .activity-fields {
-    display: none;
+/* ===== CHECKBOX GROUP ===== */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.checkbox-group input {
+  width: auto;
+}
+
+/* ===== BUTTONS ===== */
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* add buttons */
+.add-activity-btn,
+.add-day-btn {
+  margin-top: 15px;
+  background-color: #eae7e1;
+}
+
+.add-activity-btn:hover,
+.add-day-btn:hover {
+  background-color: #ddd8cf;
+}
+
+/* delete buttons */
+.delete-day-btn,
+.delete-activity-btn {
+  background-color: #f4dede;
+}
+
+.delete-day-btn:hover,
+.delete-activity-btn:hover {
+  background-color: #e7c5c5;
+}
+
+/* submit button */
+.submit-itinerary-btn {
+  width: 100%;
+  margin: 30px 0;
+  background-color: #333;
+  color: white;
+  font-weight: bold;
+}
+
+.submit-itinerary-btn:hover {
+  background-color: #000;
+}
+
+/* ===== HR ===== */
+hr {
+  border: none;
+  height: 1px;
+  background: #eee;
+  margin: 40px 0;
 }

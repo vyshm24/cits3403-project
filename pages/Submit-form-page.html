@@ -9,13 +9,18 @@
 </head>
 
 <body>
-    <header class="top-nav">
+    <nav class="navbar">
+        <div class="logo">Travel Blog</div>
+        <ul class="nav-links">
+            <li><a href="home-page.html">Home</a></li>
+            <li><a href="#">Countries</a></li>
+            <li><a href="#">Search</a></li>
+            <li><a href="#">Post your own</a></li>
+        </ul>
+    </nav>
 
-        <div class="go-back-to-home-page">
-            <a href="home-page.html">Travel Blog</a>
-        </div>
-        <h1>Create Your Itinerary</h1>
-    </header>
+    <main>
+    <h1>Create Your Itinerary</h1>
 
     <main>
         <form action="" method="POST">
@@ -66,11 +71,11 @@
                 <h2>Daily Itinerary</h2>
 
                 <!--data-day="1": let JS know which day this is -->
-                <div class="day-container" id="day-1" data-day="1"> 
+                <div class="day-container" id="day-1" data-day="1">
                     <div class="day-header">
-                    <h3 class="day-title">Day 1</h3>
-                    <button type="button" class="delete-day-btn">Delete Day</button>
-                </div>
+                        <h3 class="day-title">Day 1</h3>
+                        <button type="button" class="delete-day-btn">Delete Day</button>
+                    </div>
 
                     <!-- location -->
                     <fieldset class="location-group">
@@ -89,12 +94,12 @@
                         <input type="text" id="city-day1" name="city_day1" required>
                     </fieldset>
 
-                   
+
                     <!-- activities -->
                     <fieldset class="activities-group">
                         <legend>Activities & Schedule</legend>
 
-                            <!-- new activity can append to .activities-list  -->
+                        <!-- new activity can append to .activities-list  -->
                         <div class="activities-list">
                             <div class="activity-item">
                                 <div class="activity-header">
@@ -144,10 +149,11 @@
                             <input type="checkbox" id="transport-ferry-day1" name="transport_day1[]" value="ferry">
                             <label for="transport-ferry-day1">Ferry</label>
 
-                            <input type="checkbox" class="transport-other-checkbox" id="transport-other-day1" name="transport_day1[]" value="other">
+                            <input type="checkbox" class="transport-other-checkbox" id="transport-other-day1"
+                                name="transport_day1[]" value="other">
                             <label for="transport-other-day1">Other:</label>
-                            <input type="text" class="transport-other-text" id="transport-other-text-day1" name="transport_other_text_day1"
-                                placeholder="E.g. Helicopter..." disabled>
+                            <input type="text" class="transport-other-text" id="transport-other-text-day1"
+                                name="transport_other_text_day1" placeholder="E.g. Helicopter..." disabled>
                         </div>
 
                         <br>

@@ -1,0 +1,144 @@
+/* 全局 */
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background-color: #f8f6f2;
+  color: #333;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #444;
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #666;
+  font-size: 15px;
+}
+
+.nav-links a:hover {
+  color: #000;
+}
+
+/* PROFILE HEADER */
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  background-color: #ffffff;
+  margin: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-info img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-info h2 {
+  margin: 0;
+}
+
+.profile-info p {
+  margin: 5px 0 0;
+  color: #888;
+}
+
+/* STATS */
+.profile-stats {
+  display: flex;
+  gap: 40px;
+}
+
+.profile-stats h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.profile-stats p {
+  margin: 5px 0 0;
+  color: #888;
+  font-size: 14px;
+}
+
+/* SECTIONS */
+section {
+  margin: 30px;
+}
+
+h2 {
+  margin-bottom: 15px;
+}
+
+/* COUNTRIES */
+.country-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.country-list span {
+  background-color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* ITINERARIES */
+.itinerary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.itinerary-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.itinerary-card:hover {
+  transform: translateY(-5px);
+}
+
+.itinerary-card h3 {
+  margin-top: 0;
+}
+
+.itinerary-card p {
+  margin: 5px 0;
+  color: #666;
+}
