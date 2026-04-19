@@ -89,8 +89,9 @@ document.addEventListener("DOMContentLoaded", function () {
      */
 
     document.addEventListener("click", function (e) {
-        if (e.target.classList.contains("add-activity-btn")) {
-            const dayContainer = e.target.closest(".day-container");
+        const addActivityBtn = e.target.closest(".add-activity-btn");
+        if (addActivityBtn) {
+            const dayContainer = addActivityBtn.closest(".day-container");
             const dayNumber = parseInt(dayContainer.dataset.day, 10);
 
             const activitiesList = dayContainer.querySelector(".activities-list");
@@ -127,15 +128,17 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        if (e.target.classList.contains("activity-summary")) {
-            const activityItem = e.target.closest(".activity-item");
+        const activitySummary = e.target.closest(".activity-summary");
+        if (activitySummary) {
+            const activityItem = activitySummary.closest(".activity-item");
             if (activityItem) {
                 activityItem.classList.toggle("collapsed");
             }
         }
 
-        if (e.target.classList.contains("delete-activity-btn")) {
-            const activityItem = e.target.closest(".activity-item");
+        const deleteActivityBtn = e.target.closest(".delete-activity-btn");
+        if (deleteActivityBtn) {
+            const activityItem = deleteActivityBtn.closest(".activity-item");
             const activitiesList = activityItem.closest(".activities-list");
             const activityItems = activitiesList.querySelectorAll(".activity-item");
 
@@ -148,8 +151,9 @@ document.addEventListener("DOMContentLoaded", function () {
             renumberActivities(activitiesList);
         }
 
-        if (e.target.classList.contains("delete-day-btn")) {
-            const dayContainer = e.target.closest(".day-container");
+        const deleteDayBtn = e.target.closest(".delete-day-btn");
+        if (deleteDayBtn) {
+            const dayContainer = deleteDayBtn.closest(".day-container");
             const dayContainers = daysWrapper.querySelectorAll(".day-container");
 
             if (dayContainers.length === 1) {
