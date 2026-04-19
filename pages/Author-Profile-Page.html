@@ -4,50 +4,465 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Author Profile Page</title>
-    <link rel="stylesheet" href="">
+    <title>Author Profile - Travel Blog</title>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --blue:       #1E73D8;
+            --blue-dark:  #1F3A5F;
+            --blue-light: #EBF3FD;
+            --gray-bg:    #F7F8FA;
+            --gray-200:   #E5E7EB;
+            --gray-500:   #6B7280;
+            --gray-900:   #111827;
+            --white:      #FFFFFF;
+            --gold:       #F59E0B;
+            --gold-light: #FEF3C7;
+            --radius:     12px;
+            --shadow:     0 2px 12px rgba(0,0,0,.08);
+            --font:       ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--gray-bg);
+            color: var(--gray-900);
+            min-height: 100vh;
+        }
+
+        /* ── NAV ── */
+        header.top-nav {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 0 32px;
+            height: 60px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .nav-logo { font-size: 18px; font-weight: 700; color: var(--blue-dark); text-decoration: none; letter-spacing: .5px; }
+        .nav-logo:hover { color: var(--blue); }
+        .nav-right { display: flex; align-items: center; gap: 14px; }
+        .nav-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700; color: var(--white);
+            cursor: pointer; overflow: hidden; flex-shrink: 0;
+        }
+        .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .hamburger-btn {
+            background: none; border: none; cursor: pointer;
+            display: flex; flex-direction: column; gap: 5px;
+            padding: 6px; border-radius: 6px; transition: background .15s;
+        }
+        .hamburger-btn:hover { background: var(--gray-bg); }
+        .hamburger-btn span { display: block; width: 22px; height: 2px; background: var(--blue-dark); border-radius: 2px; }
+        .nav-dropdown {
+            position: absolute; top: 60px; right: 32px;
+            background: var(--white); border: 1px solid var(--gray-200);
+            border-radius: var(--radius); box-shadow: 0 8px 24px rgba(0,0,0,.12);
+            min-width: 200px; overflow: hidden; display: none; z-index: 200;
+        }
+        .nav-dropdown.open { display: block; }
+        .nav-dropdown a {
+            display: block; padding: 13px 20px; font-size: 14px;
+            color: var(--gray-900); text-decoration: none; font-weight: 500;
+            border-bottom: 1px solid var(--gray-200); transition: background .15s;
+        }
+        .nav-dropdown a:last-child { border-bottom: none; }
+        .nav-dropdown a:hover { background: var(--blue-light); color: var(--blue-dark); }
+
+        /* ── MAIN ── */
+        main { max-width: 1000px; margin: 0 auto; padding: 40px 24px 80px; }
+
+        /* ── PROFILE HERO ── */
+        .profile-hero {
+            background: var(--white); border-radius: var(--radius);
+            box-shadow: var(--shadow); padding: 40px 36px;
+            display: flex; align-items: center; gap: 36px; margin-bottom: 28px;
+        }
+        .avatar-wrapper { position: relative; flex-shrink: 0; }
+        .avatar {
+            width: 110px; height: 110px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 38px; font-weight: 700; color: var(--white); overflow: hidden;
+        }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-overlay {
+            position: absolute; inset: 0; border-radius: 50%;
+            background: rgba(0,0,0,.45);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity .2s; cursor: pointer;
+            color: white; font-size: 11px; gap: 4px;
+        }
+        .avatar-wrapper:hover .avatar-overlay { opacity: 1; }
+        .avatar-overlay svg { width: 22px; height: 22px; }
+        #avatar-upload { display: none; }
+        .profile-info { flex: 1; }
+        .profile-info h1 { font-size: 26px; font-weight: 700; color: var(--blue-dark); margin-bottom: 6px; }
+        .uid-badge {
+            display: inline-block; background: var(--blue-light); color: var(--blue);
+            font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+        }
+        .stats-row { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+        .stat-chip {
+            background: var(--blue-dark); border: 1px solid #162d4a;
+            border-radius: 8px; padding: 8px 0; text-align: center; width: 130px;
+        }
+        .stat-chip .stat-value { font-size: 18px; font-weight: 700; color: var(--white); }
+        .stat-chip .stat-label { font-size: 11px; color: rgba(255,255,255,.65); margin-top: 1px; text-transform: uppercase; letter-spacing: .5px; }
+
+        /* ── CARD ── */
+        .card {
+            background: var(--white); border-radius: var(--radius);
+            box-shadow: var(--shadow); padding: 28px 32px; margin-bottom: 28px;
+        }
+        .section-header {
+            font-size: 17px; font-weight: 700; color: var(--blue-dark);
+            margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+        }
+        .section-header::after { content: ''; flex: 1; height: 2px; background: var(--gray-200); border-radius: 2px; }        /* ── COUNTRIES flags ── */
+        #countries-list { display: flex; flex-wrap: wrap; gap: 12px; list-style: none; justify-content: center; margin-bottom: 28px; }
+        .country-tag {
+            display: inline-flex; align-items: center; gap: 0;
+            background: var(--blue-light); border: 2px solid #c3dafc;
+            border-radius: 999px; width: 52px; height: 52px;
+            overflow: hidden; white-space: nowrap; cursor: pointer;
+            font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--blue-dark);
+            transition: width .35s cubic-bezier(.4,0,.2,1), background .15s, border-color .15s, box-shadow .15s;
+        }
+        .country-tag:hover, .country-tag.active {
+            width: var(--expanded-width, 160px);
+            background: #d0e8fb;
+            box-shadow: 0 2px 8px rgba(30,115,216,.18);
+        }
+        .country-tag.active { background: var(--blue); border-color: var(--blue); color: var(--white); }
+        .flag-circle { width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 28px; line-height: 1; border-radius: 50%; }
+        .country-name { padding-right: 14px; padding-left: 4px; font-size: 14px; opacity: 0; transition: opacity .2s .1s; pointer-events: none; }
+        .country-tag:hover .country-name, .country-tag.active .country-name { opacity: 1; }
+
+        /* Filter notice */
+        .filter-notice { font-size: 13px; color: var(--gray-500); margin-bottom: 16px; display: none; align-items: center; gap: 6px; }
+        .filter-notice.visible { display: flex; }
+        .filter-notice button {
+            background: none; border: 1px solid var(--gray-200); border-radius: 999px;
+            color: var(--blue); cursor: pointer; font-size: 12px; font-weight: 600; padding: 2px 10px; font-family: var(--font);
+        }
+        .filter-notice button:hover { background: var(--blue-light); }
+
+        /* ── ITINERARY GRID ── */
+        #itineraries-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; list-style: none; }
+        .itinerary-card {
+            background: var(--white); border: 1px solid var(--gray-200);
+            border-radius: 10px; overflow: hidden;
+            transition: transform .2s, box-shadow .2s;
+            text-decoration: none; color: inherit;
+            display: flex; flex-direction: column; box-shadow: var(--shadow);
+        }
+        .itinerary-card:hover { transform: translateY(-5px); box-shadow: 0 12px 28px rgba(0,0,0,.13); }
+        .card-banner { height: 90px; display: flex; align-items: center; justify-content: center; font-size: 32px; }
+        .card-body { padding: 12px 14px 8px; flex: 1; }
+        .card-body h3 { font-size: 13px; font-weight: 700; color: var(--blue-dark); margin-bottom: 4px; line-height: 1.35; }
+        .card-country { font-size: 12px; color: var(--gray-500); }
+        .card-footer { padding: 8px 14px 12px; border-top: 1px solid var(--gray-200); display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--gray-500); }
+        .card-footer .spacer { flex: 1; }
+        .card-stars { display: inline-flex; align-items: center; gap: 2px; cursor: pointer; padding: 2px 5px; border-radius: 6px; transition: background .15s; }
+        .card-stars:hover { background: var(--gold-light); }
+        .star-icon { font-size: 13px; line-height: 1; color: #D1D5DB; transition: color .1s; }
+        .star-icon.filled { color: var(--gold); }
+        .avg-label { font-size: 11px; font-weight: 700; color: var(--gold); margin-left: 2px; }
+
+        /* ── RATING POPUP ── */
+        .rating-popup-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,.35);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 500; opacity: 0; pointer-events: none; transition: opacity .2s;
+        }
+        .rating-popup-overlay.open { opacity: 1; pointer-events: all; }
+        .rating-popup {
+            background: var(--white); border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.2);
+            padding: 28px 32px; width: 340px;
+            transform: translateY(12px); transition: transform .2s;
+        }
+        .rating-popup-overlay.open .rating-popup { transform: translateY(0); }
+        .popup-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+        .popup-title { font-size: 15px; font-weight: 700; color: var(--blue-dark); line-height: 1.3; max-width: 240px; }
+        .popup-close { background: none; border: none; cursor: pointer; font-size: 18px; color: var(--gray-500); line-height: 1; padding: 0 0 0 8px; }
+        .popup-close:hover { color: var(--gray-900); }
+        .popup-score-row { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--gray-200); }
+        .popup-big-score { font-size: 48px; font-weight: 800; color: var(--blue-dark); line-height: 1; }
+        .popup-score-detail { display: flex; flex-direction: column; gap: 4px; }
+        .popup-stars-large { display: flex; gap: 3px; }
+        .popup-stars-large .star-icon { font-size: 20px; }
+        .popup-total { font-size: 12px; color: var(--gray-500); }
+        .rating-bars { display: flex; flex-direction: column; gap: 8px; }
+        .rating-bar-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+        .bar-label { width: 22px; text-align: right; color: var(--gray-500); font-weight: 600; }
+        .bar-track { flex: 1; height: 8px; background: var(--gray-200); border-radius: 999px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--gold); border-radius: 999px; transition: width .4s ease; }
+        .bar-count { width: 26px; color: var(--gray-500); }
+
+        .empty-state { grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--gray-500); font-size: 14px; }
+
+        @media (max-width: 750px) {
+            #itineraries-grid { grid-template-columns: repeat(2, 1fr); }
+            .profile-hero { flex-direction: column; text-align: center; }
+            .stats-row { justify-content: center; }
+        }
+    </style>
 </head>
 
 <body>
 
-    <div class="profile-container">
+    <!-- ── NAV ── -->
+    <header class="top-nav">
+        <a href="home-page.html" class="nav-logo">Travel Blog</a>
+        <div class="nav-right">
+            <div class="nav-avatar" id="nav-avatar-display"></div>
+            <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <nav class="nav-dropdown" id="nav-dropdown">
+            <a href="home-page.html">🏠 Home</a>
+            <a href="Submit-form-page.html">✈️ Post an Itinerary</a>
+            <a href="Author-Profile-Page.html">👤 My Profile</a>
+            <a href="sign-in.html">🔓 Sign Out</a>
+        </nav>
+    </header>
 
-        <h1>Author Profile</h1>
+    <main>
 
-        <!-- UID -->
-        <div class="section">
-            <h3>UID</h3>
-            <p id="uid">
-                <!-- JS -->
-            </p>
+        <!-- ── PROFILE HERO ── -->
+        <div class="profile-hero">
+            <div class="avatar-wrapper">
+                <div class="avatar" id="avatar-display">
+                    <span id="avatar-initials">?</span>
+                </div>
+                <div class="avatar-overlay" id="avatar-overlay-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    Change photo
+                </div>
+                <input type="file" id="avatar-upload" accept="image/*">
+            </div>
+            <div class="profile-info">
+                <h1 id="username">Loading…</h1>
+                <span class="uid-badge" id="uid">UID: —</span>
+                <div class="stats-row">
+                    <div class="stat-chip"><div class="stat-value" id="stat-posts">0</div><div class="stat-label">Posts</div></div>
+                    <div class="stat-chip"><div class="stat-value" id="stat-countries">0</div><div class="stat-label">Countries</div></div>
+                    <div class="stat-chip"><div class="stat-value" id="stat-likes">0</div><div class="stat-label">Likes</div></div>
+                </div>
+            </div>
         </div>
 
-        <!-- Username -->
-        <div class="section">
-            <h3>Username</h3>
-            <p id="username">
-                <!-- JS -->
-            </p>
-        </div>
 
-        <!-- Countries Traveled -->
-        <div class="section">
-            <h3>Countries Visited</h3>
-            <ul id="countries">
-                <!-- JS -->
-            </ul>
-        </div>
+        <!-- ── COUNTRIES VISITED flags ── -->
+        <ul id="countries-list"></ul>
 
-        <!-- Itineraries -->
-        <div class="section">
-            <h3>Posted Itineraries</h3>
-            <ul id="itineraries">
-                <!-- JS -->
-            </ul>
-        </div>
+        <!-- ── ITINERARIES ── -->
+        <p class="filter-notice" id="filter-notice">
+            Showing posts from <strong id="filter-country-name"></strong>
+            <button onclick="clearFilter()">✕ Clear filter</button>
+        </p>
+        <ul id="itineraries-grid"></ul>
 
+    </main>
+
+    <!-- ── RATING POPUP ── -->
+    <div class="rating-popup-overlay" id="rating-overlay">
+        <div class="rating-popup">
+            <div class="popup-header">
+                <div class="popup-title" id="popup-trip-title"></div>
+                <button class="popup-close" id="popup-close">✕</button>
+            </div>
+            <div class="popup-score-row">
+                <div class="popup-big-score" id="popup-avg-score"></div>
+                <div class="popup-score-detail">
+                    <div class="popup-stars-large" id="popup-stars-large"></div>
+                    <div class="popup-total" id="popup-total-ratings"></div>
+                    <div style="font-size:11px;color:var(--gray-500);margin-top:2px;">What travellers think</div>
+                </div>
+            </div>
+            <div class="rating-bars" id="rating-bars"></div>
+        </div>
     </div>
 
-</body>
+    <script>
+        // ── MOCK DATA ──────────────────────────────────────────────────────
+        const mockUser = {
+            uid: "USR-20483",
+            username: "Alex Wanderer",
+            // country name → { flag, iso: ISO-3166-1 alpha-2 code for map }
+            countries: {
+                "Japan":    { flag: "🇯🇵", iso: "JP" },
+                "Italy":    { flag: "🇮🇹", iso: "IT" },
+                "Thailand": { flag: "🇹🇭", iso: "TH" },
+                "Portugal": { flag: "🇵🇹", iso: "PT" },
+                "Peru":     { flag: "🇵🇪", iso: "PE" }
+            },
+            itineraries: [
+                { id:1, title:"10 Days in Kyoto & Tokyo",  location:"Japan",    likes:142, saves:58,  emoji:"🏯", banner:"#DBEAFE", ratings:{5:80,4:42,3:15,2:4,1:1}  },
+                { id:2, title:"Amalfi Coast Road Trip",     location:"Italy",    likes:89,  saves:34,  emoji:"🍋", banner:"#FEF3C7", ratings:{5:40,4:30,3:10,2:5,1:2}  },
+                { id:3, title:"Bangkok Street Food Tour",   location:"Thailand", likes:203, saves:97,  emoji:"🍜", banner:"#D1FAE5", ratings:{5:110,4:60,3:20,2:8,1:5} },
+                { id:4, title:"Lisbon & Sintra Weekend",    location:"Portugal", likes:67,  saves:22,  emoji:"🏰", banner:"#FCE7F3", ratings:{5:30,4:20,3:8,2:3,1:1}   }
+            ]
+        };
 
+        // ── HELPERS ───────────────────────────────────────────────────────
+        function getInitials(n) { return n.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2); }
+
+        function calcAvg(ratings) {
+            let total=0, count=0;
+            for(let s=1;s<=5;s++){ total+=s*(ratings[s]||0); count+=(ratings[s]||0); }
+            return count ? total/count : 0;
+        }
+
+        function starsHTML(avg) {
+            return [1,2,3,4,5].map(i=>`<span class="star-icon ${i<=Math.round(avg)?"filled":""}">★</span>`).join("");
+        }
+
+        // ── HAMBURGER ─────────────────────────────────────────────────────
+        document.getElementById("hamburger-btn").addEventListener("click", e => {
+            e.stopPropagation();
+            document.getElementById("nav-dropdown").classList.toggle("open");
+        });
+        document.addEventListener("click", () => document.getElementById("nav-dropdown").classList.remove("open"));
+
+        // ── AVATAR UPLOAD ─────────────────────────────────────────────────
+        document.getElementById("avatar-overlay-btn").addEventListener("click", () => document.getElementById("avatar-upload").click());
+        document.getElementById("avatar-upload").addEventListener("change", e => {
+            const file = e.target.files[0]; if(!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => {
+                const src = ev.target.result;
+                const d = document.getElementById("avatar-display");
+                document.getElementById("avatar-initials").style.display = "none";
+                let img = d.querySelector("img");
+                if(!img){ img=document.createElement("img"); d.appendChild(img); }
+                img.src = src;
+                const nav = document.getElementById("nav-avatar-display");
+                nav.innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // ── COUNTRY FILTER ────────────────────────────────────────────────
+        let activeCountry = null;
+        function filterByCountry(country, tagEl) {
+            if(activeCountry === country){ clearFilter(); return; }
+            activeCountry = country;
+            document.querySelectorAll(".country-tag").forEach(t=>t.classList.remove("active"));
+            tagEl.classList.add("active");
+            document.getElementById("filter-country-name").textContent = country;
+            document.getElementById("filter-notice").classList.add("visible");
+            document.querySelectorAll(".itinerary-card").forEach(card=>{
+                card.closest("li").style.display = card.dataset.country!==country ? "none" : "";
+            });
+        }
+        function clearFilter() {
+            activeCountry = null;
+            document.querySelectorAll(".country-tag").forEach(t=>t.classList.remove("active"));
+            document.getElementById("filter-notice").classList.remove("visible");
+            document.querySelectorAll("#itineraries-grid li").forEach(li=>li.style.display="");
+        }
+
+        // ── RATING POPUP ──────────────────────────────────────────────────
+        const overlay = document.getElementById("rating-overlay");
+        document.getElementById("popup-close").addEventListener("click", ()=>overlay.classList.remove("open"));
+        overlay.addEventListener("click", e=>{ if(e.target===overlay) overlay.classList.remove("open"); });
+
+        function openRatingPopup(it) {
+            const avg   = calcAvg(it.ratings);
+            const total = Object.values(it.ratings).reduce((s,n)=>s+n,0);
+            document.getElementById("popup-trip-title").textContent  = it.title;
+            document.getElementById("popup-avg-score").textContent   = avg.toFixed(1);
+            document.getElementById("popup-total-ratings").textContent = total+" ratings";
+            document.getElementById("popup-stars-large").innerHTML   = starsHTML(avg);
+            const bars = document.getElementById("rating-bars");
+            bars.innerHTML = "";
+            for(let s=5;s>=1;s--){
+                const n=it.ratings[s]||0, pct=total?Math.round(n/total*100):0;
+                bars.innerHTML += `<div class="rating-bar-row">
+                    <div class="bar-label">${s}★</div>
+                    <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+                    <div class="bar-count">${n}</div>
+                </div>`;
+            }
+            overlay.classList.add("open");
+        }
+
+        // ── RENDER ────────────────────────────────────────────────────────
+        function renderProfile(user) {
+            const initials = getInitials(user.username);
+            document.getElementById("avatar-initials").textContent    = initials;
+            document.getElementById("nav-avatar-display").textContent = initials;
+            document.getElementById("username").textContent           = user.username;
+            document.getElementById("uid").textContent                = "UID: " + user.uid;
+            document.title = user.username + " – Travel Blog";
+
+            const totalLikes = user.itineraries.reduce((s,it)=>s+it.likes,0);
+            document.getElementById("stat-posts").textContent     = user.itineraries.length;
+            document.getElementById("stat-countries").textContent = Object.keys(user.countries).length;
+            document.getElementById("stat-likes").textContent     = totalLikes;
+
+            renderCountries(user.countries);
+            renderItineraries(user.itineraries);
+        }
+
+        function renderCountries(countries) {
+            const list = document.getElementById("countries-list");
+            list.innerHTML = "";
+            const entries = Object.entries(countries);
+            if(!entries.length){ list.innerHTML='<li style="color:#6B7280;font-size:14px;">No countries listed yet.</li>'; return; }
+            entries.forEach(([country, data]) => {
+                const li=document.createElement("li"), btn=document.createElement("button");
+                btn.className="country-tag";
+                const approxWidth = 52 + 8 + (country.length*8.5) + 14;
+                btn.style.setProperty("--expanded-width", approxWidth+"px");
+                btn.innerHTML=`<span class="flag-circle">${data.flag}</span><span class="country-name">${country}</span>`;
+                btn.addEventListener("click",()=>filterByCountry(country,btn));
+                li.appendChild(btn); list.appendChild(li);
+            });
+        }
+
+        function renderItineraries(itineraries) {
+            const grid = document.getElementById("itineraries-grid");
+            grid.innerHTML = "";
+            if(!itineraries.length){ grid.innerHTML='<li class="empty-state">No itineraries posted yet.</li>'; return; }
+            itineraries.forEach(it => {
+                const avg=calcAvg(it.ratings), li=document.createElement("li"), link=document.createElement("a");
+                link.href=`post-interface.html?id=${it.id}`;
+                link.className="itinerary-card";
+                link.dataset.country=it.location;
+                link.innerHTML=`
+                    <div class="card-banner" style="background:${it.banner}">${it.emoji||"✈️"}</div>
+                    <div class="card-body">
+                        <h3>${it.title}</h3>
+                        <div class="card-country">📍 ${it.location}</div>
+                    </div>
+                    <div class="card-footer">
+                        <span>❤️ ${it.likes}</span>
+                        <span>🔖 ${it.saves}</span>
+                        <span class="spacer"></span>
+                        <span class="card-stars" title="See ratings">
+                            ${starsHTML(avg)}<span class="avg-label">${avg.toFixed(1)}</span>
+                        </span>
+                    </div>`;
+                link.querySelector(".card-stars").addEventListener("click", e=>{ e.preventDefault(); e.stopPropagation(); openRatingPopup(it); });
+                li.appendChild(link); grid.appendChild(li);
+            });
+        }
+
+        // ── GO ──
+        renderProfile(mockUser);
+    </script>
+
+</body>
 </html>
