@@ -27,24 +27,7 @@
         </section>
     </div>
 
-    <script>
-        const form = document.querySelector("form");
-        const password = document.getElementById("password");
-        const confirmPassword = document.getElementById("confirm-password");
-
-        // Trigger the check every time you type in this input field.
-        function validatePassword() {                        // If the passwords do not match, set a custom error.
-            if (password.value != confirmPassword.value) {   //if the password and confirm password are not the same
-                confirmPassword.setCustomValidity("Passwords do not match");
-            } else {
-                confirmPassword.setCustomValidity("");
-            }
-        }
-
-        // Listen for input changes in both password fields and validate whether the passwords match in real time
-        password.addEventListener("input", validatePassword)
-        confirmPassword.addEventListener("input", validatePassword)
-    </script>
+    <script src="../js/sign-up.js"></script>
 </body>
 
 </html>
