@@ -1,0 +1,145 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+/* Make html and body fill the full viewport */
+body,
+html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.page {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../images/sign-in-picture.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.site-title {
+    color: #ffffff;
+    font-size: 44px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+/* login-card 和 signup-card 共用 */
+.login-card,
+.signup-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    width: 100%; /* 宽度不写死，能自适应屏幕 */    
+    max-width: 420px;
+    padding: 50px 40px;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.login-card h2,
+.signup-card h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1F3A5F;
+    margin-bottom: 35px;
+    position: relative;
+    display: inline-block;
+    align-self: flex-start;
+}
+
+.login-card h2::after,
+.signup-card h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 100%;
+    height: 3px;
+    background-color: #1E73D8;
+    border-radius: 2px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 14px 20px;
+    border: 1px solid #e8e8e8;
+    border-radius: 25px;
+    font-size: 14px;
+    color: #333333;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+    color: #cccccc;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #002FA7;
+}
+
+.submit {
+    width: 100%;
+    padding: 14px;
+    background-color: #1E73D8;
+    border: none;
+    border-radius: 25px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.submit:hover {
+    background-color: #002FA7;
+}
+
+/* Blue underline */
+.switch-to-sign-up,
+.switch-to-sign-in {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 13px;
+    color: #1F3A5F;
+    font-weight: 500;
+}
+
+.switch-to-sign-up a,
+.switch-to-sign-in a {
+    color: #1F3A5F;
+    text-decoration: none;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.switch-to-sign-up a:hover,
+.switch-to-sign-in a:hover {
+    text-decoration: underline;
+}

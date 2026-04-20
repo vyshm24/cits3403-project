@@ -1,0 +1,27 @@
+{
+  "name": "cits3403-project",
+  "version": "1.0.0",
+  "description": ":# cits3403-project",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./css/tailwind.css -o ./css/tailwind.output.css",
+    "watch:css": "tailwindcss -i ./css/tailwind.css -o ./css/tailwind.output.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vyshm24/cits3403-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/vyshm24/cits3403-project/issues"
+  },
+  "homepage": "https://github.com/vyshm24/cits3403-project#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.2",
+    "tailwindcss": "^4.2.2"
+  }
+}

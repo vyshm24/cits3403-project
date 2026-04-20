@@ -1,0 +1,99 @@
+.day-header,
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.activities-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-item.collapsed .activity-fields {
+    display: none;
+}
+
+body {
+  background: radial-gradient(circle at center, #cfefff 0%, #eef4ff 38%, #f4f1ff 68%, #eef1ff 100%);
+}
+
+header {
+    background: linear-gradient(90deg, #d9e6f7 0%, #e5e7f5 24%, #f4dbe3 50%, #e5e7f5 76%, #d9e6f7 100%);
+}
+
+.general-info-section,
+.photo-upload-section {
+    background: rgba(255, 255, 255, 0.38);
+    border: 1px solid rgba(209, 213, 219, 0.7);
+    border-radius: 1.5rem;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 10px 30px rgba(148, 163, 184, 0.12);
+    backdrop-filter: blur(10px);
+}
+
+.daily-plan-section {
+    background: rgba(255, 255, 255, 0.38);
+    border: 1px solid rgba(209, 213, 219, 0.7);
+    border-radius: 1.5rem;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 10px 30px rgba(148, 163, 184, 0.12);
+    backdrop-filter: blur(10px);
+}
+
+.general-info-section input:not([type="file"]),
+.general-info-section select,
+.daily-plan-section input:not([type="checkbox"]):not([type="file"]),
+.daily-plan-section select,
+.daily-plan-section textarea,
+.photo-upload-section > .mt-10 > div > .mt-2.flex {
+    background: rgba(255, 255, 255, 0.46);
+    border-color: rgba(107, 114, 128, 0.28);
+    backdrop-filter: blur(8px);
+}
+
+.photo-upload-section > .mt-10 > div > .mt-2.flex {
+    background: rgba(255, 255, 255, 0.46);
+    border-color: rgba(107, 114, 128, 0.28);
+    backdrop-filter: blur(8px);
+}
+
+.daily-plan-section .day-container,
+.daily-plan-section .activity-item {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(209, 213, 219, 0.72);
+    box-shadow: 0 10px 30px rgba(148, 163, 184, 0.08);
+    backdrop-filter: blur(8px);
+}
+
+.photo-upload-section input[type="file"] {
+    display: block;
+    width: 100%;
+    border: 1px solid rgba(209, 213, 219, 0.8);
+    border-radius: 0.875rem;
+    background: rgba(255, 255, 255, 0.72);
+    padding: 0.75rem 0.875rem;
+    color: #111827;
+    box-shadow: 0 6px 18px rgba(148, 163, 184, 0.08);
+}
+
+.photo-upload-section input[type="file"]::file-selector-button {
+    border: 0;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+    color: #4338ca;
+    padding: 0.65rem 1rem;
+    margin-right: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.photo-upload-section input[type="file"]::file-selector-button:hover {
+    background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+    transform: translateY(-1px);
+}
+
+.photo-upload-section textarea {
+    background: rgba(255, 255, 255, 0.72);
+}
