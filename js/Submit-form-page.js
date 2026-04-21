@@ -42,6 +42,10 @@ document.addEventListener("DOMContentLoaded", function () {
             copyPreviousLocation(lastDay, newDay);
             daysWrapper.appendChild(newDay);
 
+            if (window.rebuildCustomDropdowns) {
+                window.rebuildCustomDropdowns(newDay);
+            }
+
             syncTotalDays();
             initializeActivitySummaries();
         });
