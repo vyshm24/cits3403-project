@@ -1,0 +1,7 @@
+body {
+  background: radial-gradient(circle at center, #cfefff 0%, #eef4ff 38%, #f4f1ff 68%, #eef1ff 100%);
+}
+
+.site-header {
+    background: linear-gradient(90deg, #d9e6f7 0%, #e5e7f5 24%, #f4dbe3 50%, #e5e7f5 76%, #d9e6f7 100%);
+}
