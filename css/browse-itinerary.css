@@ -1,0 +1,51 @@
+/* ===== CARD STYLE (match timeline-content) ===== */
+.itinerary-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.itinerary-card:hover {
+  transform: translateY(-4px);
+}
+
+/* image */
+.card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* content */
+.card-content {
+  padding: 16px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.card-meta {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* tags */
+.card-tags {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  background: #e5e7eb;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
