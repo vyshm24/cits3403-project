@@ -8,41 +8,33 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="../js/homePage.js"></script>
+  <link rel="stylesheet" href="../css/home-page.css">
 </head>
 
 <body class="bg-gray-50 text-gray-900">
 
   <nav class="bg-white border-b border-gray-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="flex justify-between items-center h-16">
+      <nav class="flex justify-between items-center h-16" aria-label="Main navigation">
+        <span class="inline-flex items-center text-xl font-bold tracking-tight text-gray-900 transition-colors">
+          Travel Blog
+        </span>
 
-
-        <div class="flex items-center space-x-2">
-          <div class="w-8 h-8 bg-indigo-500 rounded-full"></div>
-          <span class="font-semibold text-lg">Travel App</span>
-        </div>
-
-
-        <div class="hidden md:flex space-x-8">
+        <div class="hidden md:flex items-center space-x-8">
           <a href="../pages/" class="hover:text-indigo-600">Countries</a>
           <a href="../pages/" class="hover:text-indigo-600">Search</a>
-          <a href="../pages/Submit-form-page_2.html" class="hover:text-indigo-600">Post</a>
+          <a href="../pages/Submit-form-page.html" class="hover:text-indigo-600">Post</a>
           <a href="../search/search.html" class="hover:text-indigo-600">Search</a>
         </div>
-
 
         <div class="flex items-center space-x-4">
           <a href="../pages/sign-in.html" class="text-gray-600 hover:text-black">Sign in</a>
           <a href="../pages/sign-up.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Sign up</a>
-
-
-        
-          <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full cursor-pointer"/>
+          <img src="https://i.pravatar.cc/40" alt="User profile" class="w-9 h-9 rounded-full cursor-pointer"/>
         </div>
-
-      </div>
+      </nav>
     </div>
-  </nav>
+  </header>
 
 
   <section id="hero" class="relative h-[500px] flex items-center justify-center text-white">
