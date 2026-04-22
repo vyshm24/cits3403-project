@@ -1,82 +1,120 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Profile - Travel Blog</title>
-  <link rel="stylesheet" href="../css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Travel Blog</title>
+    <link rel="stylesheet" href="../css/tailwind.output.css">
+    <link rel="stylesheet" href="../css/portfolio-page.css">
 </head>
 
-<body>
+<body class="min-h-screen bg-gray-50 text-gray-900">
 
-  <!-- Navgation bar -->
-  <nav class="navbar">
-    <div class="logo">Travel Blog</div>
-    <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Countries</a></li>
-      <li><a href="#">Search</a></li>
-      <li><a href="#">Post your own</a></li>
-    </ul>
-  </nav>
+    <!-- ── NAV ── -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="mx-auto max-w-6xl flex items-center gap-3 px-4 py-6 sm:px-6 lg:px-8">
+            <a href="home-page.html" class="text-base font-semibold text-gray-900 no-underline">Travel Blog</a>
+            <div id="nav-avatar-display" class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-900 flex items-center justify-center text-white text-xs font-bold overflow-hidden flex-shrink-0"></div>
+        </div>
+    </header>
 
-  <!-- Profile Header -->
-  <section class="profile-header">
-    <div class="profile-info">
-      <img src="XXXX" alt="profile picture">
-      <div>
-        <h2>@username</h2>
-        <p>Travel enthusiast ✈️ | Food lover 🍜</p>
-      </div>
+    <main class="mx-auto max-w-6xl px-0 pb-20">
+
+        <!-- ── BANNER — full width, hover shows Edit ── -->
+        <div class="banner-wrapper relative w-full h-64 overflow-hidden cursor-pointer group" id="banner-wrapper">
+            <div class="banner w-full h-full transition-all duration-200 group-hover:brightness-75" id="banner"></div>
+            <!-- Edit button — only visible on hover -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200" id="banner-edit-btn">
+                <button class="flex items-center gap-2 bg-black/50 backdrop-blur-sm text-white text-sm font-medium px-5 py-2 rounded-full border-0 cursor-pointer">
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 13l6.586-6.586a2 2 0 112.828 2.828L11.828 15.828a2 2 0 01-1.414.586H9v-2a2 2 0 01.586-1.414z"/>
+                    </svg>
+                    Edit Banner
+                </button>
+            </div>
+        </div>
+        <input type="file" id="banner-upload" accept="image/*" class="hidden">
+
+        <div class="px-4 sm:px-6 lg:px-8">
+
+            <!-- ── PROFILE CARD — transparent, overlaps banner ── -->
+            <div class="relative -mt-28 mx-auto max-w-lg bg-white/25 backdrop-blur-md border border-white/50 rounded-xl px-7 py-6 text-center shadow-lg z-10">
+                <!-- Avatar above card -->
+                <div class="avatar-wrapper absolute -top-12 left-1/2 -translate-x-1/2">
+                    <div class="avatar w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-blue-900 flex items-center justify-center text-3xl font-bold text-white overflow-hidden border-3 border-white shadow-md" id="avatar-display">
+                        <span id="avatar-initials">?</span>
+                    </div>
+                    <div class="avatar-overlay absolute inset-0 rounded-full bg-black/45 flex flex-col items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 cursor-pointer text-white text-xs gap-1" id="avatar-overlay-btn">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Change
+                    </div>
+                    <input type="file" id="avatar-upload" accept="image/*" class="hidden">
+                </div>
+                <div class="mt-14 text-3xl font-bold text-gray-900 mb-1.5" id="username"></div>
+                <span class="inline-block bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-0.5 rounded-full" id="uid"></span>
+            </div>
+
+            <!-- ── STATS ── -->
+            <div class="flex bg-white border border-gray-200 rounded-xl shadow-sm mt-6 mb-9 overflow-hidden">
+                <div class="flex-1 py-5 text-center border-r border-gray-200">
+                    <span class="block text-2xl font-bold text-blue-900" id="stat-countries">0</span>
+                    <span class="text-xs uppercase tracking-widest text-gray-500">Countries</span>
+                </div>
+                <div class="flex-1 py-5 text-center border-r border-gray-200">
+                    <span class="block text-2xl font-bold text-blue-900" id="stat-posts">0</span>
+                    <span class="text-xs uppercase tracking-widest text-gray-500">Trips</span>
+                </div>
+                <div class="flex-1 py-5 text-center">
+                    <span class="block text-2xl font-bold text-blue-900" id="stat-rating">—</span>
+                    <span class="block text-sm text-yellow-400 tracking-widest" id="stat-rating-stars"></span>
+                    <span class="text-xs uppercase tracking-widest text-gray-500">Rating</span>
+                </div>
+            </div>
+
+            <!-- ── COUNTRIES — grey box, no label ── -->
+            <div class="bg-gray-100 border border-gray-200 rounded-lg p-5 mb-9">
+                <ul id="countries-list" class="flex flex-wrap gap-3 justify-center list-none"></ul>
+            </div>
+
+            <!-- ── MY ITINERARIES ── -->
+            <div class="flex items-center gap-2 mb-5">
+                <h2 class="text-lg font-bold text-blue-900">My Itineraries</h2>
+                <div class="flex-1 h-0.5 bg-gray-200 rounded"></div>
+            </div>
+
+            <p class="filter-notice hidden text-sm text-gray-500 mb-4 items-center gap-2" id="filter-notice">
+                Showing posts from <strong id="filter-country-name"></strong>
+                <button onclick="clearFilter()" class="border border-gray-200 rounded-full text-blue-500 text-xs font-semibold px-2.5 py-0.5 bg-transparent cursor-pointer hover:bg-blue-50">✕ Clear filter</button>
+            </p>
+
+            <ul id="itineraries-grid" class="grid grid-cols-4 gap-3.5 list-none"></ul>
+
+            <a href="Submit-form-page.html" class="flex items-center justify-center gap-2 w-full py-4 mt-5 border-2 border-dashed border-gray-200 rounded-lg text-sm text-gray-500 no-underline hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50 transition-colors duration-150">
+                + Write a new itinerary
+            </a>
+
+        </div>
+    </main>
+
+    <!-- ── RATING POPUP ── -->
+    <div class="fixed inset-0 bg-black/35 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-200" id="rating-overlay">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 w-80 translate-y-3 transition-transform duration-200" id="rating-popup">
+            <div class="flex items-start justify-between mb-5">
+                <div class="text-sm font-bold text-blue-900 leading-snug max-w-xs" id="popup-trip-title"></div>
+                <button class="bg-transparent border-0 cursor-pointer text-lg text-gray-500 ml-2" id="popup-close">✕</button>
+            </div>
+            <div class="flex items-center gap-3.5 mb-5 pb-5 border-b border-gray-200">
+                <div class="text-5xl font-extrabold text-blue-900 leading-none" id="popup-avg-score"></div>
+                <div>
+                    <div class="flex gap-1 text-xl" id="popup-stars-large"></div>
+                    <div class="text-xs text-gray-500 mt-1" id="popup-total-ratings"></div>
+                    <div class="text-xs text-gray-400 mt-0.5">What travellers think</div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2" id="rating-bars"></div>
+        </div>
     </div>
-
-    <div class="profile-stats">
-      <div>
-        <h3>12</h3>
-        <p>Itineraries</p>
-      </div>
-      <div>
-        <h3>5</h3>
-        <p>Countries Visited</p>
-      </div>
-      <div>
-        <h3>120</h3>
-        <p>Likes</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Countries Visited -->
-  <section class="countries">
-    <h2>Countries Visited</h2>
-    <div class="country-list">
-      <span>Australia</span>
-      <span>China</span>
-      <span>United States</span>
-      <span>France</span>
-      <span>Thailand</span>
-      <!-- Add more countries as needed -->
-    </div>
-  </section>
-
-  <!-- User Itineraries -->
-  <section class="itineraries">
-    <h2>My Itineraries</h2>
-
-    <div class="itinerary-grid">
-
-      <!-- Card 1 -->
-      <div class="itinerary-card">
-        <h3>7 Days in Japan</h3>
-        <p>Budget: $$</p>
-        <p>Type: Cultural</p>
-        <p>Star Rating: 4.5 | Likes: 30</p>
-      </div>
-
-    </div>
-  </section>
-
-</body>
-</html>
-```
