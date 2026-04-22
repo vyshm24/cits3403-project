@@ -51,30 +51,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-     /**
-     * Copy location data from the previous day to the new day
-     *
-     * Purpose:
-     * - Read the country and state/province fields from the previous day
-     * - Copy those values into the newly created day
-     * - Reduce repeated input when consecutive travel days share the same location
-     *
-     * @param {HTMLElement} previousDay The source day container
-     * @param {HTMLElement} newDay The target day container
-     */
-        function copyPreviousLocation(previousDay, newDay) {
-        const prevCountry = previousDay.querySelector('[name^="country_day"]');
-        const prevState = previousDay.querySelector('[name^="state_day"]');
-
-        const newCountry = newDay.querySelector('[name^="country_day"]');
-        const newState = newDay.querySelector('[name^="state_day"]');
-
-        if (prevCountry && newCountry) {
-            newCountry.value = prevCountry.value;
-        }
+    function copyPreviousLocation(previousDay, newDay) {
+        const prevState = previousDay.querySelector('[name="state_day' + previousDay.dataset.day + '"]');
+        const prevCity = previousDay.querySelector('[name="city_day' + previousDay.dataset.day + '"]');
+        const newState = newDay.querySelector('[name="state_day' + newDay.dataset.day + '"]');
+        const newCity = newDay.querySelector('[name="city_day' + newDay.dataset.day + '"]');
 
         if (prevState && newState) {
             newState.value = prevState.value;
+        }
+
+        if (prevCity && newCity) {
+            newCity.value = prevCity.value;
         }
     }
 
@@ -314,6 +302,10 @@ document.addEventListener("DOMContentLoaded", function () {
             otherText.disabled = true;
         }
 
+        if (window.resetSubmitFormUploadState) {
+            window.resetSubmitFormUploadState(dayElement);
+        }
+
         const activitiesList = dayElement.querySelector(".activities-list");
         const activityItems = activitiesList.querySelectorAll(".activity-item");
 
@@ -355,6 +347,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 field.value = "";
             }
         });
+
+        if (window.resetSubmitFormUploadState) {
+            window.resetSubmitFormUploadState(activityElement);
+        }
     }
 
 
