@@ -5,3 +5,31 @@ body {
 .site-header {
     background: linear-gradient(90deg, #d9e6f7 0%, #e5e7f5 24%, #f4dbe3 50%, #e5e7f5 76%, #d9e6f7 100%);
 }
+
+/* Dropdown menu styles */
+#dropdown-menu {
+  animation: slideDown 0.2s ease-out;
+}
+
+#dropdown-menu.hidden {
+  display: none;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#logout-btn:hover {
+  background-color: rgba(220, 38, 38, 0.05);
+}
+
+#profile-menu {
+  display: flex;
+}
