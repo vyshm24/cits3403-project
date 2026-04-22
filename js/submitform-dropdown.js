@@ -177,32 +177,30 @@ const accommodationOptions = [
 document.addEventListener("DOMContentLoaded", function () {
     disablePlaceholderOptions();
     initializeMultiSelects();
-    initializeCountrySelects();
+    initializeCountrySelect();
     initializeStateSelects();
     initializeFixedDropdowns();
     initializeCustomDropdowns(document);
 });
 
 document.addEventListener("change", function (event) {
-    const countrySelect = event.target.closest('select[name^="country_day"]');
+    const countrySelect = event.target.closest("#trip-country");
 
     if (!countrySelect) {
         return;
     }
 
-    const dayContainer = countrySelect.closest(".day-container");
-    if (!dayContainer) {
-        return;
-    }
+    document.querySelectorAll(".day-container").forEach(function (dayContainer) {
+        const stateSelect = dayContainer.querySelector('select[name^="state_day"]');
+        const cityInput = dayContainer.querySelector('input[name^="city_day"]');
 
-    const stateSelect = dayContainer.querySelector('select[name^="state_day"]');
-    const cityInput = dayContainer.querySelector('input[name^="city_day"]');
-    if (!stateSelect) {
-        return;
-    }
+        if (!stateSelect) {
+            return;
+        }
 
-    populateStateOptions(stateSelect, countrySelect.value);
-    updateCityInputState(cityInput, countrySelect.value);
+        populateStateOptions(stateSelect, countrySelect.value);
+        updateCityInputState(cityInput, countrySelect.value);
+    });
 });
 
 document.addEventListener("click", function (event) {
@@ -222,30 +220,35 @@ window.addEventListener("resize", function () {
 window.initializeCustomDropdowns = initializeCustomDropdowns;
 window.rebuildCustomDropdowns = rebuildCustomDropdowns;
 
-function initializeCountrySelects() {
-    document.querySelectorAll('select[name^="country_day"]').forEach(function (select) {
-        const selectedValue = select.value;
+function initializeCountrySelect() {
+    const select = document.getElementById("trip-country");
+    if (!select) {
+        return;
+    }
 
-        setSelectOptions(select, Object.keys(countryStateMap), "Select Country");
+    const selectedValue = select.value;
 
-        if (selectedValue && countryStateMap[selectedValue]) {
-            select.value = selectedValue;
-        }
-    });
+    setSelectOptions(select, Object.keys(countryStateMap), "Select Country");
+
+    if (selectedValue && countryStateMap[selectedValue]) {
+        select.value = selectedValue;
+    }
 }
 
 function initializeStateSelects() {
+    const countrySelect = document.getElementById("trip-country");
+    const selectedCountry = countrySelect ? countrySelect.value : "";
+
     document.querySelectorAll(".day-container").forEach(function (dayContainer) {
-        const countrySelect = dayContainer.querySelector('select[name^="country_day"]');
         const stateSelect = dayContainer.querySelector('select[name^="state_day"]');
         const cityInput = dayContainer.querySelector('input[name^="city_day"]');
 
-        if (!countrySelect || !stateSelect) {
+        if (!stateSelect) {
             return;
         }
 
-        populateStateOptions(stateSelect, countrySelect.value);
-        updateCityInputState(cityInput, countrySelect.value);
+        populateStateOptions(stateSelect, selectedCountry);
+        updateCityInputState(cityInput, selectedCountry);
     });
 }
 
@@ -330,7 +333,7 @@ function updateCityInputState(cityInput, country) {
 }
 
 function initializeMultiSelects() {
-    document.querySelectorAll('select[name^="restaurant_dropdown_day"], select[name^="accommodation_dropdown_day"]').forEach(function (select) {
+    document.querySelectorAll('select[name="trip_type"], select[name^="restaurant_dropdown_day"], select[name^="accommodation_dropdown_day"]').forEach(function (select) {
         select.multiple = true;
     });
 }
@@ -546,7 +549,9 @@ function isMultiSelect(select) {
         return false;
     }
 
-    return select.name.startsWith("restaurant_dropdown_day") || select.name.startsWith("accommodation_dropdown_day");
+    return select.name === "trip_type" ||
+        select.name.startsWith("restaurant_dropdown_day") ||
+        select.name.startsWith("accommodation_dropdown_day");
 }
 
 function getSelectedValues(select) {
