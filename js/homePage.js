@@ -19,9 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
   
   const authLinksDiv = document.getElementById("auth-links");
   const profileMenuDiv = document.getElementById("profile-menu");
-  const profileAvatarBtn = document.getElementById("profile-avatar-btn");
-  const dropdownMenu = document.getElementById("dropdown-menu");
-  const usernameDisplay = document.getElementById("username-display");
   const logoutBtn = document.getElementById("logout-btn");
 
   // Update navbar based on login state
@@ -29,27 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // User is logged in: show profile menu, hide auth links
     authLinksDiv.classList.add("hidden");
     profileMenuDiv.classList.remove("hidden");
-    usernameDisplay.textContent = currentUser;
   } else {
     // User is not logged in: show auth links, hide profile menu
     authLinksDiv.classList.remove("hidden");
     profileMenuDiv.classList.add("hidden");
   }
-
-  // ============ Dropdown menu toggle ============
-  if (profileAvatarBtn) {
-    profileAvatarBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdownMenu.classList.toggle("hidden");
-    });
-  }
-
-  // Close dropdown when clicking outside
-  document.addEventListener("click", (e) => {
-    if (profileAvatarBtn && !profileAvatarBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-      dropdownMenu.classList.add("hidden");
-    }
-  });
 
   // ============ Logout functionality ============
   if (logoutBtn) {

@@ -34,20 +34,14 @@
             <a href="../pages/sign-up.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Sign up</a>
           </div>
 
-          <!-- Profile dropdown for logged-in state (hidden by default) -->
+          <!-- Profile link for logged-in state (hidden by default) -->
           <div id="profile-menu" class="hidden flex items-center space-x-4">
-            <button id="profile-avatar-btn" class="relative group">
+            <a href="../pages/Author-Profile-Page.html" id="profile-avatar-link" class="relative group">
               <img src="https://i.pravatar.cc/40" alt="User profile" class="w-9 h-9 rounded-full cursor-pointer hover:opacity-80 transition"/>
-              <!-- Dropdown menu -->
-              <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                <div class="px-4 py-2 border-b border-gray-200">
-                  <p class="text-sm text-gray-700">Logged in as</p>
-                  <p id="username-display" class="font-semibold text-gray-900">User</p>
-                </div>
-                <button id="logout-btn" class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition">
-                  Sign out
-                </button>
-              </div>
+            </a>
+            <!-- Logout button -->
+            <button id="logout-btn" class="text-red-600 hover:text-red-700 text-sm transition">
+              Sign out
             </button>
           </div>
         </div>
