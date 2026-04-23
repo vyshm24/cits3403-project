@@ -108,7 +108,99 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   setupObserver();
-  setupAuth(); // 🔥 登录控制
+  function setupAuth() {
+
+  const likeBtn = document.getElementById("like-btn");
+  const favBtn = document.getElementById("fav-btn");
+  const commentBox = document.getElementById("comment-box");
+  const commentBtn = document.getElementById("comment-btn");
+  const avatar = document.getElementById("user-avatar");
+
+  // ⭐ 新增这里
+  const authBtn = document.getElementById("auth-btn");
+
+  // ===== 未登录 =====
+  if (!currentUser) {
+
+    // Navbar
+    if (authBtn) {
+      authBtn.innerText = "Sign In";
+      authBtn.addEventListener("click", () => {
+        window.location.href = "../pages/sign-in.html";
+      });
+    }
+
+    // 禁用功能
+    likeBtn?.classList.add("opacity-50", "cursor-not-allowed");
+    favBtn?.classList.add("opacity-50", "cursor-not-allowed");
+
+    commentBox?.classList.add("opacity-50");
+    if (commentBox) {
+      commentBox.placeholder = "Please sign in to comment...";
+    }
+
+    likeBtn?.addEventListener("click", () => {
+      alert("Please sign in first");
+    });
+
+    favBtn?.addEventListener("click", () => {
+      alert("Please sign in first");
+    });
+
+    commentBtn?.addEventListener("click", () => {
+      alert("Please sign in first");
+    });
+
+  }
+
+  // ===== 已登录 =====
+  else {
+
+    // Navbar
+    if (authBtn) {
+      authBtn.innerText = "Sign Out";
+      authBtn.addEventListener("click", () => {
+        localStorage.removeItem("currentUser");
+        alert("Signed out!");
+        window.location.href = "../pages/home-page.html";
+      });
+    }
+
+    // 头像
+    if (avatar && currentUser.avatar) {
+      avatar.src = currentUser.avatar;
+    }
+
+    // Like
+    likeBtn?.addEventListener("click", () => {
+      alert("Liked!");
+    });
+
+    // Favorite
+    favBtn?.addEventListener("click", () => {
+      alert("Added to favorites!");
+    });
+
+    // Comment
+    commentBtn?.addEventListener("click", () => {
+      const text = commentBox.value.trim();
+
+      if (!text) {
+        alert("Please enter a comment");
+        return;
+      }
+
+      console.log("Comment:", {
+        user: currentUser.name,
+        text: text
+      });
+
+      alert("Comment posted!");
+      commentBox.value = "";
+    });
+  }
+}
+
 });
 
 // ===== MAP =====
