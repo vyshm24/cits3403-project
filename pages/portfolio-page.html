@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - Travel Blog</title>
-    <link rel="stylesheet" href="../css/tailwind.output.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../css/portfolio-page.css">
 </head>
 
@@ -13,7 +13,7 @@
 
     <!-- ── NAV ── -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div class="mx-auto max-w-6xl flex items-center gap-3 px-4 py-6 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-6xl flex items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
             <a href="home-page.html" class="text-base font-semibold text-gray-900 no-underline">Travel Blog</a>
             <div id="nav-avatar-display" class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-900 flex items-center justify-center text-white text-xs font-bold overflow-hidden flex-shrink-0"></div>
         </div>
@@ -23,7 +23,7 @@
 
         <!-- ── BANNER — full width, hover shows Edit ── -->
         <div class="banner-wrapper relative w-full h-64 overflow-hidden cursor-pointer group" id="banner-wrapper">
-            <div class="banner w-full h-full transition-all duration-200 group-hover:brightness-75" id="banner"></div>
+            <div class="banner w-full h-full transition-all duration-200 group-hover:brightness-75" id="banner" style="background: linear-gradient(135deg, #f9a8d4, #fcd5b0);"></div>
             <!-- Edit button — only visible on hover -->
             <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200" id="banner-edit-btn">
                 <button class="flex items-center gap-2 bg-black/50 backdrop-blur-sm text-white text-sm font-medium px-5 py-2 rounded-full border-0 cursor-pointer">
@@ -118,3 +118,7 @@
             <div class="flex flex-col gap-2" id="rating-bars"></div>
         </div>
     </div>
+    <script src="../js/portfolio-page.js"></script>
+
+</body>
+</html>

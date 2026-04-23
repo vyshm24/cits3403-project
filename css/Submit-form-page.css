@@ -357,3 +357,62 @@ main p {
 .photo-upload-section textarea {
     background: rgba(255, 255, 255, 0.72);
 }
+
+.cover-photo-dropzone {
+    min-height: 17rem;
+    align-items: center;
+}
+
+.cover-photo-panel {
+    width: 100%;
+}
+
+.cover-photo-dropzone.has-preview {
+    align-items: flex-start;
+}
+
+.cover-photo-dropzone.has-preview .cover-photo-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.cover-photo-dropzone.has-preview .cover-photo-icon,
+.cover-photo-dropzone.has-preview .cover-photo-hint {
+    display: none;
+}
+
+.cover-photo-dropzone.has-preview .cover-photo-primary-action {
+    margin-top: 0;
+}
+
+.cover-photo-dropzone .upload-preview {
+    width: 100%;
+    max-width: 100%;
+    height: min(20rem, 40vw);
+    min-height: 14rem;
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 14px 32px rgba(148, 163, 184, 0.18);
+}
+
+.cover-photo-dropzone .upload-feedback {
+    margin-top: 0;
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.cover-photo-dropzone .cover-photo-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(99, 102, 241, 0.1);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cover-photo-dropzone .cover-photo-trigger:hover {
+    background: rgba(99, 102, 241, 0.16);
+}

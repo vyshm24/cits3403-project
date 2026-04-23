@@ -31,18 +31,42 @@
 
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-3">
-                            <label for="account-name" class="block text-sm/6 font-medium text-gray-900">Account Name</label>
+                            <label for="trip-title" class="block text-sm/6 font-medium text-gray-900">Trip Title</label>
                             <div class="mt-2">
-                                <input id="account-name" type="text" name="account_name" required
+                                <input id="trip-title" type="text" name="trip_title" required
                                     class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
                             </div>
                         </div>
 
                         <div class="sm:col-span-3">
-                            <label for="trip-title" class="block text-sm/6 font-medium text-gray-900">Trip Title</label>
-                            <div class="mt-2">
-                                <input id="trip-title" type="text" name="trip_title" required
-                                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                            <label for="trip-country" class="block text-sm/6 font-medium text-gray-900">Country</label>
+                            <div class="mt-2 grid grid-cols-1">
+                                <select id="trip-country" name="trip_country" required
+                                    class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                                    <option value="" disabled selected>Select Country</option>
+                                </select>
+                                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
+                                    class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4">
+                                    <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="col-span-full">
+                            <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">Cover Photo</label>
+                            <div class="cover-photo-dropzone mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                                <div class="cover-photo-panel text-center">
+                                    <input id="cover-photo" type="file" name="cover_photo" accept="image/png,image/jpeg,image/gif" class="sr-only">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="cover-photo-icon mx-auto size-12 text-gray-300">
+                                        <path d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" fill-rule="evenodd" />
+                                    </svg>
+                                    <div class="cover-photo-primary-action mt-4 flex justify-center text-sm/6 text-gray-600">
+                                        <label for="cover-photo" class="cover-photo-trigger relative cursor-pointer rounded-md bg-transparent font-semibold text-indigo-600 hover:text-indigo-500">
+                                            <span>Upload cover photo</span>
+                                        </label>
+                                    </div>
+                                    <p class="cover-photo-hint text-xs/5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                                </div>
                             </div>
                         </div>
 
@@ -55,11 +79,15 @@
                         </div>
 
                         <div class="sm:col-span-3">
-                            <label for="trip-type" class="block text-sm/6 font-medium text-gray-900">Trip Type</label>
+                            <label for="trip-type" class="block text-sm/6 font-medium text-gray-900">Trip Type (Select all that apply)</label>
                             <div class="mt-2 grid grid-cols-1">
-                                <select id="trip-type" name="trip_type" required
+                                <select id="trip-type" name="trip_type" required multiple
                                     class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
                                     <option value="" disabled selected>Select a type...</option>
+                                    <option value="short-trip">Short trip</option>
+                                    <option value="beach">Beach</option>
+                                    <option value="island">Island</option>
+                                    <option value="city">City</option>
                                     <option value="adventurous">Adventurous</option>
                                     <option value="slow-paced">Slow Paced</option>
                                     <option value="food-centric">Food Centric</option>
@@ -104,58 +132,6 @@
                     </div>
                 </section>
 
-                <section class="photo-upload-section border-b border-gray-900/10 pb-12">
-                    <h2 class="text-base/7 font-semibold text-gray-900">Trip Photos</h2>
-                    <p class="mt-1 text-sm/6 text-gray-600">Upload a cover image and any extra photos for your itinerary.</p>
-
-                    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        <div class="sm:col-span-3">
-                            <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">Cover Photo</label>
-                            <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                                <div class="text-center">
-                                    <input id="cover-photo" type="file" name="cover_photo" accept="image/png,image/jpeg,image/gif" class="sr-only">
-                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="mx-auto size-12 text-gray-300">
-                                        <path d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" fill-rule="evenodd" />
-                                    </svg>
-                                    <div class="mt-4 flex justify-center text-sm/6 text-gray-600">
-                                        <label for="cover-photo" class="relative cursor-pointer rounded-md bg-transparent font-semibold text-indigo-600 hover:text-indigo-500">
-                                            <span>Upload a file</span>
-                                        </label>
-                                    </div>
-                                    <p class="text-xs/5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-3">
-                            <label for="trip-photos" class="block text-sm/6 font-medium text-gray-900">Upload Photos</label>
-                            <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                                <div class="text-center">
-                                    <input id="trip-photos" type="file" name="trip_photos" accept="image/png,image/jpeg,image/gif" multiple class="sr-only">
-                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="mx-auto size-12 text-gray-300">
-                                        <path d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" fill-rule="evenodd" />
-                                    </svg>
-                                    <div class="mt-4 flex justify-center text-sm/6 text-gray-600">
-                                        <label for="trip-photos" class="relative cursor-pointer rounded-md bg-transparent font-semibold text-indigo-600 hover:text-indigo-500">
-                                            <span>Upload files</span>
-                                        </label>
-                                    </div>
-                                    <p class="text-xs/5 text-gray-600">You can select multiple images</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-span-full">
-                            <label for="photo-notes" class="block text-sm/6 font-medium text-gray-900">Photo Notes</label>
-                            <div class="mt-2">
-                                <textarea id="photo-notes" name="photo_notes" rows="3"
-                                    placeholder="Add notes for the uploaded photos..."
-                                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
                 <section class="daily-plan-section border-b border-gray-900/10 pb-12">
                     <div class="flex items-center justify-between gap-4">
                         <div>
@@ -179,22 +155,8 @@
                             <div class="mt-8 space-y-10">
                                 <fieldset class="location-group">
                                     <legend class="text-sm/6 font-semibold text-gray-900">Location</legend>
-                                    <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                                        <div class="sm:col-span-2">
-                                            <label for="country-day1" class="block text-sm/6 font-medium text-gray-900">Country</label>
-                                            <div class="mt-2 grid grid-cols-1">
-                                                <select id="country-day1" name="country_day1" required
-                                                    class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-                                                    <option value="" disabled selected>Select Country</option>
-                                                </select>
-                                                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
-                                                    class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4">
-                                                    <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
-                                                </svg>
-                                            </div>
-                                        </div>
-
-                                        <div class="sm:col-span-2">
+                                    <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+                                        <div>
                                             <label for="state-day1" class="block text-sm/6 font-medium text-gray-900">State/Province</label>
                                             <div class="mt-2 grid grid-cols-1">
                                                 <select id="state-day1" name="state_day1"
@@ -208,7 +170,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="sm:col-span-2">
+                                        <div>
                                             <label for="city-day1" class="block text-sm/6 font-medium text-gray-900">City (Specific)</label>
                                             <div class="mt-2">
                                                 <input id="city-day1" type="text" name="city_day1" required
@@ -233,21 +195,52 @@
                                                 </button>
                                             </div>
 
-                                            <div class="activity-fields mt-4 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6">
-                                                <div class="md:col-span-2">
-                                                    <label for="time-day1-1" class="block text-sm/6 font-medium text-gray-900">Time</label>
+                                            <div class="activity-fields mt-4 space-y-8">
+                                                <div>
+                                                    <label for="activity-place-day1-1" class="block text-sm/6 font-medium text-gray-900">Place (specific location)</label>
                                                     <div class="mt-2">
-                                                        <input id="time-day1-1" type="time" name="time_day1_1"
+                                                        <input id="activity-place-day1-1" type="text" name="activity_place_day1_1"
+                                                            placeholder="E.g. Ueno Park, Tokyo"
                                                             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
                                                     </div>
                                                 </div>
 
-                                                <div class="md:col-span-4">
-                                                    <label for="activity-day1-1" class="block text-sm/6 font-medium text-gray-900">Activity Description</label>
-                                                    <div class="mt-2">
-                                                        <textarea id="activity-day1-1" name="activity_day1_1" rows="2"
-                                                            placeholder="E.g. Visit the museum..."
-                                                            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                                                <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+                                                    <div>
+                                                        <label for="activity-title-day1-1" class="block text-sm/6 font-medium text-gray-900">Title the activity</label>
+                                                        <div class="mt-2">
+                                                            <input id="activity-title-day1-1" type="text" name="activity_title_day1_1"
+                                                                placeholder="E.g. Morning market walk"
+                                                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <label for="activity-photo-day1-1" class="block text-sm/6 font-medium text-gray-900">Upload 1 Photo for each activity</label>
+                                                        <div class="mt-2">
+                                                            <input id="activity-photo-day1-1" type="file" name="activity_photo_day1_1" accept="image/png,image/jpeg,image/gif"
+                                                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 file:mr-4 file:rounded-md file:border-0 file:bg-indigo-50 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-indigo-700 hover:file:bg-indigo-100 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="w-full" style="display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); column-gap: 1.5rem; row-gap: 1.5rem; align-items: start;">
+                                                    <div style="min-width: 0;">
+                                                        <label for="time-day1-1" class="block text-sm/6 font-medium text-gray-900">Time</label>
+                                                        <div class="mt-2">
+                                                            <input id="time-day1-1" type="time" name="time_day1_1"
+                                                                style="width: 8.5rem;"
+                                                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                                                        </div>
+                                                    </div>
+
+                                                    <div style="min-width: 0; width: 100%;">
+                                                        <label for="activity-day1-1" class="block text-sm/6 font-medium text-gray-900">Activity Description</label>
+                                                        <div class="mt-2">
+                                                            <textarea id="activity-day1-1" name="activity_day1_1" rows="2"
+                                                                placeholder="E.g. Visit the museum..."
+                                                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -556,6 +549,7 @@
 
     <script src="../js/Submit-form-page.js"></script>
     <script src="../js/submitform-dropdown.js"></script>
+    <script src="../js/submitform-upload-photos.js"></script>
 </body>
 
 </html>
