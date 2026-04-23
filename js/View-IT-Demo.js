@@ -1,7 +1,10 @@
+// ===== USER STATE =====
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
 // ===== GLOBAL MAP =====
 let map;
 
-// ===== DATA =====
+// ===== DATA（Demo用，未来替换） =====
 const itinerary = {
   title: "Three Days Extraordinary Trip in Perth",
   author: "Charlie",
@@ -36,12 +39,13 @@ const itinerary = {
 // ===== RENDER PAGE =====
 document.addEventListener("DOMContentLoaded", () => {
 
+  // ===== HEADER =====
   document.getElementById("title").innerText = itinerary.title;
   document.getElementById("author").innerText = itinerary.author;
   document.getElementById("date").innerText = itinerary.date;
   document.getElementById("overview").innerText = itinerary.overview;
 
-  // TAGS
+  // ===== TAGS =====
   const tagsContainer = document.getElementById("tags");
   itinerary.tags.forEach(tag => {
     const el = document.createElement("span");
@@ -50,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tagsContainer.appendChild(el);
   });
 
+  // ===== TIMELINE =====
   const timeline = document.getElementById("timeline");
 
   itinerary.days.forEach(dayObj => {
@@ -59,11 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     dayObj.activities.forEach((act, i) => {
 
-      // ===== TIMELINE WRAPPER =====
       const wrapper = document.createElement("div");
       wrapper.className = "timeline-item";
 
-      // ===== LEFT SIDE =====
       const left = document.createElement("div");
       left.className = "timeline-left";
 
@@ -73,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const line = document.createElement("div");
       line.className = "timeline-line";
 
-      // Last activity, hide the line
       if (i === dayObj.activities.length - 1) {
         line.style.display = "none";
       }
@@ -81,7 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
       left.appendChild(dot);
       left.appendChild(line);
 
-      // ===== RIGHT CONTENT =====
       const content = document.createElement("div");
       content.className = "timeline-content activity";
 
@@ -98,10 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
         ${act.time ? `<p><b>Time:</b> ${act.time}</p>` : ""}
       `;
 
-      // wrap left and content together
       wrapper.appendChild(left);
       wrapper.appendChild(content);
-
       dayDiv.appendChild(wrapper);
     });
 
@@ -109,11 +108,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   setupObserver();
+  setupAuth(); // 🔥 登录控制
 });
 
-// ===== MAP INIT =====
+// ===== MAP =====
 function initMap() {
-
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -31.95, lng: 115.86 },
     zoom: 11
@@ -130,7 +129,7 @@ function initMap() {
   });
 }
 
-// ===== CLICK =====
+// ===== CLICK MAP SYNC =====
 document.addEventListener("click", e => {
   const el = e.target.closest(".activity");
   if (!el || !map) return;
@@ -154,11 +153,9 @@ function setupObserver() {
 
         const el = entry.target;
 
-        // Update indicator(text)
         indicator.innerText =
           `Day ${el.dataset.day} - Activity ${el.dataset.index}`;
 
-        // Hightlight in timeline
         document.querySelectorAll(".timeline-content").forEach(item =>
           item.classList.remove("active")
         );
@@ -177,4 +174,75 @@ function setupObserver() {
   document.querySelectorAll(".activity").forEach(el => {
     observer.observe(el);
   });
+}
+
+// ===== AUTH LOGIC =====
+function setupAuth() {
+
+  const likeBtn = document.getElementById("like-btn");
+  const favBtn = document.getElementById("fav-btn");
+  const commentBox = document.getElementById("comment-box");
+  const commentBtn = document.getElementById("comment-btn");
+  const avatar = document.getElementById("user-avatar");
+
+  // 未登录
+  if (!currentUser) {
+
+    likeBtn?.classList.add("opacity-50", "cursor-not-allowed");
+    favBtn?.classList.add("opacity-50", "cursor-not-allowed");
+
+    commentBox?.classList.add("opacity-50");
+    commentBox.placeholder = "Please sign in to comment...";
+
+    likeBtn?.addEventListener("click", () => {
+      alert("Please sign in first");
+    });
+
+    favBtn?.addEventListener("click", () => {
+      alert("Please sign in first");
+    });
+
+    commentBtn?.addEventListener("click", () => {
+      alert("Please sign in first");
+    });
+
+  }
+
+  // 已登录
+  else {
+
+    // 更新头像
+    if (avatar && currentUser.avatar) {
+      avatar.src = currentUser.avatar;
+    }
+
+    // Like
+    likeBtn?.addEventListener("click", () => {
+      alert("Liked!");
+    });
+
+    // Favorite
+    favBtn?.addEventListener("click", () => {
+      alert("Added to favorites!");
+    });
+
+    // Comment
+    commentBtn?.addEventListener("click", () => {
+
+      const text = commentBox.value.trim();
+
+      if (!text) {
+        alert("Please enter a comment");
+        return;
+      }
+
+      console.log("Comment:", {
+        user: currentUser.name,
+        text: text
+      });
+
+      alert("Comment posted!");
+      commentBox.value = "";
+    });
+  }
 }
