@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, jsonify, session
 import os
 
 # Get project root (one level above /python)
@@ -37,10 +37,41 @@ def post():
 def browse():
     return render_template('browse-itinerary.html')
 
+@app.route("/login", methods=["POST"])
+def login():
+    data = request.get_json()
+    username = data.get("username")
+    password = data.get("password")
 
-# -------------------
-# Error handlers
-# -------------------
+    session["user"] = username
+
+    return jsonify({"message": "Logged in"})
+
+
+users = []
+@app.route("/signup", methods=['POST'])
+def signup():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    # basic validation
+    if not username or not password:
+        return jsonify({"error": "Missing fields"}), 400
+
+    # check if user exists
+    for user in users:
+        if user["username"] == username:
+            return jsonify({"error": "Username already exists"}), 400
+
+    users.append({
+        "username": username,
+        "password": password
+    })
+
+    return jsonify({"message": "User created successfully"}), 200
+
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -51,9 +82,6 @@ def server_error(e):
     return render_template('500.html'), 500
 
 
-# -------------------
-# Run app
-# -------------------
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
