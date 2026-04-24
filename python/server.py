@@ -33,6 +33,10 @@ def countries():
 def post():
     return render_template('Submit-form-page.html')
 
+@app.route('/browse')
+def browse():
+    return render_template('browse-itinerary.html')
+
 
 # -------------------
 # Error handlers
