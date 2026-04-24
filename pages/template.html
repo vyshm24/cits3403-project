@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Travel App{% endblock %}</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/tailwind.output.css">
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- Navigation Bar -->
+  <nav class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex justify-between items-center h-16" aria-label="Main navigation">
+        <!-- Logo -->
+        <a href="{{ url_for('home') }}" class="inline-flex items-center text-xl font-bold tracking-tight text-gray-900 hover:text-indigo-600 transition-colors">
+          Travel Blog
+        </a>
+
+        <!-- Navigation Links (Desktop) -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="{{ url_for('home') }}" class="text-gray-700 hover:text-indigo-600 transition-colors">Home</a>
+          <a href="#" class="text-gray-700 hover:text-indigo-600 transition-colors">Explore</a>
+          <a href="#" class="text-gray-700 hover:text-indigo-600 transition-colors">Countries</a>
+          <a href="#" class="text-gray-700 hover:text-indigo-600 transition-colors">Post</a>
+          <a href="#" class="text-gray-700 hover:text-indigo-600 transition-colors">Search</a>
+        </div>
+
+        <!-- Auth Section -->
+        <div class="flex items-center space-x-4">
+          <div id="auth-links" class="flex items-center space-x-4">
+            <a href="#" class="text-gray-600 hover:text-black transition-colors">Sign in</a>
+            <a href="#" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">Sign up</a>
+          </div>
+
+          <!-- Profile Menu (Hidden by default, shown when logged in) -->
+          <div id="profile-menu" class="hidden flex items-center space-x-4">
+            <a href="#" id="profile-avatar-link" class="relative group">
+              <img src="https://i.pravatar.cc/40" alt="User profile" class="w-9 h-9 rounded-full cursor-pointer hover:opacity-80 transition"/>
+            </a>
+
+            <button id="logout-btn" class="text-red-600 hover:text-red-700 text-sm transition">
+              Sign out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
