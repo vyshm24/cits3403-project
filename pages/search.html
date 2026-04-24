@@ -8,6 +8,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="../js/homePage.js"></script>
+  <script src="../js/search.js"></script>
   <link rel="stylesheet" href="../css/home-page.css">
 </head>
 
@@ -22,7 +23,7 @@
 
         <div class="hidden md:flex items-center space-x-8">
           <a href="../pages/countries.html" class="hover:text-indigo-600">Countries</a>
-          <a href="../pages/Submit-form-page.html" class="hover:text-indigo-600">Post</a>
+          <a href="../pages/Submit-form-page.html" id="post-link" class="hover:text-indigo-600">Post</a>
           <a href="../pages/search.html" class="hover:text-indigo-600">Search</a>
         </div>
 
@@ -44,9 +45,38 @@
             </button>
           </div>
         </div>
-      </nav>
+  </nav>
+    <section class="relative flex items-start justify-center pt-24 pb-16 bg-gray-50">
+        <div class="w-full max-w-2xl px-6">
+          
+          <h1 class="text-3xl md:text-4xl font-bold text-center mb-6">
+            Find your next adventure
+          </h1>
+
+          <div class="relative">
+            <input 
+              type="text" 
+              placeholder="Search countries, cities, itineraries..."
+              class="w-full px-6 py-4 text-lg rounded-2xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            />
+
+       
+            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+              🔍
+            </div>
+          </div>
+
+        </div>
+    </section>
     </div>
   </header>
+  <section class="bg-gray-50 py-10">
+    <h1 class="text-2xl font-bold text-center">
+      Search Results
+    </h1>
+  </section>
+
+  
 
 
 </body>
