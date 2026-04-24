@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const images = [
-    "../images/homePic1.jpg",
-    "../images/homePic2.jpeg",
-    "../images/homePic3.jpg",
-    "../images/homepic4.jpg",
+      "/static/images/homePic1.jpg",
+      "/static/images/homePic2.jpeg",
+      "/static/images/homePic3.jpg",
+      "/static/images/homepic4.jpg",
   ];
   const randomImage = images[Math.floor(Math.random() * images.length)];
   const heroBg = document.getElementById("hero-bg");
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.removeItem("currentUser");
 
       alert("You have signed out successfully.");
-      window.location.href = "../pages/home-page.html";
+      window.location.href = "/";
     });
   }
 
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!isLoggedIn) {
         e.preventDefault();
         alert("Please sign in to create a post.");
-        window.location.href = "../pages/sign-in.html";
+        window.location.href = "/sign-in";
       }
     });
   }

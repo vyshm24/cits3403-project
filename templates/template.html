@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{% block title %}Travel App{% endblock %}</title>
 
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Page-specific CSS -->
   {% block extra_css %}{% endblock %}
 </head>
 
@@ -15,10 +17,10 @@
   <!-- Navigation Bar -->
   <nav class="bg-white border-b border-gray-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="flex justify-between items-center h-16" aria-label="Main navigation">
+      <div class="flex justify-between items-center h-16">
 
         <!-- Logo -->
-        <span class="inline-flex items-center text-xl font-bold tracking-tight text-gray-900 transition-colors">
+        <span class="text-xl font-bold tracking-tight">
           Travel Blog
         </span>
 
@@ -31,7 +33,7 @@
         </div>
 
         <!-- Auth / Profile -->
-        <div class="flex items-center space-x-4 relative">
+        <div class="flex items-center space-x-4">
 
           <!-- Not logged in -->
           <div id="auth-links" class="flex items-center space-x-4">
@@ -43,15 +45,15 @@
 
           <!-- Logged in -->
           <div id="profile-menu" class="hidden flex items-center space-x-4">
-            <a href="/pages/Author-Profile-Page.html" id="profile-avatar-link" class="relative group">
+            <a href="/pages/Author-Profile-Page.html">
               <img 
                 src="https://i.pravatar.cc/40" 
                 alt="User profile" 
-                class="w-9 h-9 rounded-full cursor-pointer hover:opacity-80 transition"
+                class="w-9 h-9 rounded-full hover:opacity-80 transition"
               />
             </a>
 
-            <button id="logout-btn" class="text-red-600 hover:text-red-700 text-sm transition">
+            <button id="logout-btn" class="text-red-600 hover:text-red-700 text-sm">
               Sign out
             </button>
           </div>
@@ -66,6 +68,8 @@
     {% block content %}{% endblock %}
   </main>
 
+  <!-- Page-specific JS -->
   {% block extra_js %}{% endblock %}
+
 </body>
 </html>

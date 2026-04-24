@@ -3,48 +3,55 @@
 {% block title %}Home - Travel App{% endblock %}
 
 {% block extra_css %}
-  <link rel="stylesheet" href="../css/home-page.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home-page.css') }}">
 {% endblock %}
 
 {% block content %}
-  <div class="relative text-white">
-    <!-- Background image and gradient container -->
-    <div id="hero-bg" class="absolute inset-0 bg-cover bg-center"></div>
-    <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/70 to-black/50"></div>
+<div class="relative text-white">
 
-    <section id="hero" class="relative h-[500px] flex items-center justify-center">
-      <div class="relative z-10 text-center px-6">
-        <h1 class="text-4xl font-bold mb-4">Discover, Plan & Share Your Travels</h1>
-        <p class="text-lg max-w-2xl mx-auto">
-          A social platform where travelers share itineraries, explore trending destinations, and build their next adventure.
-        </p>
-      </div>
-    </section>
+  <!-- Background -->
+  <div id="hero-bg" class="absolute inset-0 bg-cover bg-center"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/70 to-black/50"></div>
 
-    <section class="relative z-10 max-w-6xl mx-auto py-12 px-6">
-      <h2 class="text-2xl font-semibold mb-6">How it works</h2>
+  <!-- Hero -->
+  <section class="relative h-[500px] flex items-center justify-center">
+    <div class="relative z-10 text-center px-6">
+      <h1 class="text-4xl font-bold mb-4">
+        Discover, Plan & Share Your Travels
+      </h1>
+      <p class="text-lg max-w-2xl mx-auto">
+        A social platform where travelers share itineraries, explore trending destinations, and build their next adventure.
+      </p>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="relative z-10 max-w-6xl mx-auto py-12 px-6">
+    <h2 class="text-2xl font-semibold mb-6">How it works</h2>
 
     <div class="grid md:grid-cols-3 gap-6">
+
       <div class="bg-white p-6 rounded-xl shadow text-gray-900">
         <h3 class="font-semibold text-lg mb-2">Explore</h3>
-        <p>Browse custome made itineraries from travelers around the world.</p>
+        <p>Browse custom made itineraries from travelers around the world.</p>
       </div>
 
       <div class="bg-white p-6 rounded-xl shadow text-gray-900">
         <h3 class="font-semibold text-lg mb-2">Share</h3>
-        <p>Post your own trips with as much detail as you'd like, </b> to share your creativity and inspire others!</p>
+        <p>Post your own trips with as much detail as you'd like to inspire others.</p>
       </div>
 
       <div class="bg-white p-6 rounded-xl shadow text-gray-900">
         <h3 class="font-semibold text-lg mb-2">Plan</h3>
         <p>Save and organise itineraries for future travel.</p>
       </div>
-    </div>
-    </section>
-  </div>
 
+    </div>
+  </section>
+
+</div>
 {% endblock %}
 
 {% block extra_js %}
-  <script src="../js/homePage.js"></script>
+<script src="{{ url_for('static', filename='js/homePage.js') }}"></script>
 {% endblock %}
