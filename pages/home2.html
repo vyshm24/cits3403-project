@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Travel App</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../js/homePage.js"></script>
+  <link rel="stylesheet" href="../css/home-page.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+
+  <nav class="bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6">
+      <nav class="flex justify-between items-center h-16" aria-label="Main navigation">
+        <span class="inline-flex items-center text-xl font-bold tracking-tight text-gray-900 transition-colors">
+          Travel Blog
+        </span>
+
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="../pages/countries.html" class="hover:text-indigo-600">Countries</a>
+          <a href="../pages/Submit-form-page.html" class="hover:text-indigo-600">Post</a>
+          <a href="../pages/search.html" class="hover:text-indigo-600">Search</a>
+        </div>
+
+        <div class="flex items-center space-x-4 relative">
+
+          <div id="auth-links" class="flex items-center space-x-4">
+            <a href="../pages/sign-in.html" class="text-gray-600 hover:text-black">Sign in</a>
+            <a href="../pages/sign-up.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Sign up</a>
+          </div>
+
+      
+          <div id="profile-menu" class="hidden flex items-center space-x-4">
+            <a href="../pages/Author-Profile-Page.html" id="profile-avatar-link" class="relative group">
+              <img src="https://i.pravatar.cc/40" alt="User profile" class="w-9 h-9 rounded-full cursor-pointer hover:opacity-80 transition"/>
+            </a>
+
+            <button id="logout-btn" class="text-red-600 hover:text-red-700 text-sm transition">
+              Sign out
+            </button>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </nav>
+
+  <div class="relative text-white">
+    <!-- Background image and gradient container -->
+    <div id="hero-bg" class="absolute inset-0 bg-cover bg-center"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/70 to-black/50"></div>
+
+    <section id="hero" class="relative h-[500px] flex items-center justify-center">
+      <div class="relative z-10 text-center px-6">
+        <h1 class="text-4xl font-bold mb-4">Discover, Plan & Share Your Travels</h1>
+        <p class="text-lg max-w-2xl mx-auto">
+          A social platform where travelers share itineraries, explore trending destinations, and build their next adventure.
+        </p>
+      </div>
+    </section>
+
+    <section class="relative z-10 max-w-6xl mx-auto py-12 px-6">
+      <h2 class="text-2xl font-semibold mb-6">How it works</h2>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-white p-6 rounded-xl shadow text-gray-900">
+        <h3 class="font-semibold text-lg mb-2">Explore</h3>
+        <p>Browse custome made itineraries from travelers around the world.</p>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow text-gray-900">
+        <h3 class="font-semibold text-lg mb-2">Share</h3>
+        <p>Post your own trips with as much detail as you'd like, </b> to share your creativity and inspire others!</p>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow text-gray-900">
+        <h3 class="font-semibold text-lg mb-2">Plan</h3>
+        <p>Save and organise itineraries for future travel.</p>
+      </div>
+    </div>
+    </section>
+  </div>
+
+  <section class="max-w-6xl mx-auto py-12 px-6">
+    <h2 class="text-2xl font-semibold mb-4">Trending Countries</h2>
+
+      TBD
+  </section> 
+
+
+  <section class="max-w-6xl mx-auto py-12 px-6">
+    <h2 class="text-2xl font-semibold mb-4">Trending Itineraries</h2>
+    TBD
+  </section>
+
+</body>
+</html>

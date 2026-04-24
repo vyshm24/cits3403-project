@@ -1,12 +1,19 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template
 import os
+
+# Initialize Flask app with template and static folder configuration
+template_folder = os.path.join(os.path.dirname(__file__), '../pages')
+static_folder = os.path.join(os.path.dirname(__file__), '..')
 
 app = Flask(
     __name__,
-    static_folder=os.path.join(os.path.dirname(__file__), '..'),
+    static_folder=static_folder,
     static_url_path='',
-    template_folder=os.path.join(os.path.dirname(__file__), '../pages')
+    template_folder=template_folder
 )
+
+# Configure Jinja2 for template auto-reload in development
+app.jinja_env.auto_reload = True
 
 @app.route('/')
 def home():
