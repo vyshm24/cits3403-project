@@ -18,15 +18,16 @@
       <div class="flex justify-between items-center h-16" aria-label="Main navigation">
 
         <!-- Logo -->
-        <span class="inline-flex items-center text-xl font-bold tracking-tight text-gray-900">
+        <span class="inline-flex items-center text-xl font-bold tracking-tight text-gray-900 transition-colors">
           Travel Blog
         </span>
 
         <!-- Nav Links -->
         <div class="hidden md:flex items-center space-x-8">
           <a href="/pages/countries.html" class="hover:text-indigo-600">Countries</a>
-          <a href="/pages/Submit-form-page.html" class="hover:text-indigo-600">Post</a>
+          <a href="/pages/Submit-form-page.html" id="post-link" class="hover:text-indigo-600">Post</a>
           <a href="/pages/search.html" class="hover:text-indigo-600">Search</a>
+          <a href="/pages/browse-itinerary.html" class="hover:text-indigo-600">Browse</a>
         </div>
 
         <!-- Auth / Profile -->
@@ -42,7 +43,7 @@
 
           <!-- Logged in -->
           <div id="profile-menu" class="hidden flex items-center space-x-4">
-            <a href="/pages/Author-Profile-Page.html" id="profile-avatar-link">
+            <a href="/pages/Author-Profile-Page.html" id="profile-avatar-link" class="relative group">
               <img 
                 src="https://i.pravatar.cc/40" 
                 alt="User profile" 
@@ -50,7 +51,7 @@
               />
             </a>
 
-            <button id="logout-btn" class="text-red-600 hover:text-red-700 text-sm">
+            <button id="logout-btn" class="text-red-600 hover:text-red-700 text-sm transition">
               Sign out
             </button>
           </div>
