@@ -1,12 +1,21 @@
-{% extends "template.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Browse Itineraries</title>
+  <link rel="stylesheet" href="../css/browse-itinerary.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-{% block title %}Browse Itineraries{% endblock %}
+<body class="bg-gray-50">
 
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/browse-itinerary.css') }}">
-{% endblock %}
-
-{% block content %}
+<!-- NAVBAR (same as view page) -->
+<header class="border-b bg-white fixed top-0 w-full z-50">
+  <div class="max-w-6xl mx-auto flex justify-between items-center px-4 py-6">
+    <a href="home-page.html" class="font-semibold text-lg">Travel Blog</a>
+    <h1 class="text-xl font-bold">Browse Itineraries</h1>
+  </div>
+</header>
 
 <!-- PAGE TITLE -->
 <section class="max-w-6xl mx-auto px-4 pt-28 pb-6">
@@ -19,8 +28,7 @@
   <div id="card-container" class="grid md:grid-cols-3 gap-6"></div>
 </main>
 
-{% endblock %}
+<script src="../js/browse-itinerary.js"></script>
 
-{% block extra_js %}
-<script src="{{ url_for('static', filename='js/browse-itinerary.js') }}"></script>
-{% endblock %}
+</body>
+</html>
