@@ -1,5 +1,5 @@
-"""
-Travel Blog Flask Application Package
-"""
-__version__ = '1.0.0'
-__author__ = 'Travel Blog Team'
+from flask import Flask
+
+app = Flask(__name__)
+
+from app import routes
