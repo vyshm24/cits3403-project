@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In - Travel Blog</title>
-    <link rel="stylesheet" href="../css/sign-in-up.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sign-in-up.css') }}">
 </head>
 
 <body>
@@ -25,7 +25,7 @@
         </section>
     </div>
 
-    <script src="../js/sign-in.js"></script>
+    <script src="{{ url_for('static', filename='js/sign-in.js') }}"></script>
 </body>
 
 </html>

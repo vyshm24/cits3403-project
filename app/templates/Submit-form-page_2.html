@@ -7,8 +7,8 @@
     <title>Submit Itinerary - Travel Blog</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../css/tailwind.output.css">
-    <link rel="stylesheet" href="../css/Submit-form-page.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.output.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Submit-form-page.css') }}">
 </head>
 
 <body class="min-h-screen bg-gray-50 text-gray-900">
@@ -369,7 +369,7 @@
         </form>
     </main>
 
-    <script src="../js/Submit-form-page.js"></script>
+    <script src="{{ url_for('static', filename='js/Submit-form-page.js') }}"></script>
 </body>
 
 </html>
