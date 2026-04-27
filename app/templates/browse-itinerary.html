@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Browse Itineraries</title>
-  <link rel="stylesheet" href="../css/browse-itinerary.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/browse-itinerary.css') }}">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -28,7 +28,7 @@
   <div id="card-container" class="grid md:grid-cols-3 gap-6"></div>
 </main>
 
-<script src="../js/browse-itinerary.js"></script>
+<script src="{{ url_for('static', filename='js/browse-itinerary.js') }}"></script>
 
 </body>
 </html>

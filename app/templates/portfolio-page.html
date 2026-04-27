@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - Travel Blog</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../css/portfolio-page.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/portfolio-page.css') }}">
 </head>
 
 <body class="min-h-screen bg-gray-50 text-gray-900">
@@ -118,7 +118,7 @@
             <div class="flex flex-col gap-2" id="rating-bars"></div>
         </div>
     </div>
-    <script src="../js/portfolio-page.js"></script>
+    <script src="{{ url_for('static', filename='js/portfolio-page.js') }}"></script>
 
 </body>
 </html>
