@@ -9,8 +9,9 @@
 body,
 html {
     width: 100%;
-    height: 100%;
-    overflow: hidden;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .page {
@@ -46,7 +47,7 @@ html {
     border: 1px solid rgba(255, 255, 255, 0.5);
     width: 100%; /* 宽度不写死，能自适应屏幕 */    
     max-width: 420px;
-    padding: 50px 40px;
+    padding: 40px 32px;
     border-radius: 16px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     display: flex;
