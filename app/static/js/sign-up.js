@@ -16,10 +16,10 @@ if (form && password && confirmPassword) {
     confirmPassword.addEventListener("input", validatePassword);
 
     form.addEventListener("submit", function (event) {
-        event.preventDefault();
         validatePassword();
 
         if (!form.checkValidity()) {
+            event.preventDefault();
             form.reportValidity();
             return;
         }
@@ -29,11 +29,7 @@ if (form && password && confirmPassword) {
             password: password.value
         };
 
-         // Save the registered account information in localStorage
+        // Keep the temporary localStorage flow, but let Flask handle the redirect.
         localStorage.setItem("registeredUser", JSON.stringify(userData));
-        // Show a success message after sign-up and redirect to the sign-in page
-        alert("Sign up successful! Please sign in.");
-        // Redirect the user to the sign-in page
-        window.location.href = "sign-in.html";
     });
 }
