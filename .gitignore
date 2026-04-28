@@ -18,3 +18,18 @@ app.db
 
 
 .DS_Store
+
+# dependencies
+node_modules/
+
+# Python virtual environment
+.venv/
+venv/
+application-env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# env / secrets
+.env

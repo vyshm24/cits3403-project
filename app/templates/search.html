@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Travel App</title>
+
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="{{ url_for('static', filename='js/homePage.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home-page.css') }}">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+
+  <nav class="bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6">
+      <nav class="flex justify-between items-center h-16" aria-label="Main navigation">
+        <span class="inline-flex items-center text-xl font-bold tracking-tight text-gray-900 transition-colors">
+          <a href="../pages/home-page.html">Travel Blog</a>
+        </span>
+
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="../pages/countries.html" class="hover:text-indigo-600">Countries</a>
+          <a href="../pages/Submit-form-page.html" id="post-link" class="hover:text-indigo-600">Post</a>
+          <a href="../pages/search.html" class="hover:text-indigo-600">Search</a>
+        </div>
+
+        <div class="flex items-center space-x-4 relative">
+
+          <div id="auth-links" class="flex items-center space-x-4">
+            <a href="../pages/sign-in.html" class="text-gray-600 hover:text-black">Sign in</a>
+            <a href="../pages/sign-up.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Sign up</a>
+          </div>
+
+      
+          <div id="profile-menu" class="hidden flex items-center space-x-4">
+            <a href="../pages/Author-Profile-Page.html" id="profile-avatar-link" class="relative group">
+              <img src="https://i.pravatar.cc/40" alt="User profile" class="w-9 h-9 rounded-full cursor-pointer hover:opacity-80 transition"/>
+            </a>
+
+            <button id="logout-btn" class="text-red-600 hover:text-red-700 text-sm transition">
+              Sign out
+            </button>
+          </div>
+        </div>
+  </nav>
+    <section class="relative flex items-start justify-center pt-24 pb-16 bg-gray-50">
+        <div class="w-full max-w-2xl px-6">
+          
+          <h1 class="text-3xl md:text-4xl font-bold text-center mb-6">
+            Find your next adventure
+          </h1>
+
+          <div class="relative">
+            <input 
+              type="text" 
+              placeholder="Search countries, cities, itineraries..."
+              class="w-full px-6 py-4 text-lg rounded-2xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            />
+
+       
+            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+              🔍
+            </div>
+          </div>
+
+        </div>
+    </section>
+    </div>
+  </header>
+  <section class="bg-gray-50 py-10">
+    <h1 class="text-2xl font-bold text-center">
+      Search Results
+    </h1>
+  </section>
+
+  
+
+
+</body>
+</html>
