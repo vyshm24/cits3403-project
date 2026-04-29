@@ -16,6 +16,7 @@
             <form method="POST" action="{{ url_for('main.signin') }}">
                 <input type="text" placeholder="Enter your username" name="username" required>
                 <input type="password" placeholder="Enter your password" name="password" required>
+                <p class="form-error{% if not error %} is-hidden{% endif %}" id="signin-error">{{ error or "" }}</p>
                 <button type="submit" class="submit">LOGIN</button>
             </form>
 

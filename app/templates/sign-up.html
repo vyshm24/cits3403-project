@@ -13,6 +13,9 @@
         <h1 class="site-title">Travel Blog</h1>
         <section class="signup-card">
             <h2>Sign Up</h2>
+            {% if error %}
+                <p>{{ error }}</p>
+            {% endif %}
             <form method="POST" action="{{ url_for('main.signup') }}">
                 <input type="text" placeholder="Choose a username" name="username" required>
                 <input type="password" id="password" placeholder="Create a password" name="password" required>

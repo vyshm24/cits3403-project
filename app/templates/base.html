@@ -21,43 +21,34 @@
 
         <!-- Logo -->
         <span class="text-xl font-bold tracking-tight">
-          <a href="/">Travel Blog</a>
+          <a href="{{ url_for('main.index') }}">Travel Blog</a>
         </span>
 
         <!-- Nav Links -->
         <div class="hidden md:flex items-center space-x-8">
           <a href="/pages/countries.html" class="hover:text-indigo-600">Countries</a>
-          <a href="/pages/Submit-form-page.html" id="post-link" class="hover:text-indigo-600">Post</a>
+          <a href="{{ url_for('main.submit_itinerary') }}" class="hover:text-indigo-600">Post</a>
           <a href="/pages/search.html" class="hover:text-indigo-600">Search</a>
           <a href="/pages/browse-itinerary.html" class="hover:text-indigo-600">Browse</a>
         </div>
 
         <!-- Auth / Profile -->
         <div class="flex items-center space-x-4">
-
-          <!-- Not logged in -->
-          <div id="auth-links" class="flex items-center space-x-4">
+          {% if session.get('user') %}
+          <div class="flex items-center space-x-4">
+            <span class="text-sm text-gray-600">{{ session.get('user') }}</span>
+            <a href="{{ url_for('main.logout') }}" class="text-red-600 hover:text-red-700 text-sm">
+              Sign out
+            </a>
+          </div>
+          {% else %}
+          <div class="flex items-center space-x-4">
             <a href="{{ url_for('main.signin') }}" class="text-gray-600 hover:text-black">Sign in</a>
             <a href="{{ url_for('main.signup') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">
               Sign up
             </a>
           </div>
-
-          <!-- Logged in -->
-          <div id="profile-menu" class="hidden flex items-center space-x-4">
-            <a href="/pages/Author-Profile-Page.html">
-              <img
-                src="https://i.pravatar.cc/40"
-                alt="User profile"
-                class="w-9 h-9 rounded-full hover:opacity-80 transition"
-              />
-            </a>
-
-            <button id="logout-btn" class="text-red-600 hover:text-red-700 text-sm">
-              Sign out
-            </button>
-          </div>
-
+          {% endif %}
         </div>
       </div>
     </div>

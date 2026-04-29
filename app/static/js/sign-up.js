@@ -16,6 +16,10 @@ if (form && password && confirmPassword) {
     confirmPassword.addEventListener("input", validatePassword);
 
     form.addEventListener("submit", function (event) {
+        if (username) {
+            username.value = username.value.trim();
+        }
+
         validatePassword();
 
         if (!form.checkValidity()) {
@@ -23,13 +27,5 @@ if (form && password && confirmPassword) {
             form.reportValidity();
             return;
         }
-
-        const userData = {
-            username: username.value.trim(),
-            password: password.value
-        };
-
-        // Keep the temporary localStorage flow, but let Flask handle the redirect.
-        localStorage.setItem("registeredUser", JSON.stringify(userData));
     });
 }
