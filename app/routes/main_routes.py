@@ -1,8 +1,11 @@
 from flask import Blueprint, jsonify, render_template, request, redirect, session, url_for
+from werkzeug.security import check_password_hash, generate_password_hash
+
+from app.extensions import db
+from app.models import User
 
 
 main_bp = Blueprint("main", __name__)
-registered_users = {}
 
 
 @main_bp.route("/")
@@ -17,18 +20,18 @@ def signin():
         error_message = "Incorrect username or password."
         is_ajax_request = request.headers.get("X-Requested-With") == "XMLHttpRequest"
 
-        stored_password = registered_users.get(username)
-        if stored_password is None:
+        user = User.query.filter_by(username=username).first()
+        if user is None:
             if is_ajax_request:
                 return jsonify({"success": False, "error": error_message}), 401
             return render_template("sign-in.html", error=error_message)
 
-        if stored_password != password:
+        if not check_password_hash(user.password_hash, password):
             if is_ajax_request:
                 return jsonify({"success": False, "error": error_message}), 401
             return render_template("sign-in.html", error=error_message)
 
-        session["user"] = username
+        session["user"] = user.username
         redirect_url = url_for("main.index")
 
         if is_ajax_request:
@@ -51,12 +54,19 @@ def signup():
                 return jsonify({"success": False, "error": "Passwords do not match."}), 400
             return render_template("sign-up.html", error="Passwords do not match.")
 
-        if username in registered_users:
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user is not None:
             if is_ajax_request:
                 return jsonify({"success": False, "error": "This username is already taken."}), 400
             return render_template("sign-up.html", error="This username is already taken.")
 
-        registered_users[username] = password
+        new_user = User(
+            username=username,
+            password_hash=generate_password_hash(password)
+        )
+        db.session.add(new_user)
+        db.session.commit()
+
         redirect_url = url_for("main.signin")
 
         if is_ajax_request:

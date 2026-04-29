@@ -11,6 +11,7 @@ application-env/
 # Python cache
 __pycache__/
 *.pyc
+*.db
 
 # env / secrets
 .env
