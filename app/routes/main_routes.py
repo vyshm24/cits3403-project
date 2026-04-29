@@ -44,15 +44,25 @@ def signup():
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "")
         confirm_password = request.form.get("confirm-password", "")
+        is_ajax_request = request.headers.get("X-Requested-With") == "XMLHttpRequest"
 
         if password != confirm_password:
+            if is_ajax_request:
+                return jsonify({"success": False, "error": "Passwords do not match."}), 400
             return render_template("sign-up.html", error="Passwords do not match.")
 
         if username in registered_users:
+            if is_ajax_request:
+                return jsonify({"success": False, "error": "This username is already taken."}), 400
             return render_template("sign-up.html", error="This username is already taken.")
 
         registered_users[username] = password
-        return redirect(url_for("main.signin"))
+        redirect_url = url_for("main.signin")
+
+        if is_ajax_request:
+            return jsonify({"success": True, "redirect_url": redirect_url})
+
+        return redirect(redirect_url)
 
     return render_template("sign-up.html")
 
