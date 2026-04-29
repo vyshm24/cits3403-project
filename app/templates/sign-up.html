@@ -13,16 +13,16 @@
         <h1 class="site-title">Travel Blog</h1>
         <section class="signup-card">
             <h2>Sign Up</h2>
-            <form action="">
+            <form method="POST" action="{{ url_for('main.signup') }}">
                 <input type="text" placeholder="Choose a username" name="username" required>
                 <input type="password" id="password" placeholder="Create a password" name="password" required>
                 <input type="password" id="confirm-password" placeholder="Confirm your password" name="confirm-password"
                     required>
-                <button class="submit">SIGN UP</button>
+                <button type="submit" class="submit">SIGN UP</button>
             </form>
 
             <p class="switch-to-sign-in">
-                Already have an account? <a href="sign-in.html">Sign in</a>
+                Already have an account? <a href="{{ url_for('main.signin') }}">Sign in</a>
             </p>
         </section>
     </div>

@@ -14,7 +14,7 @@
         <div class="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between gap-4">
                 <div class="go-back-to-home-page">
-                    <a href="home-page.html" class="inline-flex items-center text-xl/7 font-bold tracking-tight text-gray-900 transition-colors hover:text-indigo-600">Travel Blog</a>
+                    <a href="{{ url_for('main.index') }}" class="inline-flex items-center text-xl/7 font-bold tracking-tight text-gray-900 transition-colors hover:text-indigo-600">Travel Blog</a>
                 </div>
                 <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Create Your Itinerary</h1>
             </div>
@@ -22,7 +22,7 @@
     </header>
 
     <main class="py-10">
-        <form action="" method="POST" enctype="multipart/form-data" class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <form method="POST" action="{{ url_for('main.submit_itinerary') }}" enctype="multipart/form-data" class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div class="space-y-12">
 
                 <section class="general-info-section border-b border-gray-900/10 pb-12">
