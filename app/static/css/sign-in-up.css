@@ -21,7 +21,7 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url('../images/sign-in-picture.jpg');
+    background-image: url('/static/images/sign-in-picture.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

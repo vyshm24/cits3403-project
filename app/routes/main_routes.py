@@ -7,8 +7,8 @@ from app.models import User
 
 main_bp = Blueprint("main", __name__)
 
-@app.route("/")
-def home():
+@main_bp.route("/")
+def index():
     return render_template("home-page.html")
 
 @main_bp.route("/signin", methods=["GET", "POST"])
