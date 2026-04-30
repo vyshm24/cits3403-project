@@ -10,23 +10,49 @@ class Itinerary(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     country = db.Column(db.String(255), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    user = db.relationship("User", backref=db.backref("itineraries", lazy=True))
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    user = db.relationship("User", back_populates="itineraries")
+
     cover_image_url = db.Column(db.String(255), nullable=True)
     total_days = db.Column(db.Integer, nullable=False)  
     budget_level = db.Column(db.String(50), nullable=False)
     budget_range = db.Column(db.String(50), nullable=False)
 
+    days = db.relationship(
+        "ItineraryDay",
+        back_populates="itinerary",
+        cascade="all, delete-orphan"
+    )
+
 
 class ItineraryDay(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     day_number = db.Column(db.Integer, nullable=False)
-    itinerary_id = db.Column(db.Integer, db.ForeignKey("itinerary.id"), nullable=False)
-    itinerary = db.relationship("Itinerary", backref=db.backref("days", lazy=True))
+
+    itinerary_id = db.Column(
+        db.Integer,
+        db.ForeignKey("itineraries.id"),
+        nullable=False
+    )
+    
+    itinerary = db.relationship("Itinerary", back_populates="days")
+
+    activities = db.relationship(
+        "ItineraryActivity",
+        back_populates="day",
+        cascade="all, delete-orphan"
+    )
 
 class ItineraryActivity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     activity_name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=True)
-    day_id = db.Column(db.Integer, db.ForeignKey("itinerary_day.id"), nullable=False)
-    day = db.relationship("ItineraryDay", backref=db.backref("activities", lazy=True))
+    photo_url = db.Column(db.String(255), nullable=True)
+
+    day_id = db.Column(
+        db.Integer,
+        db.ForeignKey("itinerary_days.id"),
+        nullable=False
+    )
+    day = db.relationship("ItineraryDay", back_populates="activities")
