@@ -11,6 +11,18 @@ main_bp = Blueprint("main", __name__)
 def index():
     return render_template("home-page.html")
 
+@main_bp.route("/search")
+def search():
+    return render_template("search.html")
+
+@main_bp.route("/browse")
+def browse():
+    return render_template("browse-itinerary.html")
+
+@main_bp.route("/countries")
+def countries():
+    return render_template("browse-itinerary.html")
+
 @main_bp.route("/signin", methods=["GET", "POST"])
 def signin():
     if request.method == "POST":
