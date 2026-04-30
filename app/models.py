@@ -24,4 +24,9 @@ class ItineraryDay(db.Model):
     itinerary_id = db.Column(db.Integer, db.ForeignKey("itinerary.id"), nullable=False)
     itinerary = db.relationship("Itinerary", backref=db.backref("days", lazy=True))
 
-
+class ItineraryActivity(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    activity_name = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    day_id = db.Column(db.Integer, db.ForeignKey("itinerary_day.id"), nullable=False)
+    day = db.relationship("ItineraryDay", backref=db.backref("activities", lazy=True))
