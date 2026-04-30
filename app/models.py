@@ -17,3 +17,11 @@ class Itinerary(db.Model):
     budget_level = db.Column(db.String(50), nullable=False)
     budget_range = db.Column(db.String(50), nullable=False)
 
+
+class ItineraryDay(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    day_number = db.Column(db.Integer, nullable=False)
+    itinerary_id = db.Column(db.Integer, db.ForeignKey("itinerary.id"), nullable=False)
+    itinerary = db.relationship("Itinerary", backref=db.backref("days", lazy=True))
+
+
