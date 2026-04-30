@@ -1,31 +1,45 @@
 const form = document.querySelector("form");
 const usernameInput = document.querySelector('input[name="username"]');
-const passwordInput = document.querySelector('input[name="password"]');
+const errorMessage = document.getElementById("signin-error");
 
-if (form && usernameInput && passwordInput) {
-    form.addEventListener("submit", function (event) {
+if (form && usernameInput) {
+    form.addEventListener("submit", async function (event) {
         event.preventDefault();
+        usernameInput.value = usernameInput.value.trim();
 
-        const storedUser = JSON.parse(localStorage.getItem("registeredUser"));
-
-        if (!storedUser) {
-            alert("No account found. Please sign up first.");
-            return;
+        if (errorMessage) {
+            errorMessage.textContent = "";
+            errorMessage.classList.add("is-hidden");
         }
 
-        const enteredUsername = usernameInput.value.trim();
-        const enteredPassword = passwordInput.value;
+        const formData = new FormData(form);
 
-        if (
-            enteredUsername === storedUser.username &&
-            enteredPassword === storedUser.password
-        ) {
-            localStorage.setItem("isLoggedIn", "true");
-            localStorage.setItem("currentUser", storedUser.username);
-            alert("Sign in successful!");
-            window.location.href = "home-page.html";
-        } else {
-            alert("Incorrect username or password.");
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Accept": "application/json"
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                window.location.href = data.redirect_url;
+                return;
+            }
+
+            if (errorMessage && data.error) {
+                errorMessage.textContent = data.error;
+                errorMessage.classList.remove("is-hidden");
+            }
+        } catch (error) {
+            if (errorMessage) {
+                errorMessage.textContent = "Unable to sign in right now.";
+                errorMessage.classList.remove("is-hidden");
+            }
         }
     });
 }

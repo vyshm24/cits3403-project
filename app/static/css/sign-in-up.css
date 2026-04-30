@@ -83,6 +83,19 @@ form {
     gap: 15px;
 }
 
+.form-error {
+    color: #d93025;
+    font-size: 13px;
+    margin-top: -2px;
+    margin-bottom: -6px;
+    min-height: 16px;
+    text-align: left;
+}
+
+.form-error.is-hidden {
+    visibility: hidden;
+}
+
 input[type="text"],
 input[type="password"] {
     width: 100%;

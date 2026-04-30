@@ -2,6 +2,7 @@ const form = document.querySelector("form");
 const username = document.querySelector('input[name="username"]');
 const password = document.getElementById("password");
 const confirmPassword = document.getElementById("confirm-password");
+const errorMessage = document.getElementById("signup-error");
 
 function validatePassword() {
     if (password.value !== confirmPassword.value) {
@@ -15,21 +16,53 @@ if (form && password && confirmPassword) {
     password.addEventListener("input", validatePassword);
     confirmPassword.addEventListener("input", validatePassword);
 
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        if (username) {
+            username.value = username.value.trim();
+        }
+
+        if (errorMessage) {
+            errorMessage.textContent = "";
+            errorMessage.classList.add("is-hidden");
+        }
+
         validatePassword();
 
         if (!form.checkValidity()) {
-            event.preventDefault();
             form.reportValidity();
             return;
         }
 
-        const userData = {
-            username: username.value.trim(),
-            password: password.value
-        };
+        const formData = new FormData(form);
 
-        // Keep the temporary localStorage flow, but let Flask handle the redirect.
-        localStorage.setItem("registeredUser", JSON.stringify(userData));
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Accept": "application/json"
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                window.location.href = data.redirect_url;
+                return;
+            }
+
+            if (errorMessage && data.error) {
+                errorMessage.textContent = data.error;
+                errorMessage.classList.remove("is-hidden");
+            }
+        } catch (error) {
+            if (errorMessage) {
+                errorMessage.textContent = "Unable to sign up right now.";
+                errorMessage.classList.remove("is-hidden");
+            }
+        }
     });
 }
