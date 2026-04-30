@@ -15,13 +15,6 @@ def index():
 def search():
     return render_template("search.html")
 
-@main_bp.route("/browse")
-def browse():
-    return render_template("browse-itinerary.html")
-
-@main_bp.route("/countries")
-def countries():
-    return render_template("browse-itinerary.html")
 
 @main_bp.route("/signin", methods=["GET", "POST"])
 def signin():

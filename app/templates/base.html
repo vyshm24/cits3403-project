@@ -26,14 +26,14 @@
 
         <!-- Nav Links -->
         <div class="hidden md:flex items-center space-x-8">
-          <a href="{{ url_for('main.countries') }}" class="hover:text-indigo-600">Countries</a>
+          <a href="" class="hover:text-indigo-600">Countries</a>
           {% if session.get('user') %}
           <a href="{{ url_for('main.submit_itinerary') }}" class="hover:text-indigo-600">Post</a>
           {% else %}
           <a href="{{ url_for('main.signin') }}" class="hover:text-indigo-600">Post</a>
           {% endif %}
           <a href="{{ url_for('main.search') }}" class="hover:text-indigo-600">Search</a>
-          <a href="{{ url_for('main.browse') }}" class="hover:text-indigo-600">Browse</a>
+          <a href="" class="hover:text-indigo-600">Browse</a>
         </div>
 
         <!-- Auth / Profile -->
