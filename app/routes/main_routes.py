@@ -84,6 +84,9 @@ def logout():
 
 @main_bp.route("/submit", methods=["GET", "POST"])
 def submit_itinerary():
+    if not session.get("user"):
+        return redirect(url_for("main.signin"))
+    
     if request.method == "POST":
         trip_title = request.form.get("trip_title")
         trip_country = request.form.get("trip_country")
