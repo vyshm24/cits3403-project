@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, render_template, request, redirect, session, url_for
+from flask import Blueprint, app, jsonify, render_template, request, redirect, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app.extensions import db
@@ -7,9 +7,8 @@ from app.models import User
 
 main_bp = Blueprint("main", __name__)
 
-
-@main_bp.route("/")
-def index():
+@app.route("/")
+def home():
     return render_template("home-page.html")
 
 @main_bp.route("/signin", methods=["GET", "POST"])
@@ -97,3 +96,4 @@ def submit_itinerary():
         return redirect(url_for("main.index"))
 
     return render_template("Submit-form-page.html")
+
