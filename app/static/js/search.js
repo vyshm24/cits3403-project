@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
    */
   function renderResults(results, query) {
     if (results.length === 0) {
-      resultsContainer.innerHTML = `<p class="no-results">No itineraries found matching "${query}"</p>`;
+      resultsContainer.innerHTML = `<p class="no-results">No itineraries found matching "${escapeHtml(query)}"</p>`;
       return;
     }
 
