@@ -14,17 +14,22 @@ document.addEventListener("DOMContentLoaded", () => {
         const card = document.createElement("div");
         card.className = "itinerary-card";
 
+        const cover = escapeHtml(item.cover || "default.jpg");
+        const title = escapeHtml(item.title || "");
+        const country = escapeHtml(item.country || "");
+        const days = escapeHtml(item.days || "");
+
         card.innerHTML = `
-          <img src="/static/${item.cover || 'default.jpg'}" class="card-image">
+          <img src="/static/${cover}" class="card-image">
           <div class="card-content">
-            <div class="card-title">${item.title}</div>
+            <div class="card-title">${title}</div>
             <div class="card-meta">
-              ${item.country} • ${item.days} days
+              ${country} • ${days} days
             </div>
           </div>
         `;
 
-        //关键：跳 Flask route（不是 html）
+        // 关键：跳 Flask route（不是 html）
         card.addEventListener("click", () => {
           window.location.href = `/itinerary/${item.id}`;
         });
@@ -38,3 +43,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
