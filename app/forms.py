@@ -22,7 +22,13 @@ class SignUpForm(FlaskForm):
             ),
         ],
     )
-    email = StringField("Email", validators=[DataRequired(), Email()])
+    email = StringField(
+        "Email",
+        validators=[
+            DataRequired(),
+            Email(message="Please enter a valid email address."),
+        ],
+    )
     password = PasswordField("Password", validators=[DataRequired(), Length(min=8)])
     confirm_password = PasswordField(
         "Confirm Password",

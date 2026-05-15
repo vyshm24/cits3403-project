@@ -107,6 +107,18 @@ def submit_error_response(message: str, form=None):
     return render_template("Submit-form-page.html", form=form, error=message)
 
 
+def get_form_error_message(form, default_message="Please check the submitted form and try again."):
+    csrf_token = getattr(form, "csrf_token", None)
+    if csrf_token and getattr(csrf_token, "errors", None):
+        return csrf_token.errors[0]
+
+    all_errors = [error for errors in form.errors.values() for error in errors]
+    if all_errors:
+        return all_errors[0]
+
+    return default_message
+
+
 def get_uploaded_file_size(file_storage) -> int:
     stream = file_storage.stream
     current_position = stream.tell()
@@ -373,9 +385,7 @@ def signin():
 
     # validate_on_submit() checks both request method and CSRF token validity.
     if request.method == "POST" and not form.validate_on_submit():
-        error_message = next(
-            iter(form.csrf_token.errors or ["Please check the submitted form and try again."])
-        )
+        error_message = get_form_error_message(form)
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return jsonify({"success": False, "error": error_message}), 400
         return render_template("sign-in.html", form=form, error=error_message)
@@ -422,9 +432,7 @@ def signup():
 
     # Reject invalid or forged form submissions before custom signup checks.
     if request.method == "POST" and not form.validate_on_submit():
-        error_message = next(
-            iter(form.csrf_token.errors or [error for errors in form.errors.values() for error in errors] or ["Please check the submitted form and try again."])
-        )
+        error_message = get_form_error_message(form)
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return jsonify({"success": False, "error": error_message}), 400
         return render_template("sign-up.html", form=form, error=error_message)
@@ -532,9 +540,7 @@ def submit_itinerary():
     form = SubmitItineraryForm()
 
     if request.method == "POST" and not form.validate_on_submit():
-        error_message = next(
-            iter(form.csrf_token.errors or ["Please check the submitted form and try again."])
-        )
+        error_message = get_form_error_message(form)
         return submit_error_response(error_message, form=form)
 
     if form.validate_on_submit():
@@ -996,17 +1002,106 @@ def upload_banner():
     db.session.commit()
     return jsonify({"success": True, "url": "/static/" + path.replace("\\", "/")})
 
+# Portfolio page — delete own itinerary
+@main_bp.route("/api/itinerary/<int:id>/delete", methods=["DELETE"])
+def delete_itinerary(id):
+    current_user, error_response = require_login_json()
+    if error_response:
+        return error_response
+
+    it = Itinerary.query.get_or_404(id)
+
+    if it.user_id != current_user.id:
+        return jsonify({"success": False, "error": "You can only delete your own itineraries."}), 403
+
+    db.session.delete(it)
+    db.session.commit()
+
+    return jsonify({"success": True})
+
 @main_bp.route("/portfolio")
 @login_required
 def portfolio():
     current_user = get_current_user()
     
-    itineraries = Itinerary.query.filter_by(
+    # User's own itineraries only (shown by default)
+    own_itineraries = Itinerary.query.filter_by(
         user_id=current_user.id
     ).all()
-    
+
+    # Itineraries favourited by the user (including other people's)
+    favourited_ids = [f.itinerary_id for f in current_user.favorites]
+    favourited_itineraries = Itinerary.query.filter(
+        Itinerary.id.in_(favourited_ids),
+        Itinerary.user_id != current_user.id
+    ).all()
+
+    # All itineraries to pass to template (own + favourited others)
+    own_ids = {it.id for it in own_itineraries}
+    all_itineraries = own_itineraries + [it for it in favourited_itineraries if it.id not in own_ids]
+
     return render_template(
         "portfolio-page.html",
         user=current_user,
-        itineraries=itineraries
+        itineraries=all_itineraries,
+        favourited_ids=favourited_ids,
+        own_itinerary_ids=[it.id for it in own_itineraries]
     )
+# Change password
+@main_bp.route("/api/change-password", methods=["POST"])
+@login_required
+def change_password():
+    current_user = get_current_user()
+    payload = request.get_json(silent=True) or {}
+    
+    current_password = payload.get("current_password", "")
+    new_password = payload.get("new_password", "")
+    confirm_password = payload.get("confirm_password", "")
+
+    if not current_user.check_password(current_password):
+        return jsonify({"success": False, "error": "Current password is incorrect."}), 400
+    
+    if current_password == new_password:
+        return jsonify({"success": False, "error": "New password must be different from your current password."}), 400
+
+    if len(new_password) < PASSWORD_MIN_LENGTH:
+        return jsonify({"success": False, "error": f"Password must be at least {PASSWORD_MIN_LENGTH} characters."}), 400
+
+    if new_password != confirm_password:
+        return jsonify({"success": False, "error": "Passwords do not match."}), 400
+
+    current_user.set_password(new_password)
+    db.session.commit()
+
+    return jsonify({"success": True})
+
+
+# Change username
+@main_bp.route("/api/change-username", methods=["POST"])
+@login_required
+def change_username():
+    current_user = get_current_user()
+    payload = request.get_json(silent=True) or {}
+
+    new_username = payload.get("new_username", "").strip()
+
+    if not new_username:
+        return jsonify({"success": False, "error": "Username is required."}), 400
+
+    if not (USERNAME_MIN_LENGTH <= len(new_username) <= USERNAME_MAX_LENGTH):
+        return jsonify({"success": False, "error": f"Username must be between {USERNAME_MIN_LENGTH} and {USERNAME_MAX_LENGTH} characters."}), 400
+
+    if not USERNAME_PATTERN.fullmatch(new_username):
+        return jsonify({"success": False, "error": "Username can only contain letters, numbers, and underscores."}), 400
+
+    if new_username == current_user.username:
+        return jsonify({"success": False, "error": "New username must be different from your current one."}), 400
+
+    existing = User.query.filter_by(username=new_username).first()
+    if existing:
+        return jsonify({"success": False, "error": "This username is already taken."}), 400
+
+    current_user.username = new_username
+    db.session.commit()
+
+    return jsonify({"success": True})

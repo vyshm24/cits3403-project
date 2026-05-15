@@ -148,11 +148,44 @@ function filterByCountry(country, tagEl) {
 
 function clearFilter() {
     activeCountries.clear();
-    document.querySelectorAll(".country-tag").forEach(t => t.classList.remove("active"));
+    favouritesActive = false;
+    document.querySelectorAll(".country-tag").forEach(t => {
+        if (t.id !== "favourites-filter-btn") t.classList.remove("active");
+    });
     document.getElementById("filter-notice").classList.add("hidden");
     document.getElementById("filter-notice").classList.remove("flex");
-    document.querySelectorAll("#itineraries-grid li").forEach(li => li.style.display = "");
+    document.querySelectorAll("#itineraries-grid li").forEach(li => {
+        const id = parseInt(li.dataset.itineraryId);
+        li.style.display = PORTFOLIO_DATA.own_itinerary_ids.includes(id) ? "" : "none";
+    });
 }
+
+// -- FAVOURITES FILTER --
+let favouritesActive = false;
+document.getElementById("favourites-filter-btn").addEventListener("click", () => {
+    favouritesActive = !favouritesActive;
+    const btn = document.getElementById("favourites-filter-btn");
+
+    if (favouritesActive) {
+        // deactivate country filters
+        activeCountries.clear();
+        document.querySelectorAll(".country-tag").forEach(t => t.classList.remove("active"));
+        document.getElementById("filter-notice").classList.add("hidden");
+        document.getElementById("filter-notice").classList.remove("flex");
+        // activate favourites
+        btn.classList.add("active");
+        document.querySelectorAll("#itineraries-grid li").forEach(li => {
+            const id = parseInt(li.dataset.itineraryId);
+            li.style.display = PORTFOLIO_DATA.favourited_ids.includes(id) ? "" : "none";
+        });
+    } else {
+        btn.classList.remove("active");
+        document.querySelectorAll("#itineraries-grid li").forEach(li => {
+        const id = parseInt(li.dataset.itineraryId);
+        li.style.display = PORTFOLIO_DATA.own_itinerary_ids.includes(id) ? "" : "none";
+        });
+    }
+});
 
 
 // ── RENDER ──
@@ -167,13 +200,14 @@ function renderProfile(user) {
 
     // Stats
     document.getElementById("stat-countries").textContent = Object.keys(user.countries).length;
-    document.getElementById("stat-posts").textContent = user.itineraries.length;
-
+    document.getElementById("stat-posts").textContent = PORTFOLIO_DATA.own_itinerary_ids.length;
 }
 
 function renderCountries(countries) {
     const list = document.getElementById("countries-list");
-    list.innerHTML = "";
+    Array.from(list.querySelectorAll("li")).forEach(li => {
+        if (!li.querySelector("#favourites-filter-btn")) li.remove();
+    });
     const entries = Object.entries(countries);
     if (!entries.length) return;
     entries.forEach(([country, data]) => {
@@ -200,18 +234,28 @@ function renderItineraries(itineraries) {
     itineraries.forEach((it, i) => {
         const li = document.createElement("li");
         li.style.position = "relative";
+        li.dataset.itineraryId = it.id;
 
         const link = document.createElement("a");
         link.href = `/itinerary/${it.id}`;
+        link.addEventListener("click", (e) => {
+            if (document.getElementById("global-edit-btn").classList.contains("active")) {
+                e.preventDefault();
+                const msg = document.getElementById("edit-mode-msg");
+                msg.classList.remove("hidden");
+                clearTimeout(msg._hideTimer);
+                msg._hideTimer = setTimeout(() => msg.classList.add("hidden"), 2500);
+            }
+        });
         link.className = "itinerary-card block bg-white border border-gray-200 rounded-xl overflow-hidden no-underline text-inherit flex flex-col shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-200";
         link.dataset.country = it.location;
         link.innerHTML = `
-            <div class="h-24 overflow-hidden relative" style="background:${colors[i % colors.length]}">
+            <div class="overflow-hidden relative" style="background:${colors[i % colors.length]}; height:230px;">
                 ${it.cover_image_url
                     ? `<img src="${it.cover_image_url}" class="w-full h-full object-cover">`
                     : `<div class="w-full h-full flex items-center justify-center text-4xl">✈️</div>`}
                 <div class="card-delete-overlay">
-                    <button class="card-delete-btn">🗑 Delete</button>
+                    <button class="card-delete-btn"> X DELETE </button>
                 </div>
             </div>
             <div class="p-3 flex-1">
@@ -258,14 +302,167 @@ function renderItineraries(itineraries) {
 
 // ── GLOBAL EDIT MODE ──
 document.getElementById("global-edit-btn").addEventListener("click", () => {
+    if (favouritesActive) {
+        alert("You can't edit while in Favourites view!");
+        return;
+    }
     const editBtn = document.getElementById("global-edit-btn");
     const isActive = editBtn.classList.toggle("active");
     document.querySelectorAll(".card-delete-overlay").forEach(overlay => {
         overlay.classList.toggle("active", isActive);
     });
+    document.querySelectorAll(".itinerary-card").forEach(card => {
+        if (isActive) {
+            card.addEventListener("click", blockClick);
+        } else {
+            card.removeEventListener("click", blockClick);
+        }
+    });
+});
+
+function blockClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
+
+// ── SETTINGS DROPDOWN ──
+document.getElementById("settings-btn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    document.getElementById("settings-dropdown").classList.toggle("hidden");
+});
+
+document.addEventListener("click", () => {
+    document.getElementById("settings-dropdown").classList.add("hidden");
 });
 
 
+// ── CHANGE PASSWORD MODAL ──
+document.getElementById("change-password-btn").addEventListener("click", () => {
+    document.getElementById("change-password-modal").classList.remove("hidden");
+});
+
+document.getElementById("cancel-password-btn").addEventListener("click", () => {
+    document.getElementById("change-password-modal").classList.add("hidden");
+    document.getElementById("current-password").value = "";
+    document.getElementById("new-password").value = "";
+    document.getElementById("confirm-password").value = "";
+    document.getElementById("password-error").classList.add("hidden");
+    document.getElementById("password-success").classList.add("hidden");
+});
+
+document.getElementById("save-password-btn").addEventListener("click", () => {
+    const currentPassword = document.getElementById("current-password").value;
+    const newPassword = document.getElementById("new-password").value;
+    const confirmPassword = document.getElementById("confirm-password").value;
+    const errorEl = document.getElementById("password-error");
+    const successEl = document.getElementById("password-success");
+
+    errorEl.classList.add("hidden");
+    successEl.classList.add("hidden");
+
+     // Empty field validation
+    if (!currentPassword || !newPassword || !confirmPassword) {
+        errorEl.textContent = "Please fill out all fields.";
+        errorEl.classList.remove("hidden");
+        return;
+    }
+
+    // Same password validation
+    if (currentPassword === newPassword) {
+        errorEl.textContent = "New password must be different from your current password.";
+        errorEl.classList.remove("hidden");
+        return;
+    }
+
+    fetch("/api/change-password", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCsrfToken()
+        },
+        body: JSON.stringify({
+            current_password: currentPassword,
+            new_password: newPassword,
+            confirm_password: confirmPassword
+        })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            successEl.classList.remove("hidden");
+            setTimeout(() => {
+                document.getElementById("change-password-modal").classList.add("hidden");
+                document.getElementById("current-password").value = "";
+                document.getElementById("new-password").value = "";
+                document.getElementById("confirm-password").value = "";
+                successEl.classList.add("hidden");
+            }, 1500);
+        } else {
+            errorEl.textContent = data.error;
+            errorEl.classList.remove("hidden");
+        }
+    })
+    .catch(() => {
+        errorEl.textContent = "Something went wrong.";
+        errorEl.classList.remove("hidden");
+    });
+});
+
+// ── CHANGE USERNAME MODAL ──
+document.getElementById("change-username-btn").addEventListener("click", () => {
+    document.getElementById("change-username-modal").classList.remove("hidden");
+    document.getElementById("settings-dropdown").classList.add("hidden");
+});
+
+document.getElementById("cancel-username-btn").addEventListener("click", () => {
+    document.getElementById("change-username-modal").classList.add("hidden");
+    document.getElementById("new-username").value = "";
+    document.getElementById("username-error").classList.add("hidden");
+    document.getElementById("username-success").classList.add("hidden");
+});
+
+document.getElementById("save-username-btn").addEventListener("click", () => {
+    const newUsername = document.getElementById("new-username").value.trim();
+    const errorEl = document.getElementById("username-error");
+    const successEl = document.getElementById("username-success");
+
+    errorEl.classList.add("hidden");
+    successEl.classList.add("hidden");
+
+    if (!newUsername) {
+        errorEl.textContent = "Please fill out the username field.";
+        errorEl.classList.remove("hidden");
+        return;
+    }
+
+    fetch("/api/change-username", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCsrfToken()
+        },
+        body: JSON.stringify({ new_username: newUsername })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            successEl.classList.remove("hidden");
+            document.getElementById("username").textContent = newUsername;
+            setTimeout(() => {
+                document.getElementById("change-username-modal").classList.add("hidden");
+                document.getElementById("new-username").value = "";
+                successEl.classList.add("hidden");
+            }, 1500);
+        } else {
+            errorEl.textContent = data.error;
+            errorEl.classList.remove("hidden");
+        }
+    })
+    .catch(() => {
+        errorEl.textContent = "Something went wrong.";
+        errorEl.classList.remove("hidden");
+    });
+});
 
 // Restore saved avatar and banner on page load
 if (PORTFOLIO_DATA.avatar_url) {
@@ -288,3 +485,11 @@ if (PORTFOLIO_DATA.banner_url) {
 renderProfile(PORTFOLIO_DATA);
 renderCountries(PORTFOLIO_DATA.countries);
 renderItineraries(PORTFOLIO_DATA.itineraries);
+
+// Hide other people's favourited itineraries by default
+document.querySelectorAll("#itineraries-grid li").forEach(li => {
+    const id = parseInt(li.dataset.itineraryId);
+    if (!PORTFOLIO_DATA.own_itinerary_ids.includes(id)) {
+        li.style.display = "none";
+    }
+});

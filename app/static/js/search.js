@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  
+
 
   // Live search functionality
   const searchInput = document.getElementById("search-input");
@@ -116,23 +116,41 @@ document.addEventListener("DOMContentLoaded", () => {
    * Create HTML for a single result box
    */
   function createResultBox(itinerary) {
-    const coverImage = itinerary.cover_image_url
-      ? `/static/${itinerary.cover_image_url}`
-      : '/static/images/placeholder.jpg';
+    const safeTitle = escapeHtml(String(itinerary.title || ""));
+    const safeCountry = escapeHtml(String(itinerary.country || ""));
+
+    const totalDays = Number.parseInt(itinerary.total_days, 10) || 0;
+    const likesCount = Number.parseInt(itinerary.likes_count, 10) || 0;
+    const id = Number.parseInt(itinerary.id, 10);
+
+    const coverImage = sanitizeStaticImagePath(itinerary.cover_image_url);
 
     return `
-      <div class="result-box">
-        <div class="result-image">
-          <img src="${coverImage}" alt="${escapeHtml(itinerary.title)}" />
-        </div>
-        <div class="result-content">
-          <h3 class="result-title">${escapeHtml(itinerary.title)}</h3>
-          <p class="result-country">${escapeHtml(itinerary.country)}</p>
-          <p class="result-duration">${itinerary.total_days} days &nbsp;·&nbsp; ♥ ${itinerary.likes_count || 0}</p>
-          <a href="/itinerary/${itinerary.id}" class="result-link">View Itinerary</a>
-        </div>
+    <div class="result-box">
+      <div class="result-image">
+        <img src="${escapeHtml(coverImage)}" alt="${safeTitle}" />
       </div>
-    `;
+      <div class="result-content">
+        <h3 class="result-title">${safeTitle}</h3>
+        <p class="result-country">${safeCountry}</p>
+        <p class="result-duration">${totalDays} days &nbsp;·&nbsp; ♥ ${likesCount}</p>
+        <a href="/itinerary/${id}" class="result-link">View Itinerary</a>
+      </div>
+    </div>
+  `;
+  }
+
+  function sanitizeStaticImagePath(path) {
+    if (!path || typeof path !== "string") {
+      return "/static/images/placeholder.jpg";
+    }
+
+    // Only allow certain characters and extensions to prevent XSS
+    if (!/^[a-zA-Z0-9/_\-.]+\.(jpg|jpeg|png|webp|gif)$/i.test(path)) {
+      return "/static/images/placeholder.jpg";
+    }
+
+    return `/static/${path}`;
   }
 
   /**

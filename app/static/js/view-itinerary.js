@@ -32,7 +32,7 @@ function getCsrfToken() {
 //change background each time
 document.addEventListener("DOMContentLoaded", () => {
     const background = document.getElementById("page-background");
-    const themes = ["bg-theme-1", "bg-theme-2", "bg-theme-3","bg-theme-4","bg-theme-5"];
+    const themes = ["bg-theme-1", "bg-theme-2", "bg-theme-3", "bg-theme-4", "bg-theme-5"];
 
     const randomTheme = themes[Math.floor(Math.random() * themes.length)];
 
@@ -82,8 +82,8 @@ function renderItineraryHeader() {
     if (countryEl) countryEl.innerText = itinerary.country;
     if (overviewEl) overviewEl.innerText = itinerary.overview;
     if (coverEl) {
-        coverEl.src = itinerary.coverPhoto;
-        coverEl.alt = itinerary.title;
+        coverEl.src = sanitizeUploadImageUrl(itinerary.coverPhoto);
+        coverEl.alt = String(itinerary.title || "Itinerary cover");
     }
 
     if (tagsContainer) {
@@ -129,16 +129,23 @@ function renderTimeline() {
 
         const dayHeader = document.createElement("div");
         dayHeader.className = "day-header-card";
+        const safeDay = escapeHtml(dayObj.day || "");
+        const safeState = escapeHtml(dayObj.state || "");
+        const safeCity = escapeHtml(dayObj.city || "");
+        const safeTransport = transport.length
+            ? transport.map((item) => escapeHtml(item)).join(", ")
+            : "Not specified";
+
         dayHeader.innerHTML = `
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div>
-              <h2 class="text-2xl font-bold">Day ${dayObj.day || ""}</h2>
-              <p class="text-gray-600 mt-1">${dayObj.state || ""} · ${dayObj.city || ""}</p>
+            <h2 class="text-2xl font-bold">Day ${safeDay}</h2>
+            <p class="text-gray-600 mt-1">${safeState} · ${safeCity}</p>
             </div>
             <div class="text-sm text-gray-600">
-              <span class="font-semibold">Transport:</span> ${transport.length ? transport.join(", ") : "Not specified"}
+            <span class="font-semibold">Transport:</span> ${safeTransport}
             </div>
-          </div>
+        </div>
         `;
         daySection.appendChild(dayHeader);
 
@@ -190,19 +197,18 @@ function renderTimeline() {
         transportBlock.className = "info-chip-group";
 
         transportBlock.innerHTML = `
-          <h3 class="font-semibold text-lg">Transport on this day</h3>
-          <div class="flex flex-wrap gap-2 mt-2">
-            ${
-                transport.length
-                    ? transport.map((item) => `
-                        <div class="transport-card">
-                            ${item}
-                        </div>
-                    `).join("")
-                    : `<div class="text-sm text-slate-500">Not specified</div>`
+            <h3 class="font-semibold text-lg">Transport on this day</h3>
+            <div class="flex flex-wrap gap-2 mt-2">
+                ${transport.length
+                ? transport.map((item) => `
+                            <div class="transport-card">
+                                ${escapeHtml(item)}
+                            </div>
+                        `).join("")
+                : `<div class="text-sm text-slate-500">Not specified</div>`
             }
-          </div>
-        `;
+            </div>
+            `;
 
         extras.appendChild(transportBlock);
 
@@ -309,21 +315,30 @@ function createLocationCard({
 
     const typeBadgeClass = getBadgeClass(type);
 
+    const safeLabel = escapeHtml(label || "");
+    const safeTitle = escapeHtml(title || "Untitled");
+    const safeImage = sanitizeUploadImageUrl(image || "");
+    const safeDescription = escapeHtml(description || "");
+    const safePlace = escapeHtml(place || "");
+    const safeTime = escapeHtml(time || "");
+    const safeState = escapeHtml(state || "");
+    const safeCity = escapeHtml(city || "");
+
     content.innerHTML = `
-        ${image ? `<img src="${image}" class="card-image">` : ""}
+        ${safeImage ? `<img src="${safeImage}" class="card-image" alt="${safeTitle}">` : ""}
 
         <div class="card-body">
             <div class="flex justify-between items-center">
-                <span class="${typeBadgeClass}">${label}</span>
-                ${time ? `<span class="text-sm text-gray-500">${time}</span>` : ""}
+                <span class="${typeBadgeClass}">${safeLabel}</span>
+                ${safeTime ? `<span class="text-sm text-gray-500">${safeTime}</span>` : ""}
             </div>
 
-            <h3 class="card-title">${title || "Untitled"}</h3>
+            <h3 class="card-title">${safeTitle}</h3>
 
-            ${description ? `<p class="card-desc">${description}</p>` : ""}
+            ${safeDescription ? `<p class="card-desc">${safeDescription}</p>` : ""}
 
-            ${place ? `<p class="card-meta"><b>Place:</b> ${place}</p>` : ""}
-            <p class="card-meta"><b>State + City:</b> ${state || ""}, ${city || ""}</p>
+            ${safePlace ? `<p class="card-meta"><b>Place:</b> ${safePlace}</p>` : ""}
+            <p class="card-meta"><b>State + City:</b> ${safeState}, ${safeCity}</p>
         </div>
     `;
 
@@ -438,13 +453,18 @@ async function renderMapMarkers() {
             animation: google.maps.Animation.DROP
         });
 
+        const safeTitle = escapeHtml(title);
+        const safeType = escapeHtml(type);
+        const safePlace = escapeHtml(place);
+        const safeInfoTime = escapeHtml(el.dataset.time || "");
+
         const infoWindow = new google.maps.InfoWindow({
             content: `
                 <div style="min-width:180px;">
-                    <div style="font-weight:700; margin-bottom:6px;">${title}</div>
-                    <div style="font-size:13px; color:#555; text-transform:capitalize;">${type}</div>
-                    ${place ? `<div style="margin-top:6px; font-size:13px;">${place}</div>` : ""}
-                    ${el.dataset.time ? `<div style="margin-top:4px; font-size:13px;"><b>Time:</b> ${el.dataset.time}</div>` : ""}
+                    <div style="font-weight:700; margin-bottom:6px;">${safeTitle}</div>
+                    <div style="font-size:13px; color:#555; text-transform:capitalize;">${safeType}</div>
+                    ${safePlace ? `<div style="margin-top:6px; font-size:13px;">${safePlace}</div>` : ""}
+                    ${safeInfoTime ? `<div style="margin-top:4px; font-size:13px;"><b>Time:</b> ${safeInfoTime}</div>` : ""}
                 </div>
             `
         });
@@ -562,12 +582,12 @@ function highlightCard(el) {
 }
 
 // ===== LIKE / FAVORITE / COMMENT =====
-    // 1. 准备一个 POST 请求
-    // 2. 告诉后端：我发的是 JSON
-    // 3. 如果有 body，就 JSON.stringify(body)
-    // 4. fetch 这个 url
-    // 5. 把后端返回的 JSON 转成 JavaScript object
-    // 6. 出错时显示错误信息
+// 1. 准备一个 POST 请求
+// 2. 告诉后端：我发的是 JSON
+// 3. 如果有 body，就 JSON.stringify(body)
+// 4. fetch 这个 url
+// 5. 把后端返回的 JSON 转成 JavaScript object
+// 6. 出错时显示错误信息
 function setupInteractionButtons() {
     const itineraryId = window.location.pathname.split("/").pop();
 
@@ -673,9 +693,9 @@ async function deleteComment(commentId) {
         const res = await fetch(`/api/itinerary/comments/${commentId}`, {
             method: "DELETE",
             headers: {
-        "X-CSRFToken": getCsrfToken()   //DELETE need CSRF token
-        }
-    });
+                "X-CSRFToken": getCsrfToken()   //DELETE need CSRF token
+            }
+        });
 
         const data = await res.json();
 
@@ -694,9 +714,24 @@ async function deleteComment(commentId) {
     }
 }
 
+function safeRedirect(url) {
+    const fallbackUrl = "/";
+
+    if (typeof url !== "string") {
+        window.location.href = fallbackUrl;
+        return;
+    }
+
+    if (!url.startsWith("/") || url.startsWith("//")) {
+        window.location.href = fallbackUrl;
+        return;
+    }
+
+    window.location.href = url;
+}
 function handleLoginRequired(data) {
     if (data && data.redirect_url) {
-        window.location.href = data.redirect_url;
+        safeRedirect(data.redirect_url);
         return true;
     }
 
@@ -772,11 +807,14 @@ function renderComments(comments) {
         const author = escapeHtml(comment.author || "User");
         const createdAt = escapeHtml(comment.created_at || "");
         const content = escapeHtml(comment.content || "");
-        const avatarUrl = comment.author_avatar_url || "";
+        const avatarUrl = sanitizeUploadImageUrl(comment.author_avatar_url || "");
         const initial = author.charAt(0).toUpperCase();
 
+        const commentId = Number.parseInt(comment.id, 10);
+        const canDelete = comment.can_delete && Number.isInteger(commentId) && commentId > 0;
+
         const avatarHtml = avatarUrl
-            ? `<img src="${escapeHtml(avatarUrl)}" alt="${author}'s avatar" class="comment-avatar-img">`
+            ? `<img src="${avatarUrl}" alt="${author}'s avatar" class="comment-avatar-img">`
             : `<div class="comment-avatar">${initial}</div>`;
 
         item.innerHTML = `
@@ -789,15 +827,14 @@ function renderComments(comments) {
                         <div class="comment-time">${createdAt}</div>
                     </div>
 
-                    ${
-                        comment.can_delete
-                            ? `<button
+                    ${canDelete
+                        ? `<button
                                 class="delete-comment-btn"
-                                data-comment-id="${comment.id}"
+                                data-comment-id="${commentId}"
                             >
                                 Delete
                             </button>`
-                            : ""
+                        : ""
                     }
                 </div>
 
@@ -831,4 +868,51 @@ function escapeHtml(value) {
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
+}
+
+function safeRedirect(url) {
+    const fallbackUrl = "/";
+
+    if (typeof url !== "string") {
+        window.location.href = fallbackUrl;
+        return;
+    }
+
+    if (!url.startsWith("/") || url.startsWith("//")) {
+        window.location.href = fallbackUrl;
+        return;
+    }
+
+    window.location.href = url;
+}
+
+function sanitizeUploadImageUrl(url) {
+    if (!url || typeof url !== "string") {
+        return "";
+    }
+
+    let value = url.trim();
+
+    // 兼容 uploads/activity_photos/a.jpg
+    if (value.startsWith("uploads/")) {
+        value = "/static/" + value;
+    }
+
+    // 兼容 static/uploads/activity_photos/a.jpg
+    if (value.startsWith("static/uploads/")) {
+        value = "/" + value;
+    }
+
+    // 兼容 /uploads/activity_photos/a.jpg
+    if (value.startsWith("/uploads/")) {
+        value = "/static" + value;
+    }
+
+    const pattern = /^\/static\/uploads\/(activity_photos|avatar_photos|banner_photos|cover_photos)\/[a-zA-Z0-9_\-.]+\.(jpg|jpeg|png|webp|gif)$/i;
+
+    if (pattern.test(value)) {
+        return value;
+    }
+
+    return "";
 }

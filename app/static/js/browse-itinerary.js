@@ -1,40 +1,64 @@
 document.addEventListener("DOMContentLoaded", () => {
-
   const container = document.getElementById("card-container");
 
-  // 从 Flask API get itineraries data and render cards
+  if (!container) {
+    return;
+  }
+
   fetch("/api/itineraries")
     .then(res => res.json())
     .then(data => {
-
-      container.innerHTML = "";
+      container.textContent = "";
 
       data.forEach(item => {
-
         const card = document.createElement("div");
         card.className = "itinerary-card";
 
-        card.innerHTML = `
-          <img src="/static/${item.cover || 'default.jpg'}" class="card-image">
-          <div class="card-content">
-            <div class="card-title">${item.title}</div>
-            <div class="card-meta">
-              ${item.country} • ${item.days} days
-            </div>
-          </div>
-        `;
+        const img = document.createElement("img");
+        img.className = "card-image";
+        img.src = sanitizeStaticImagePath(item.cover || "default.jpg");
+        img.alt = String(item.title || "Itinerary cover");
 
-        //关键：跳 Flask route（不是 html）
+        const content = document.createElement("div");
+        content.className = "card-content";
+
+        const title = document.createElement("div");
+        title.className = "card-title";
+        title.textContent = item.title || "";
+
+        const meta = document.createElement("div");
+        meta.className = "card-meta";
+        meta.textContent = `${item.country || ""} • ${Number.parseInt(item.days, 10) || 0} days`;
+
+        content.appendChild(title);
+        content.appendChild(meta);
+
+        card.appendChild(img);
+        card.appendChild(content);
+
+        const id = Number.parseInt(item.id, 10);
         card.addEventListener("click", () => {
-          window.location.href = `/itinerary/${item.id}`;
+          if (Number.isInteger(id) && id > 0) {
+            window.location.href = `/itinerary/${id}`;
+          }
         });
 
         container.appendChild(card);
       });
-
     })
     .catch(err => {
       console.error("Failed to load itineraries:", err);
     });
-
 });
+
+function sanitizeStaticImagePath(path) {
+  if (!path || typeof path !== "string") {
+    return "/static/default.jpg";
+  }
+
+  if (!/^[a-zA-Z0-9/_\-.]+\.(jpg|jpeg|png|webp|gif)$/i.test(path)) {
+    return "/static/default.jpg";
+  }
+
+  return `/static/${path}`;
+}

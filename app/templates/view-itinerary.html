@@ -116,9 +116,15 @@
 {% block extra_js %}
 <script src="{{ url_for('static', filename='js/view-itinerary.js') }}"></script>
 
+{% if google_maps_api_key %}
 <script
   async
   defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFbTlfB_BZlezD2-l2HPvU5mvtKQopBUM&callback=onGoogleMapsReady">
+  src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=onGoogleMapsReady">
 </script>
+{% else %}
+<script>
+  console.error("GOOGLE_MAPS_API_KEY is not set");
+</script>
+{% endif %}
 {% endblock %}

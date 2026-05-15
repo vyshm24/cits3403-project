@@ -10,6 +10,7 @@ node_modules/
 # Python virtual environment
 .venv/
 venv/
+.venv-1/
 application-env/
 
 # Python cache

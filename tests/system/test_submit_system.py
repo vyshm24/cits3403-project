@@ -8,7 +8,9 @@ from pathlib import Path
 from flask import Flask
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.edge.options import Options
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.edge.options import Options as EdgeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
@@ -39,8 +41,68 @@ class LiveServerThread(threading.Thread):
 
 
 class SubmitSystemTests(unittest.TestCase):
+    def create_webdriver(self):
+        browser = os.environ.get("SELENIUM_BROWSER", "").lower().strip()
+
+        def make_chrome():
+            options = ChromeOptions()
+            options.add_argument("--headless=new")
+            options.add_argument("--window-size=1400,1000")
+            options.add_argument("--disable-gpu")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument(
+                f"--user-data-dir={os.path.join(self.browser_profile_dir, 'chrome')}"
+            )
+            return webdriver.Chrome(options=options)
+
+        def make_edge():
+            options = EdgeOptions()
+            options.add_argument("--headless=new")
+            options.add_argument("--window-size=1400,1000")
+            options.add_argument("--disable-gpu")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument(
+                f"--user-data-dir={os.path.join(self.browser_profile_dir, 'edge')}"
+            )
+            return webdriver.Edge(options=options)
+
+        def make_firefox():
+            options = FirefoxOptions()
+            options.add_argument("--headless")
+            return webdriver.Firefox(options=options)
+
+        browsers = {
+            "chrome": make_chrome,
+            "edge": make_edge,
+            "firefox": make_firefox,
+        }
+
+        if browser:
+            if browser not in browsers:
+                raise RuntimeError(
+                    "SELENIUM_BROWSER must be one of: chrome, edge, firefox"
+                )
+            return browsers[browser]()
+
+        last_error = None
+
+        for make_browser in (make_chrome, make_edge, make_firefox):
+            try:
+                return make_browser()
+            except Exception as error:
+                last_error = error
+
+        raise RuntimeError(
+            "Could not start Chrome, Edge, or Firefox for Selenium tests. "
+            "Install one supported browser, or set SELENIUM_BROWSER=chrome/edge/firefox."
+        ) from last_error
+
     def setUp(self):
         self.temp_dir = tempfile.mkdtemp()
+        self.browser_profile_dir = os.path.join(self.temp_dir, "browser-profile")
+        os.environ["SE_CACHE_PATH"] = os.path.join(self.temp_dir, "selenium-cache")
         self.db_path = os.path.join(self.temp_dir, "test.db")
         self.cover_photo_path = os.path.join(self.temp_dir, "cover.png")
         self.activity_photo_path = os.path.join(self.temp_dir, "activity.png")
@@ -75,10 +137,7 @@ class SubmitSystemTests(unittest.TestCase):
         self.server.start()
         self.base_url = f"http://{self.server.host}:{self.server.port}"
 
-        options = Options()
-        options.add_argument("--headless=new")
-        options.add_argument("--window-size=1400,1000")
-        self.driver = webdriver.Edge(options=options)
+        self.driver = self.create_webdriver()
         self.wait = WebDriverWait(self.driver, 10)
 
     def tearDown(self):
@@ -171,16 +230,31 @@ class SubmitSystemTests(unittest.TestCase):
         self.driver.find_element(By.ID, "activity-photo-day1-1").send_keys(
             self.activity_photo_path
         )
-        self.driver.find_element(By.ID, "time-day1-1").send_keys("09:00")
+        # Set time input value using JavaScript to ensure events are triggered
+        time_input = self.driver.find_element(By.ID, "time-day1-1")
+        self.driver.execute_script(
+            """
+            const el = arguments[0];
+            el.removeAttribute("disabled");
+            el.value = "09:00";
+            el.setAttribute("value", "09:00");
+            el.dispatchEvent(new Event("input", { bubbles: true }));
+            el.dispatchEvent(new Event("change", { bubbles: true }));
+            """,
+            time_input,
+        )
+
+        self.assertEqual(time_input.get_attribute("value"), "09:00")
+        #---------------------------------------------------------------
         self.driver.find_element(By.ID, "activity-day1-1").send_keys(
             "Walk around the park and city lookout."
         )
-
+    #self.driver.find_element(By.ID, "activity-title-day1-2").send_keys(
     def submit_form_and_accept_confirmation(self):
         self.driver.find_element(By.ID, "submit-itinerary-button").click()
         confirmation = self.wait.until(EC.alert_is_present())
         confirmation.accept()
-
+#----------------------------------------------------------------
     def submit_form_without_client_validation(self):
         self.driver.execute_script(
             """

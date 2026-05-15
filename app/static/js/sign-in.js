@@ -2,6 +2,25 @@ const form = document.querySelector("form");
 const usernameInput = document.querySelector('input[name="username"]');
 const errorMessage = document.getElementById("signin-error");
 
+function safeRedirect(url) {
+    // fallback URL in case of invalid input
+    const fallbackUrl = "/";
+
+    if (typeof url !== "string") {
+        window.location.href = fallbackUrl;
+        return;
+    }
+
+    // Only allow internal relative paths, e.g., /home, /profile, /itinerary/1
+    // Prohibit https://evil.com and //evil.com
+    if (!url.startsWith("/") || url.startsWith("//")) {
+        window.location.href = fallbackUrl;
+        return;
+    }
+
+    window.location.href = url;
+}
+
 if (form && usernameInput) {
     form.addEventListener("submit", async function (event) {
         event.preventDefault();

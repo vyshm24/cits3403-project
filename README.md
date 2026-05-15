@@ -1,129 +1,87 @@
-# Travel Social Media Website Project (Flask Version)
+# Travel Social Media Website
 
-## Project Overview
+Travel Social Media Website is a Flask-based web application for sharing travel itineraries. Users can create an account, sign in, submit their own travel plans, browse itineraries from other users, view detailed day-by-day travel routes, like or favourite posts, and leave comments.
 
-This is a group project for building a travel social media website where users can sign up, sign in, submit travel itineraries, browse itineraries, view itinerary details, like/favorite itineraries, and post comments.
-
-The frontend uses HTML, CSS, JavaScript, jQuery, and AJAX/fetch requests. The backend uses Flask, Flask-SQLAlchemy, Flask-WTF, and Flask-Migrate to support routing, form handling, authentication, database interaction, and schema migrations.
+The goal of this project is to create a web application where travel information can be uploaded, viewed, and shared. Users upload data by submitting itineraries with destinations, activities, transport options, accommodation, restaurants, and photos. Other users can then explore this data through browse, search, itinerary detail, map, like, favourite, and comment features.
 
 ---
 
-## 🧱 Project Structure & Git Branch Strategy
+# Overview
+
+This project is designed as a travel planning and sharing platform. A user can register an account, publish a trip plan, and interact with travel posts created by other users.
+
+The main pages of the application include:
+
+- **Home**: The landing page of the website. Users can access the main features and search for itineraries.
+- **Sign Up / Sign In**: Pages where users can create an account or log in.
+- **Submit Itinerary**: A form where logged-in users can upload a complete travel itinerary, including trip details, daily activities, transport, restaurants, accommodation, and photos.
+- **Browse Itineraries**: A page where users can explore travel itineraries posted by others.
+- **View Itinerary**: A detailed itinerary page showing the trip overview, daily timeline, activity cards, photos, comments, likes, favourites, and an interactive Google Map.
+- **Search**: A page that allows users to search for itineraries by title or other supported search types.
+- **Portfolio / Profile**: A user profile page for viewing a user's posted itineraries and saved travel-related information.
+- **Like, Favourite, and Comment Features**: Users can interact with itineraries and share feedback.
+
+To relate these pages to the required project views:
+
+- **Introductory view**: The Home page introduces the travel website and provides navigation to the main features.
+- **Upload data view**: The Submit Itinerary page allows users to upload travel itinerary data and images.
+- **Visualise data view**: The Browse and View Itinerary pages display uploaded travel data in card, timeline, and map formats.
+- **Share data view**: The itinerary detail page allows users to share feedback through likes, favourites, and comments.
 
 ---
 
-## Environment Setup for First Run
+# Technologies Used
 
-### 1️⃣ Pull the repository
+## Frontend
 
-```bash
-git pull
-git pull origin dev
-```
+- HTML
+- CSS
+- JavaScript
+- AJAX / Fetch API
+- Google Maps JavaScript API
 
-### 2️⃣ Create a virtual environment
+## Backend
 
-```bash
-python -m venv venv
-```
+- Python
+- Flask
+- Jinja2
+- Werkzeug
+- Flask-WTF
+- WTForms
 
-### 3️⃣ Activate the virtual environment
+## Database and ORM
 
-Windows:
+- SQLite for local development and testing
+- SQLAlchemy
+- Flask-SQLAlchemy
+- Flask-Migrate
+- Alembic
 
-```bash
-venv\Scripts\activate
-```
+## Testing
 
-Mac/Linux:
-
-```bash
-source venv/bin/activate
-```
-
-### 4️⃣ Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 5️⃣ Run the project
-
-```bash
-python app.py
-```
+- Python `unittest`
+- Selenium system tests
+- Chrome / Edge / Firefox headless browser testing
 
 ---
 
-## ✏️ Development Steps
+# Running Unit & Selenium Tests
 
-1. Modify code such as Flask routes, templates, JavaScript, CSS, models, or database migrations.
-2. Test your changes locally.
-3. Ensure there are no errors before committing.
-4. Commit and push your changes to the correct branch.
-
----
-
-## ✅ Running Tests
-
-The project uses Python `unittest` for both unit tests and Selenium system tests.
-
-### Run all tests
-
-From the project root directory:
-
-```bash
-python -m unittest discover -s tests -v
-```
-
-If Python cannot find the `app` module, run with `PYTHONPATH`:
-
-Mac/Linux:
-
-```bash
-PYTHONPATH=. python -m unittest discover -s tests -v
-```
-
-Windows PowerShell:
-
-```powershell
-$env:PYTHONPATH="."
-python -m unittest discover -s tests -v
-```
-
-### Run unit tests only
+Run unit tests:
 
 ```bash
 python -m unittest discover -s tests/unit -v
 ```
 
-Or run a specific unit test file:
-
-```bash
-python -m unittest tests.unit.test_auth -v
-python -m unittest tests.unit.test_submit -v
-python -m unittest tests.unit.test_browse_view -v
-```
-
-### Run Selenium system tests only
+Run Selenium system tests:
 
 ```bash
 python -m unittest discover -s tests/system -v
 ```
 
-Or run a specific Selenium test file:
+The Selenium tests run in a real browser in headless mode. The project supports Chrome, Edge, or Firefox depending on the browser installed on your machine.
 
-```bash
-python -m unittest tests.system.test_auth_system -v
-python -m unittest tests.system.test_submit_system -v
-python -m unittest tests.system.test_browse_view_system -v
-```
-
-### Selenium browser setup
-
-The Selenium tests run in a real browser in headless mode. The project can use Chrome, Edge, or Firefox depending on the browser installed on the machine.
-
-Recommended approach:
+Recommended example:
 
 ```bash
 SELENIUM_BROWSER=chrome python -m unittest discover -s tests/system -v
@@ -143,118 +101,85 @@ $env:SELENIUM_BROWSER="edge"
 python -m unittest discover -s tests/system -v
 ```
 
-If no browser is specified, the tests should try an available supported browser. If Selenium cannot start a browser, install Google Chrome, Microsoft Edge, or Firefox, then run the tests again.
-
-### Current test coverage
-
-The test suite includes:
-
-* Authentication unit and Selenium tests.
-* Itinerary submission unit and Selenium tests.
-* Browse itinerary page unit and Selenium tests.
-* View itinerary page unit and Selenium tests.
-* API tests for itinerary data, likes, comments, and access control.
-
 ---
 
-## ⚠️ Important Notes (Very Important!!!)
+# How to Run
 
-### ❌ DO NOT commit the following:
+## Prerequisites
 
-* `venv/` or `.venv/` virtual environment folders
-* `__pycache__/`
-* `.db` database files, unless specifically required for a demo
-* Local browser driver binaries, unless the team has agreed to include them
+- Python 3
+- pip
+- A modern web browser
+- A Google Maps API key for the itinerary map feature
 
-Make sure `.gitignore` is properly configured.
+## Installation
 
----
+### 1. Clone or pull the repository
 
-## 📦 Environment Synchronization
-
-Dependencies are managed via `requirements.txt`.
-
-### When you install new packages:
+If this is your first time setting up the project, clone the repository:
 
 ```bash
-pip freeze > requirements.txt
+git clone <repository-url>
+cd <repository-folder>
 ```
 
-Then commit and push the updated `requirements.txt`.
+If you already have the repository, pull the latest version:
 
-### For other team members:
+```bash
+git pull
+```
+
+### 2. Create a virtual environment
+
+```bash
+python -m venv venv
+```
+
+### 3. Activate the virtual environment
+
+Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+Mac/Linux:
+
+```bash
+source venv/bin/activate
+```
+
+### 4. Install the required packages
 
 ```bash
 pip install -r requirements.txt
 ```
 
+### 5. Create environment variables
+
+Create a `.env` file in the project root directory:
+
+```env
+SECRET_KEY=dev-secret-key
+GOOGLE_MAPS_API_KEY=Your_API_Here
+```
+
+The Google Maps API key is required because the itinerary detail page loads the map key from environment variables instead of hardcoding it in `view-itinerary.html`.
+
+### 6. Run the application
+
+```bash
+python app.py
+```
+
+### 7. Open the website
+
+Open your browser and go to:
+
+```text
+http://127.0.0.1:5001
+```
+
+You can then sign up, sign in, submit an itinerary, browse existing itineraries, view itinerary details, and interact with posts.
+
 ---
-
-## 🚀 Tech Stack
-
-### Frontend
-
-* HTML
-* CSS
-* JavaScript
-* jQuery
-* AJAX / Fetch API
-* Google Maps JavaScript API
-
-### Backend
-
-* Python
-* Flask 3.1.3
-* Jinja2 3.1.6
-* Werkzeug 3.1.8
-* ItsDangerous 2.2.0
-* Blinker 1.9.0
-* Click 8.3.3
-
-### Database and ORM
-
-* SQLite for local development/testing
-* SQLAlchemy 2.0.49
-* Flask-SQLAlchemy 3.1.1
-* Flask-Migrate 4.1.0
-* Alembic 1.18.4
-* Greenlet 3.5.0
-
-### Forms and Validation
-
-* Flask-WTF 1.3.0
-* WTForms 3.2.2
-
-### Testing
-
-* Python unittest
-* Selenium 4.43.0
-* Chrome / Edge / Firefox headless browser testing
-
-### Selenium and Browser Support Dependencies
-
-* attrs 26.1.0
-* certifi 2026.4.22
-* cffi 2.0.0
-* h11 0.16.0
-* idna 3.13
-* outcome 1.3.0.post0
-* pycparser 3.0
-* PySocks 1.7.1
-* sniffio 1.3.1
-* sortedcontainers 2.4.0
-* trio 0.33.0
-* trio-websocket 0.12.2
-* typing_extensions 4.15.0
-* urllib3 2.7.0
-* websocket-client 1.9.0
-* wsproto 1.3.2
-
-### Template and Migration Dependencies
-
-* Mako 1.3.12
-* MarkupSafe 3.0.3
-
-### Windows Compatibility
-
-* colorama 0.4.6

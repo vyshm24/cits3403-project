@@ -10,8 +10,8 @@
 <main class="pb-20">
 
     <!-- -BANNER- -->
-     <div class="banner-wrapper relative w-full h-64 overflow-hidden cursor-pointer group" id="banner-wrapper">
-        <div class="banner w-full h-full transition-all duration-200 group-hover:brightness-75" id="banner" style="background: linear-gradient(135deg, #f9a8d4, #fcd5b0);"></div>
+     <div class="banner-wrapper relative w-full h-80 overflow-hidden cursor-pointer group" id="banner-wrapper">
+        <div class="banner w-full h-full transition-all duration-200 group-hover:brightness-75" id="banner" style="background-image: url('/static/images/default-banner.jpg'); background-size: cover; background-position: center;"></div>
         <div class="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200" id="banner-edit-btn">
             <button class="flex items-center gap-2 bg-black/50 backdrop-blur-sm text-white text-sm font-medium px-3 py-1.5 rounded-full border-0 cursor-pointer">
                 ✎𓂃 Edit
@@ -22,44 +22,67 @@
 
     <div class="px-4 sm:px-6 lg:px-8">
 
-        <!-- PROFILE CARD-->
-         <div class="relative -mt-28 mx-auto max-w-lg bg-white/25 backdrop-blur-md border border-white/50 rounded-xl px-7 py-6 text-center shadow-lg z-10">
-            <div class="avatar-wrapper absolute -top-12 left-1/2 -translate-x-1/2">
-                <div class="avatar w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-blue-900 flex items-center justify-center text-3xl font-bold text-white overflow-hidden border-3 border-white shadow-md" id="avatar-display">
-                    <span id="avatar-initials">{{ user.username[0].upper() if user else '?' }}</span>
-                </div>
-            <div class="avatar-overlay absolute inset-0 rounded-full bg-black/45 flex flex-col items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 cursor-pointer text-white text-xs gap-1" id="avatar-overlay-btn">
-                ˙✧˖°📷 ༘ ⋆｡˚
-                Change
+    <!-- portfolio-page -->
+    <div class="relative -mt-36 mx-auto max-w-lg bg-white/25 backdrop-blur-md border border-white/50 rounded-xl px-10 py-6 pb-10 shadow-lg z-10 flex items-center gap-4 min-h-[140px]">
+        <!-- Settings button top right -->
+        <div class="absolute top-3 right-3" id="settings-menu-wrapper">
+            <button id="settings-btn" class="text-gray-800 hover:text-blue-600 transition-colors text-xl">
+                ☰
+            </button>
+            <div id="settings-dropdown" class="hidden absolute right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-50 w-44 py-1">
+                <button id="change-username-btn" class="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                 Change username
+                </button>
+                <button id="change-password-btn" class="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                    Change password
+                </button>
             </div>
-                <input type="file" id="avatar-upload" accept="image/*" class="hidden">
-            </div>
-            <div class="mt-14 text-3xl font-bold text-gray-900 mb-1.5" id="username">{{ user.username if user else '' }}</div>
-            <span class="inline-block bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-0.5 rounded-full" id="uid"></span>
         </div>
 
-        <!-- STATS -->
-         <div class="flex bg-white border border-gray-200 rounded-xl shadow-sm mt-6 mb-9 overflow-hidden">
-            <div class="flex-1 py-5 text-center border-r border-gray-200">
-                <span class="block text-2xl font-bold text-blue-900" id="stat-countries">0</span>
-                <span class="text-xs uppercase tracking-widest text-gray-500">Countries</span>
+        <div class="avatar-wrapper relative flex-shrink-0">
+            <div class="avatar rounded-full bg-transparent flex items-center justify-center text-3xl font-bold text-gray-700 overflow-hidden border-3 border-white shadow-md" id="avatar-display">
+                <span id="avatar-initials">{{ user.username[0].upper() if user else '?' }}</span>
             </div>
-            <div class="flex-1 py-5 text-center border-r border-gray-200">
-                <span class="block text-2xl font-bold text-blue-900" id="stat-posts">0</span>
-                <span class="text-xs uppercase tracking-widest text-gray-500">Trips</span>
+            <div class="avatar-overlay absolute inset-0 rounded-full bg-black/45 flex flex-col items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 cursor-pointer text-white text-xs gap-1" id="avatar-overlay-btn">
+                <span>˙✧˖°📷 ༘ ⋆｡˚</span>
+                <span>Change</span>
+            </div>
+            <input type="file" id="avatar-upload" accept="image/*" class="hidden">
+        </div>
+        <div>
+        <div class="text-xl font-bold text-gray-900 mb-0.5" id="username">{{ user.username if user else '' }}</div>
+            <span class="inline-block bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-0.5 rounded-full" id="uid"></span>
+        </div>
+    </div>
+
+
+            <!-- Stats Bar -->
+         <div class="flex bg-blue-900 rounded-xl shadow-sm -mt-8 mb-9 overflow-hidden max-w-2xl mx-auto z-20 relative">
+            <div class="flex-1 py-4 text-center border-r border-blue-700">
+                <span class="block text-2xl font-bold text-white" id="stat-countries">0</span>
+                <span class="text-xs uppercase tracking-widest text-blue-300">Countries</span>
+            </div>
+            <div class="flex-1 py-4 text-center">
+                <span class="block text-2xl font-bold text-white" id="stat-posts">0</span>
+                <span class="text-xs uppercase tracking-widest text-blue-300">Trips</span>
             </div>
         </div>
 
         <!-- COUNTRIES -->
-         <div class ="bg-gray-100 border border-gray-200 rounded-lg p-5 mb-9">
-            <ul id="countries-list" class="flex flex-wrap gap-3 justify-center list-none"></ul>
-         </div>
+        <ul id="countries-list" class="flex flex-wrap gap-3 justify-center list-none mb-9">
+            <li>
+                <button class="country-tag" id="favourites-filter-btn" style="--expanded-width: 130px;">
+                    <span class="flag-circle">★</span>
+                    <span class="country-name">Favourites</span>
+                </button>
+            </li>
+        </ul>
 
          <!-- MY ITINERARIES -->
-          <div class="flex items-center gap-2 mb-5">
-        <h2 class="text-lg font-bold text-blue-900">My Itineraries</h2>
-        <div class="flex-1 h-0.5 bg-gray-200 rounded"></div>
-        <button id="global-edit-btn" class="card-edit-btn">✎﹏ Edit</button>
+        <div class="flex items-center gap-2 mb-5">
+            <h2 class="text-lg font-bold text-blue-900">My Itineraries</h2>
+            <div class="flex-1 h-0.5 bg-gray-200 rounded self-center"></div>
+            <button id="global-edit-btn" class="card-edit-btn">✎𓂃<span class="edit-label"> Edit</span></button>
         </div>
 
         <!-- FILTER NOTICE -->
@@ -68,15 +91,52 @@
             <span id="filter-country-name" class="font-bold"></span>
             <button onclick="clearFilter()" class="ml-auto text-xs text-gray-500 hover:text-red-500 transition-colors">✕ Clear filter</button>
         </div>
+        <div id="edit-mode-msg" class="hidden text-xs text-blue-600 bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 mb-3">
+        ✏️ You're in edit mode — click 🗑 Delete on a card to remove it, or click <strong>Edit</strong> again to exit.
+        </div>
 
-          <ul id="itineraries-grid" class="grid grid-cols-4 gap-3.5 list-none"></ul>
+          <ul id="itineraries-grid" class="grid grid-cols-3 gap-4 list-none"></ul>
 
           <a href="{{ url_for('main.submit_itinerary') }}" class="flex flex items-center justify-center gap-2 w-full py-4 mt-5 border-2 border-dashed border-gray-200 rounded-lg text-sm text-gray-500 no-underline hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50 transition-colors duration-150">
             + Write a new itinerary
         </a>
 
     </div>
+
+    <!-- Change Password Modal -->
+    <div id="change-password-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-xl p-6 w-full max-w-sm shadow-xl">
+            <h2 class="text-lg font-bold text-blue-900 mb-4">Change Password</h2>
+            <div class="flex flex-col gap-3">
+                <input id="current-password" type="password" placeholder="Current password" class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full">
+                <input id="new-password" type="password" placeholder="New password" class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full">
+                <input id="confirm-password" type="password" placeholder="Confirm new password" class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full">
+                <p id="password-error" class="text-red-500 text-xs hidden"></p>
+                <p id="password-success" class="text-green-500 text-xs hidden">Password changed successfully!</p>
+            </div>
+            <div class="flex gap-2 mt-4">
+                <button id="cancel-password-btn" class="flex-1 py-2 rounded-lg border border-gray-300 text-sm text-gray-600 hover:bg-gray-50">Cancel</button>
+                <button id="save-password-btn" class="flex-1 py-2 rounded-lg bg-blue-900 text-white text-sm hover:bg-blue-800">Save</button>
+            </div>
+        </div>
+    </div>
 </main>
+
+<!-- Change Username Modal -->
+<div id="change-username-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+    <div class="bg-white rounded-xl p-6 w-full max-w-sm shadow-xl">
+        <h2 class="text-lg font-bold text-blue-900 mb-4">Change Username</h2>
+        <div class="flex flex-col gap-3">
+            <input id="new-username" type="text" placeholder="New username" class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full">
+            <p id="username-error" class="text-red-500 text-xs hidden"></p>
+            <p id="username-success" class="text-green-500 text-xs hidden">Username changed successfully!</p>
+        </div>
+        <div class="flex gap-2 mt-4">
+            <button id="cancel-username-btn" class="flex-1 py-2 rounded-lg border border-gray-300 text-sm text-gray-600 hover:bg-gray-50">Cancel</button>
+            <button id="save-username-btn" class="flex-1 py-2 rounded-lg bg-blue-900 text-white text-sm hover:bg-blue-800">Save</button>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
@@ -86,8 +146,11 @@
         username: "{{ user.username if user else '' }}",
         avatar_url: "{{ url_for('static', filename=user.avatar_url) if user and user.avatar_url else '' }}",
         banner_url: "{{ url_for('static', filename=user.banner_url) if user and user.banner_url else '' }}",
+        favourited_ids: {{ favourited_ids | tojson }},
+        own_itinerary_ids: {{ own_itinerary_ids | tojson }},
         countries: {
-            {% for it in itineraries %}
+            {% set own = itineraries | selectattr('user_id', 'equalto', user.id) | list %}
+            {% for it in own %}
                 "{{ it.country }}": { flag: ""}{% if not loop.last %}, {% endif %}
             {% endfor %}
         },

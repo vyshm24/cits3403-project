@@ -261,7 +261,7 @@
                                     <label for="budget-range" class="block text-sm/6 font-medium text-gray-900">Estimated Cost Range</label>
                                     <div class="mt-2">
                                         <input id="budget-range" type="text" name="budget_range" placeholder="e.g. $500" required
-                                            pattern="[$€£¥]\s*(0|[1-9][0-9]*)(\.[0-9]{1,2})?"
+                                            pattern="^[\u0024\u20AC\u00A3\u00A5]\s*(0|[1-9][0-9]*)(\.[0-9]{1,2})?$"
                                             title="Enter a currency symbol followed by a number greater than or equal to 0, such as $500."
                                             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
                                     </div>
@@ -694,3 +694,6 @@
     <script src="{{ url_for('static', filename='js/submitform-dropdown.js') }}"></script>
     <script src="{{ url_for('static', filename='js/submitform-upload-photos.js') }}"></script>
 {% endblock %}
+
+
+
