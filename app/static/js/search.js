@@ -21,6 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultsContainer = document.getElementById("search-results");
   const toggleButtons = document.querySelectorAll(".search-toggle");
   const sortSelect = document.getElementById("sort-select");
+  const sortDropdown = document.getElementById("sort-dropdown");
+  const sortTrigger = document.getElementById("sort-trigger");
+  const sortLabel = document.getElementById("sort-label");
+  const sortMenu = document.getElementById("sort-menu");
+  const sortChevron = document.getElementById("sort-chevron");
+  const sortOptions = document.querySelectorAll(".sort-option");
   let searchTimeout;
   let activeSearchType = "title";
   let activeSortOrder = "default";
@@ -84,9 +90,33 @@ document.addEventListener("DOMContentLoaded", () => {
   if (sortSelect) {
     sortSelect.addEventListener("change", () => {
       activeSortOrder = sortSelect.value;
+      syncSortDropdown();
       const query = searchInput ? searchInput.value.trim() : "";
       if (lastResults.length) renderResults(sortResults(lastResults), query);
     });
+  }
+
+  if (sortTrigger && sortMenu && sortSelect) {
+    sortTrigger.addEventListener("click", () => {
+      const isOpen = !sortMenu.classList.contains("hidden");
+      setSortDropdownOpen(!isOpen);
+    });
+
+    sortOptions.forEach((option) => {
+      option.addEventListener("click", () => {
+        sortSelect.value = option.dataset.value;
+        sortSelect.dispatchEvent(new Event("change", { bubbles: true }));
+        setSortDropdownOpen(false);
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      if (sortDropdown && !sortDropdown.contains(event.target)) {
+        setSortDropdownOpen(false);
+      }
+    });
+
+    syncSortDropdown();
   }
 
   function sortResults(results) {
@@ -165,5 +195,29 @@ document.addEventListener("DOMContentLoaded", () => {
       "'": '&#039;'
     };
     return text.replace(/[&<>"']/g, m => map[m]);
+  }
+
+  function setSortDropdownOpen(isOpen) {
+    sortMenu.classList.toggle("hidden", !isOpen);
+    sortTrigger.setAttribute("aria-expanded", String(isOpen));
+    sortChevron.classList.toggle("rotate-180", isOpen);
+  }
+
+  function syncSortDropdown() {
+    if (!sortSelect || !sortLabel) {
+      return;
+    }
+
+    const selectedOption = sortSelect.options[sortSelect.selectedIndex];
+    sortLabel.textContent = selectedOption ? selectedOption.textContent : "Sort: Default";
+
+    sortOptions.forEach((option) => {
+      const isSelected = option.dataset.value === sortSelect.value;
+      option.classList.toggle("bg-slate-400", isSelected);
+      option.classList.toggle("text-white", isSelected);
+      option.classList.toggle("hover:bg-slate-500", isSelected);
+      option.classList.toggle("text-slate-900", !isSelected);
+      option.classList.toggle("hover:bg-indigo-50", !isSelected);
+    });
   }
 });
