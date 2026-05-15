@@ -213,11 +213,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     sortOptions.forEach((option) => {
       const isSelected = option.dataset.value === sortSelect.value;
-      option.classList.toggle("bg-slate-400", isSelected);
+      option.classList.toggle("bg-white/30", isSelected);
       option.classList.toggle("text-white", isSelected);
-      option.classList.toggle("hover:bg-slate-500", isSelected);
-      option.classList.toggle("text-slate-900", !isSelected);
-      option.classList.toggle("hover:bg-indigo-50", !isSelected);
+      option.classList.toggle("hover:bg-white/40", isSelected);
+      option.classList.toggle("text-white/80", !isSelected);
+      option.classList.toggle("hover:bg-white/20", !isSelected);
     });
   }
 });
