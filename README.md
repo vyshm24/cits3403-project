@@ -155,6 +155,9 @@ source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
+```bash
+python -m flask db upgrade
+```
 
 ### 5. Create environment variables
 
