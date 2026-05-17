@@ -1083,6 +1083,7 @@ function buildCustomDropdown(select, index) {
     const dropdown = document.createElement("div");
     dropdown.className = "custom-dropdown";
     dropdown.dataset.selectId = select.id || select.name || "dropdown-" + index;
+    dropdown.dataset.selectedValue = select.value || "";
     if (!useSearch) {
         dropdown.classList.add("custom-dropdown-no-search");
     }
@@ -1205,6 +1206,7 @@ function renderCustomOptions(select, dropdown, keyword) {
                 toggleMultiSelectOption(select, option.value);
             } else {
                 select.value = option.value;
+                dropdown.dataset.selectedValue = option.value;
             }
 
             renderCustomOptions(select, dropdown, "");
@@ -1235,6 +1237,7 @@ function refreshCustomDropdown(select) {
 
     const panel = dropdown._panel;
     const search = panel ? panel.querySelector(".custom-dropdown-search") : null;
+    dropdown.dataset.selectedValue = select.value || "";
     renderCustomOptions(select, dropdown, search ? search.value : "");
 
     if (dropdown.classList.contains("is-open")) {

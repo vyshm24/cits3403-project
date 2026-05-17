@@ -32,6 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (submitForm) {
         submitForm.addEventListener("submit", function (event) {
+            syncSingleSelectCustomDropdowns();
+
             if (!validateSubmitForm()) {
                 event.preventDefault();
                 return;
@@ -40,6 +42,32 @@ document.addEventListener("DOMContentLoaded", function () {
             const confirmed = window.confirm("Are you sure you want to submit this itinerary?");
             if (!confirmed) {
                 event.preventDefault();
+            }
+        });
+    }
+
+    function syncSingleSelectCustomDropdowns() {
+        document.querySelectorAll("select.custom-select-native").forEach(function (select) {
+            if (select.multiple) {
+                return;
+            }
+
+            const dropdown = select.nextElementSibling;
+            if (!dropdown || !dropdown.classList.contains("custom-dropdown")) {
+                return;
+            }
+
+            const selectedValue = dropdown.dataset.selectedValue || "";
+            if (!selectedValue) {
+                return;
+            }
+
+            const matchingOption = Array.from(select.options).find(function (option) {
+                return option.value === selectedValue;
+            });
+
+            if (matchingOption) {
+                select.value = selectedValue;
             }
         });
     }
